@@ -13,7 +13,7 @@ namespace ContabeeCaptura
         /// <returns></returns>
         private string GetGDlic()
         {
-            return ContabeeComunes.Constantes.GDPARAMS.Replace("A", "4");
+            return ContabeeComunes.Constantes.GDPARAM.Replace("A", "4");
         }
 
 

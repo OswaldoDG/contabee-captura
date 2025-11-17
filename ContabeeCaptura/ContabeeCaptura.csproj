@@ -196,7 +196,9 @@
     <Compile Include="Parciales\ProcesoCaptura.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Parciales\ProcesoSolicitudWeb.cs" />
+    <Compile Include="Parciales\ProcesoSolicitudWeb.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="ILLink\ILLink.Descriptors.LibraryBuild.xml" />

@@ -9,7 +9,7 @@ namespace ContabeeComunes
     public class Constantes
     {
         public const string APPVERSION = "1.0.0";   
-        private const string GDILIC = "A1189766972AA998211161A2A92193218";
+        public const string GDPARAM = "A1189766972AA998211161A2A92193218";
     }
 
     /// <summary>
