@@ -57,10 +57,10 @@ namespace ContabeeCaptura
             services.Configure<ApiConfig>(Configuration.GetSection("ApiConfig"));
 
 
-
             // Registrar Form1
             services.AddTransient<Form1>();
             services.AddTransient<Login>();
+            services.AddTransient<CompletarCaptura>();
             services.AddSingleton<ITinyMessengerHub, TinyMessengerHub>();
             services.AddSingleton<IHubEventos, HubEventos>();
             services.AddSingleton<IProxyGenerico, ProxyGenerico>();

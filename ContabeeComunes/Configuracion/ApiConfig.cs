@@ -9,5 +9,10 @@
         /// URI base para el servicio de identidad.
         /// </summary>
         public string UriIdentidad { get; set; }
+
+        /// <summary>
+        /// URI base para el servicio de Transcript.
+        /// </summary>
+        public string UriTranscript { get; set; }
     }
 }

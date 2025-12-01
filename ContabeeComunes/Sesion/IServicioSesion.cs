@@ -6,6 +6,8 @@ namespace ContabeeComunes.Sesion
     {
         void EstablecerSesion(string userName, InfoAccesso infoAccesso);
         string ObtenerNombreUsuario();
-        InfoAccesso ObtenerInfoAccesso();   
+        InfoAccesso ObtenerInfoAccesso();
+        bool NeedsRefresh();
+        void Clear();
     }
 }
