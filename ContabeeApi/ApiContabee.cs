@@ -155,14 +155,14 @@ namespace ContabeeApi
             return respuesta;
         }
 
-        public async Task<Respuesta> CompletarPagina(long id, CompletarCapturaPagina pagina, IList<IFormFile> files)
+        public async Task<Respuesta> CompletarPagina(long id, CompletarCapturaPagina pagina)
         {
             _logger.LogDebug("CompletarPagina");
             Respuesta respuesta = new Respuesta();
             try
             {
 
-                var proxy = await _proxyGenerico.JsonRespuestaSerializada("transcript", $"captura/pagina/completar/{id}", "CompletarPagina", VerboHttp.GET, null);
+                var proxy = await _proxyGenerico.JsonRespuestaSerializada("transcript", $"captura/pagina/completar/{id}", "CompletarPagina", VerboHttp.GET, pagina);
                 if (!proxy.Ok)
                 {
                     _logger.LogError("ProxyGenerico - CompletarPagina", proxy.Error?.Mensaje ?? "Error desconocido al Completar Pagina");

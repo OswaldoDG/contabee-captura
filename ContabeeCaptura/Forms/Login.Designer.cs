@@ -36,9 +36,6 @@
             this.btnLogin = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.labelError = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnShowPass = new System.Windows.Forms.Button();
-            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -73,11 +70,10 @@
             // txtPass
             // 
             this.txtPass.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtPass.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPass.Location = new System.Drawing.Point(3, 3);
+            this.txtPass.Location = new System.Drawing.Point(140, 46);
             this.txtPass.Name = "txtPass";
-            this.txtPass.Size = new System.Drawing.Size(183, 19);
+            this.txtPass.Size = new System.Drawing.Size(250, 19);
             this.txtPass.TabIndex = 3;
             this.txtPass.Text = "Pa$$w0rd";
             this.txtPass.UseSystemPasswordChar = true;
@@ -117,40 +113,11 @@
             this.labelError.TabIndex = 6;
             this.labelError.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.Window;
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75.6F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.4F));
-            this.tableLayoutPanel1.Controls.Add(this.txtPass, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnShowPass, 1, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(140, 45);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(250, 26);
-            this.tableLayoutPanel1.TabIndex = 7;
-            // 
-            // btnShowPass
-            // 
-            this.btnShowPass.BackColor = System.Drawing.SystemColors.Window;
-            this.btnShowPass.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnShowPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnShowPass.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnShowPass.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnShowPass.Location = new System.Drawing.Point(192, 3);
-            this.btnShowPass.Name = "btnShowPass";
-            this.btnShowPass.Size = new System.Drawing.Size(53, 20);
-            this.btnShowPass.TabIndex = 4;
-            this.btnShowPass.Text = "👁";
-            this.btnShowPass.UseVisualStyleBackColor = false;
-            // 
             // Login
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(407, 153);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.txtPass);
             this.Controls.Add(this.labelError);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnLogin);
@@ -163,8 +130,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Acceso - Contabee";
             this.Load += new System.EventHandler(this.Login_Load);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -179,7 +144,5 @@
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label labelError;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Button btnShowPass;
     }
 }

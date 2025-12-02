@@ -39,7 +39,7 @@ namespace ContabeeApi
         /// <param name="pagina">Metadatos de la pagina.</param>
         /// <param name="files">Lista de los comprobantes.</param>
         /// <returns>Retorno de operacion.</returns>
-        Task<Respuesta> CompletarPagina(long id, CompletarCapturaPagina pagina, IList<IFormFile> files);
+        Task<Respuesta> CompletarPagina(long id, CompletarCapturaPagina pagina);
 
         Task<RespuestaPayload<string>> ComputerVision(Stream stream);
 

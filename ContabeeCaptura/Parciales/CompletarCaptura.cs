@@ -20,7 +20,7 @@ namespace ContabeeCaptura.Forms
         private readonly IHubEventos _hubEventos;
         private readonly ITinyMessengerHub _hub;
         private readonly ServicioSesion _servicioSesion;
-        private List<string> _comprobantesPath = new List<string>();
+        public List<string> comprobantesPath = new List<string>();
         public CompletarCapturaPagina finalizada { get; set; }
         public CompletarCaptura(IServicioSesion servicioSesion, ITinyMessengerHub hub, IHubEventos hubEventos)
         {
@@ -59,7 +59,7 @@ namespace ContabeeCaptura.Forms
 
         private void btnComprobantes_Click(object sender, EventArgs e)
         {
-            if (_comprobantesPath.Count >= 2)
+            if (comprobantesPath.Count >= 2)
             {
                 _hubEventos.PublicarNotificacionUI(this, "Seleccione únicamente 2 comprobantes (PDF o XML)", TipoNotificacion.Alerta);
                 return;
@@ -74,13 +74,13 @@ namespace ContabeeCaptura.Forms
                 {
                     foreach (string file in ofd.FileNames)
                     {
-                        if (_comprobantesPath.Count >= 2)
+                        if (comprobantesPath.Count >= 2)
                         {
                             _hubEventos.PublicarNotificacionUI(this, "Solo se permiten 2 comprobantes (PDF o XML).", TipoNotificacion.Alerta);
                             break;
                         }
 
-                        _comprobantesPath.Add(file);
+                        comprobantesPath.Add(file);
 
                         FileInfo fi = new FileInfo(file);
 
