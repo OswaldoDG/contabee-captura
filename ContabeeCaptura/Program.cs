@@ -55,6 +55,7 @@ namespace ContabeeCaptura
 
             // Configuración de ApiConfig desde appsettings
             services.Configure<ApiConfig>(Configuration.GetSection("ApiConfig"));
+            services.Configure<AzureConfig>(Configuration.GetSection("AzureConfig"));
 
 
             // Registrar Form1

@@ -1,18 +1,15 @@
 ﻿using ContabeeComunes.Configuracion;
 using ContabeeComunes.RespuestaApi;
-using ContabeeComunes.Seguridad;
 using ContabeeComunes.Sesion;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
-using System.Xml.Linq;
 
 namespace ContabeeComunes.ProxyGenerico
 {
@@ -63,8 +60,9 @@ namespace ContabeeComunes.ProxyGenerico
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _servicioSesion.ObtenerInfoAccesso().access_token);
 
                 HttpResponseMessage response = null;
-                var json = new JavaScriptSerializer();
-                StringContent contenido = payload != null ? new StringContent(json.Serialize(payload), Encoding.UTF8, "application/json") : null;
+                string json = payload != null ? JsonSerializer.Serialize(payload) : null;
+
+                StringContent contenido = json != null ? new StringContent(json, Encoding.UTF8, "application/json") : null;
                 switch (verbo)
                 {
                     case VerboHttp.POST:

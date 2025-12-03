@@ -162,6 +162,7 @@ namespace ContabeeCaptura
                             using (var fs = new FileStream(archivoLocal, FileMode.Open, FileAccess.Read))
                             {
                                 var content = new StreamContent(fs);
+                                content.Headers.Add("x-ms-blob-type", "BlockBlob");
 
                                 var response = await http.PutAsync(urlBlob, content);
                                 if (!response.IsSuccessStatusCode)
@@ -175,7 +176,7 @@ namespace ContabeeCaptura
                     _hubEventos.PublicarNotificacionUI(this, $"Archivos subidos correctamente.", TipoNotificacion.Info);
                 }
 
-                var completar = await _apiContabee.CompletarPagina(_pagina.Id, datos);
+                var completar = await _apiContabee.CompletarPagina(datos);
 
                 if (!completar.Ok)
                 {

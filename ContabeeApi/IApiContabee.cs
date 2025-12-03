@@ -39,8 +39,13 @@ namespace ContabeeApi
         /// <param name="pagina">Metadatos de la pagina.</param>
         /// <param name="files">Lista de los comprobantes.</param>
         /// <returns>Retorno de operacion.</returns>
-        Task<Respuesta> CompletarPagina(long id, CompletarCapturaPagina pagina);
+        Task<Respuesta> CompletarPagina(CompletarCapturaPagina pagina);
 
+        /// <summary>
+        /// Realiza el OCR a un comprobante mediante un stream.
+        /// </summary>
+        /// <param name="stream">Comprobante en stream</param>
+        /// <returns>Retorno de operación</returns>
         Task<RespuestaPayload<string>> ComputerVision(Stream stream);
 
     }

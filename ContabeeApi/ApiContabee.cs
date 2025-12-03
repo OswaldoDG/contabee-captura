@@ -25,12 +25,14 @@ namespace ContabeeApi
     public class ApiContabee: IApiContabee
     {
         readonly ApiConfig _config;
+        readonly AzureConfig _azureConfig;
         readonly IProxyGenerico _proxyGenerico;
         readonly ILogger<ApiContabee> _logger;
 
-        public ApiContabee(IOptions<ApiConfig> config, IProxyGenerico proxyGenerico, ILogger<ApiContabee> logger) 
+        public ApiContabee(IOptions<ApiConfig> config, IOptions<AzureConfig> azureConfig, IProxyGenerico proxyGenerico, ILogger<ApiContabee> logger) 
         {
             _config = config.Value;
+            _azureConfig = azureConfig.Value;
             _logger = logger;
             _proxyGenerico = proxyGenerico;
         }
@@ -155,14 +157,14 @@ namespace ContabeeApi
             return respuesta;
         }
 
-        public async Task<Respuesta> CompletarPagina(long id, CompletarCapturaPagina pagina)
+        public async Task<Respuesta> CompletarPagina(CompletarCapturaPagina pagina)
         {
             _logger.LogDebug("CompletarPagina");
             Respuesta respuesta = new Respuesta();
             try
             {
 
-                var proxy = await _proxyGenerico.JsonRespuestaSerializada("transcript", $"captura/pagina/completar/{id}", "CompletarPagina", VerboHttp.GET, pagina);
+                var proxy = await _proxyGenerico.JsonRespuestaSerializada("transcript", $"captura/pagina/completar", "CompletarPagina", VerboHttp.POST, pagina);
                 if (!proxy.Ok)
                 {
                     _logger.LogError("ProxyGenerico - CompletarPagina", proxy.Error?.Mensaje ?? "Error desconocido al Completar Pagina");
@@ -188,8 +190,8 @@ namespace ContabeeApi
         public async Task<RespuestaPayload<string>> ComputerVision(Stream stream)
         {
             RespuestaPayload<string> r = new RespuestaPayload<string>();
-            string endpoint = "";
-            string apiKey = "";
+            string endpoint = _azureConfig.Endpoint;
+            string apiKey = _azureConfig.Key;
 
             var client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(apiKey))
             { Endpoint = endpoint };
