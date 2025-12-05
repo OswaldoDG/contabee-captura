@@ -95,8 +95,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(805, 724);
-            this.splitContainer1.SplitterDistance = 38;
+            this.splitContainer1.Size = new System.Drawing.Size(805, 1153);
+            this.splitContainer1.SplitterDistance = 55;
             this.splitContainer1.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -110,7 +110,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(805, 38);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(805, 55);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // label1
@@ -120,7 +120,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(799, 38);
+            this.label1.Size = new System.Drawing.Size(799, 55);
             this.label1.TabIndex = 1;
             this.label1.Text = "Datos Fiscales";
             // 
@@ -139,17 +139,17 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.panel1);
-            this.splitContainer2.Size = new System.Drawing.Size(805, 682);
-            this.splitContainer2.SplitterDistance = 101;
+            this.splitContainer2.Size = new System.Drawing.Size(805, 1094);
+            this.splitContainer2.SplitterDistance = 182;
             this.splitContainer2.TabIndex = 3;
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.listViewComprobantes);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 39);
+            this.panel2.Location = new System.Drawing.Point(0, 103);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(805, 62);
+            this.panel2.Size = new System.Drawing.Size(805, 79);
             this.panel2.TabIndex = 1;
             // 
             // listViewComprobantes
@@ -157,12 +157,13 @@
             this.listViewComprobantes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colNombre});
             this.listViewComprobantes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewComprobantes.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.listViewComprobantes.FullRowSelect = true;
             this.listViewComprobantes.GridLines = true;
             this.listViewComprobantes.HideSelection = false;
             this.listViewComprobantes.Location = new System.Drawing.Point(0, 0);
             this.listViewComprobantes.Name = "listViewComprobantes";
-            this.listViewComprobantes.Size = new System.Drawing.Size(805, 62);
+            this.listViewComprobantes.Size = new System.Drawing.Size(805, 79);
             this.listViewComprobantes.TabIndex = 2;
             this.listViewComprobantes.UseCompatibleStateImageBehavior = false;
             this.listViewComprobantes.View = System.Windows.Forms.View.Details;
@@ -170,7 +171,7 @@
             // colNombre
             // 
             this.colNombre.Text = "Nombre";
-            this.colNombre.Width = 573;
+            this.colNombre.Width = 823;
             // 
             // tableLayoutPanel2
             // 
@@ -184,17 +185,18 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(805, 39);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(805, 103);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // BtnRemoverComprobante
             // 
             this.BtnRemoverComprobante.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.BtnRemoverComprobante.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BtnRemoverComprobante.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.BtnRemoverComprobante.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.BtnRemoverComprobante.Location = new System.Drawing.Point(631, 3);
             this.BtnRemoverComprobante.Name = "BtnRemoverComprobante";
-            this.BtnRemoverComprobante.Size = new System.Drawing.Size(171, 33);
+            this.BtnRemoverComprobante.Size = new System.Drawing.Size(171, 97);
             this.BtnRemoverComprobante.TabIndex = 1;
             this.BtnRemoverComprobante.Text = "Remover comprobante";
             this.BtnRemoverComprobante.UseVisualStyleBackColor = false;
@@ -203,10 +205,11 @@
             // btnComprobantes
             // 
             this.btnComprobantes.BackColor = System.Drawing.Color.Gold;
+            this.btnComprobantes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnComprobantes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnComprobantes.Location = new System.Drawing.Point(3, 3);
             this.btnComprobantes.Name = "btnComprobantes";
-            this.btnComprobantes.Size = new System.Drawing.Size(374, 33);
+            this.btnComprobantes.Size = new System.Drawing.Size(622, 97);
             this.btnComprobantes.TabIndex = 0;
             this.btnComprobantes.Text = "↑ Seleccione los comprobantes";
             this.btnComprobantes.UseVisualStyleBackColor = false;
@@ -221,7 +224,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(805, 577);
+            this.panel1.Size = new System.Drawing.Size(805, 908);
             this.panel1.TabIndex = 3;
             // 
             // tableLayoutPanel5
@@ -240,30 +243,30 @@
             this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 100);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 8;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.473683F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.473683F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.4F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.266666F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 31.57895F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.473683F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.473683F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.57895F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(805, 451);
-            this.tableLayoutPanel5.TabIndex = 26;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.747537F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.20143F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.17788F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.505629F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 32.49179F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.747537F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.868032F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.26016F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(805, 782);
+            this.tableLayoutPanel5.TabIndex = 34;
             // 
             // tableLayoutPanel6
             // 
             this.tableLayoutPanel6.ColumnCount = 2;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 87.41259F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.58741F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 82.97872F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.02128F));
             this.tableLayoutPanel6.Controls.Add(this.btnOk, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.btnCancelar, 1, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 397);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 711);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(799, 51);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(799, 68);
             this.tableLayoutPanel6.TabIndex = 27;
             // 
             // btnOk
@@ -271,13 +274,13 @@
             this.btnOk.BackColor = System.Drawing.Color.SkyBlue;
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnOk.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnOk.Location = new System.Drawing.Point(572, 3);
+            this.btnOk.Location = new System.Drawing.Point(515, 3);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(123, 45);
+            this.btnOk.Size = new System.Drawing.Size(145, 62);
             this.btnOk.TabIndex = 17;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = false;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click_1);
             // 
             // btnCancelar
             // 
@@ -285,18 +288,19 @@
             this.btnCancelar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnCancelar.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnCancelar.Location = new System.Drawing.Point(701, 3);
+            this.btnCancelar.Location = new System.Drawing.Point(666, 3);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(95, 45);
+            this.btnCancelar.Size = new System.Drawing.Size(130, 62);
             this.btnCancelar.TabIndex = 16;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = false;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // cbxTieneCaptcha
             // 
             this.cbxTieneCaptcha.AutoSize = true;
             this.cbxTieneCaptcha.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.cbxTieneCaptcha.Location = new System.Drawing.Point(3, 87);
+            this.cbxTieneCaptcha.Location = new System.Drawing.Point(3, 143);
             this.cbxTieneCaptcha.Name = "cbxTieneCaptcha";
             this.cbxTieneCaptcha.Size = new System.Drawing.Size(152, 24);
             this.cbxTieneCaptcha.TabIndex = 29;
@@ -317,7 +321,7 @@
             // 
             this.txtBxUrl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtBxUrl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.txtBxUrl.Location = new System.Drawing.Point(3, 45);
+            this.txtBxUrl.Location = new System.Drawing.Point(3, 79);
             this.txtBxUrl.Name = "txtBxUrl";
             this.txtBxUrl.Size = new System.Drawing.Size(799, 30);
             this.txtBxUrl.TabIndex = 28;
@@ -330,7 +334,7 @@
             this.cbxReprogramar.Items.AddRange(new object[] {
             "Finalizar",
             "Reprogramar"});
-            this.cbxReprogramar.Location = new System.Drawing.Point(3, 355);
+            this.cbxReprogramar.Location = new System.Drawing.Point(3, 634);
             this.cbxReprogramar.Name = "cbxReprogramar";
             this.cbxReprogramar.Size = new System.Drawing.Size(799, 28);
             this.cbxReprogramar.TabIndex = 13;
@@ -338,17 +342,17 @@
             // txtBxComentario
             // 
             this.txtBxComentario.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtBxComentario.Location = new System.Drawing.Point(3, 171);
+            this.txtBxComentario.Location = new System.Drawing.Point(3, 304);
             this.txtBxComentario.Multiline = true;
             this.txtBxComentario.Name = "txtBxComentario";
-            this.txtBxComentario.Size = new System.Drawing.Size(799, 136);
+            this.txtBxComentario.Size = new System.Drawing.Size(799, 248);
             this.txtBxComentario.TabIndex = 11;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.label7.Location = new System.Drawing.Point(3, 310);
+            this.label7.Location = new System.Drawing.Point(3, 555);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(101, 25);
             this.label7.TabIndex = 12;
@@ -358,7 +362,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.label6.Location = new System.Drawing.Point(3, 131);
+            this.label6.Location = new System.Drawing.Point(3, 235);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(123, 25);
             this.label6.TabIndex = 10;
@@ -379,7 +383,7 @@
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(805, 43);
-            this.tableLayoutPanel4.TabIndex = 25;
+            this.tableLayoutPanel4.TabIndex = 33;
             // 
             // label4
             // 
@@ -430,7 +434,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(805, 57);
-            this.tableLayoutPanel3.TabIndex = 17;
+            this.tableLayoutPanel3.TabIndex = 32;
             // 
             // label2
             // 
@@ -486,11 +490,11 @@
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statuLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 551);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 882);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
             this.statusStrip1.Size = new System.Drawing.Size(805, 26);
-            this.statusStrip1.TabIndex = 16;
+            this.statusStrip1.TabIndex = 31;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // statuLabel
@@ -503,7 +507,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(805, 724);
+            this.ClientSize = new System.Drawing.Size(805, 1153);
             this.Controls.Add(this.splitContainer1);
             this.Name = "CompletarCaptura";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -542,34 +546,34 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.Button BtnRemoverComprobante;
+        private System.Windows.Forms.Button btnComprobantes;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.ListView listViewComprobantes;
+        private System.Windows.Forms.ColumnHeader colNombre;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox txtBxComentario;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel statuLabel;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
+        private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.CheckBox cbxTieneCaptcha;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtBxUrl;
+        private System.Windows.Forms.ComboBox cbxReprogramar;
+        private System.Windows.Forms.TextBox txtBxComentario;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox chxXml;
+        private System.Windows.Forms.CheckBox chxPdf;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cbxTipoFuente;
         private System.Windows.Forms.ComboBox cbxMotivo;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.CheckBox chxPdf;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
-        private System.Windows.Forms.CheckBox cbxTieneCaptcha;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtBxUrl;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.ComboBox cbxReprogramar;
-        private System.Windows.Forms.Button BtnRemoverComprobante;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
-        private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.Button btnCancelar;
-        private System.Windows.Forms.ListView listViewComprobantes;
-        private System.Windows.Forms.ColumnHeader colNombre;
-        private System.Windows.Forms.Button btnComprobantes;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     }
 }

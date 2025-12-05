@@ -107,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuracion\ApiConfig.cs" />
+    <Compile Include="Configuracion\AzureConfig.cs" />
     <Compile Include="Constantes.cs" />
     <Compile Include="Eventos\HubEventos.cs" />
     <Compile Include="Eventos\IHubEventos.cs" />

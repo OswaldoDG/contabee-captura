@@ -35,15 +35,9 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.label1 = new System.Windows.Forms.Label();
-            this.labelBoxDireccion = new ContabeeCaptura.Controls.LabelBox();
-            this.labelBoxNombre = new ContabeeCaptura.Controls.LabelBox();
-            this.labelBoxTarjeta = new ContabeeCaptura.Controls.LabelBox();
-            this.labelBoxCP = new ContabeeCaptura.Controls.LabelBox();
-            this.labelBoxUso = new ContabeeCaptura.Controls.LabelBox();
-            this.labelBoxPago = new ContabeeCaptura.Controls.LabelBox();
-            this.labelBoxRfc = new ContabeeCaptura.Controls.LabelBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnFacturar = new System.Windows.Forms.Button();
             this.btnCompletar = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.btnObtener = new System.Windows.Forms.Button();
@@ -51,8 +45,15 @@
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.label10 = new System.Windows.Forms.Label();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtBoxOCR = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.labelBoxDireccion = new ContabeeCaptura.Controls.LabelBox();
+            this.labelBoxNombre = new ContabeeCaptura.Controls.LabelBox();
+            this.labelBoxTarjeta = new ContabeeCaptura.Controls.LabelBox();
+            this.labelBoxCP = new ContabeeCaptura.Controls.LabelBox();
+            this.labelBoxUso = new ContabeeCaptura.Controls.LabelBox();
+            this.labelBoxPago = new ContabeeCaptura.Controls.LabelBox();
+            this.labelBoxRfc = new ContabeeCaptura.Controls.LabelBox();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -153,12 +154,234 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(185, 29);
+            this.label1.Size = new System.Drawing.Size(154, 25);
             this.label1.TabIndex = 0;
             this.label1.Text = "Datos Fiscales";
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer2.IsSplitterFixed = true;
+            this.splitContainer2.Location = new System.Drawing.Point(318, 3);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.tableLayoutPanel2);
+            this.splitContainer2.Panel1MinSize = 35;
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.visorImagenes);
+            this.splitContainer2.Size = new System.Drawing.Size(399, 530);
+            this.splitContainer2.SplitterDistance = 35;
+            this.splitContainer2.SplitterWidth = 1;
+            this.splitContainer2.TabIndex = 2;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 4;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.00547F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.95271F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.12128F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.92054F));
+            this.tableLayoutPanel2.Controls.Add(this.btnFacturar, 2, 0);
+            this.tableLayoutPanel2.Controls.Add(this.label2, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnObtener, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnCompletar, 3, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(399, 35);
+            this.tableLayoutPanel2.TabIndex = 1;
+            // 
+            // btnFacturar
+            // 
+            this.btnFacturar.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.btnFacturar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnFacturar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.btnFacturar.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.btnFacturar.Location = new System.Drawing.Point(185, 3);
+            this.btnFacturar.Name = "btnFacturar";
+            this.btnFacturar.Size = new System.Drawing.Size(102, 29);
+            this.btnFacturar.TabIndex = 4;
+            this.btnFacturar.Text = "Facturar";
+            this.btnFacturar.UseVisualStyleBackColor = false;
+            this.btnFacturar.Click += new System.EventHandler(this.btnFacturar_Click);
+            // 
+            // btnCompletar
+            // 
+            this.btnCompletar.BackColor = System.Drawing.Color.SkyBlue;
+            this.btnCompletar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnCompletar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.btnCompletar.Location = new System.Drawing.Point(293, 3);
+            this.btnCompletar.Name = "btnCompletar";
+            this.btnCompletar.Size = new System.Drawing.Size(103, 29);
+            this.btnCompletar.TabIndex = 3;
+            this.btnCompletar.Text = "Completar";
+            this.btnCompletar.UseVisualStyleBackColor = false;
+            this.btnCompletar.Click += new System.EventHandler(this.btnCompletar_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(3, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(77, 35);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Ticket";
+            // 
+            // btnObtener
+            // 
+            this.btnObtener.BackColor = System.Drawing.Color.Gold;
+            this.btnObtener.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnObtener.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.btnObtener.Location = new System.Drawing.Point(86, 3);
+            this.btnObtener.Name = "btnObtener";
+            this.btnObtener.Size = new System.Drawing.Size(93, 29);
+            this.btnObtener.TabIndex = 2;
+            this.btnObtener.Text = "Obtener";
+            this.btnObtener.UseVisualStyleBackColor = false;
+            this.btnObtener.Click += new System.EventHandler(this.btnObtener_Click);
+            // 
+            // visorImagenes
+            // 
+            this.visorImagenes.AnimateGIF = false;
+            this.visorImagenes.BackColor = System.Drawing.Color.Black;
+            this.visorImagenes.BackgroundImage = null;
+            this.visorImagenes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.visorImagenes.ContinuousViewMode = true;
+            this.visorImagenes.Cursor = System.Windows.Forms.Cursors.Default;
+            this.visorImagenes.DisplayQuality = GdPicture.DisplayQuality.DisplayQualityBicubicHQ;
+            this.visorImagenes.DisplayQualityAuto = false;
+            this.visorImagenes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.visorImagenes.DocumentAlignment = GdPicture.ViewerDocumentAlignment.DocumentAlignmentMiddleCenter;
+            this.visorImagenes.DocumentPosition = GdPicture.ViewerDocumentPosition.DocumentPositionMiddleCenter;
+            this.visorImagenes.EnabledProgressBar = true;
+            this.visorImagenes.EnableMenu = true;
+            this.visorImagenes.EnableMouseWheel = true;
+            this.visorImagenes.ForceScrollBars = false;
+            this.visorImagenes.ForceTemporaryModeForImage = false;
+            this.visorImagenes.ForceTemporaryModeForPDF = false;
+            this.visorImagenes.ForeColor = System.Drawing.Color.Black;
+            this.visorImagenes.Gamma = 1F;
+            this.visorImagenes.HQAnnotationRendering = true;
+            this.visorImagenes.IgnoreDocumentResolution = false;
+            this.visorImagenes.KeepDocumentPosition = false;
+            this.visorImagenes.Location = new System.Drawing.Point(0, 0);
+            this.visorImagenes.LockViewer = false;
+            this.visorImagenes.MagnifierHeight = 90;
+            this.visorImagenes.MagnifierWidth = 160;
+            this.visorImagenes.MagnifierZoomX = 2F;
+            this.visorImagenes.MagnifierZoomY = 2F;
+            this.visorImagenes.MouseButtonForMouseMode = GdPicture.MouseButton.MouseButtonLeft;
+            this.visorImagenes.MouseMode = GdPicture.ViewerMouseMode.MouseModePan;
+            this.visorImagenes.MouseWheelMode = GdPicture.ViewerMouseWheelMode.MouseWheelModeZoom;
+            this.visorImagenes.Name = "visorImagenes";
+            this.visorImagenes.OptimizeDrawingSpeed = false;
+            this.visorImagenes.PdfDisplayFormField = true;
+            this.visorImagenes.PdfEnableLinks = true;
+            this.visorImagenes.PDFShowDialogForPassword = true;
+            this.visorImagenes.RectBorderColor = System.Drawing.Color.Black;
+            this.visorImagenes.RectBorderSize = 1;
+            this.visorImagenes.RectIsEditable = true;
+            this.visorImagenes.RegionsAreEditable = true;
+            this.visorImagenes.ScrollBars = true;
+            this.visorImagenes.ScrollLargeChange = ((short)(50));
+            this.visorImagenes.ScrollSmallChange = ((short)(1));
+            this.visorImagenes.SilentMode = true;
+            this.visorImagenes.Size = new System.Drawing.Size(399, 494);
+            this.visorImagenes.TabIndex = 0;
+            this.visorImagenes.Zoom = 1D;
+            this.visorImagenes.ZoomCenterAtMousePosition = false;
+            this.visorImagenes.ZoomMode = GdPicture.ViewerZoomMode.ZoomMode100;
+            this.visorImagenes.ZoomStep = 25;
+            // 
+            // splitContainer3
+            // 
+            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer3.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer3.IsSplitterFixed = true;
+            this.splitContainer3.Location = new System.Drawing.Point(723, 3);
+            this.splitContainer3.Name = "splitContainer3";
+            this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer3.Panel1
+            // 
+            this.splitContainer3.Panel1.Controls.Add(this.label10);
+            this.splitContainer3.Panel1MinSize = 35;
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
+            this.splitContainer3.Size = new System.Drawing.Size(174, 530);
+            this.splitContainer3.SplitterDistance = 35;
+            this.splitContainer3.TabIndex = 3;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(0, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(162, 25);
+            this.label10.TabIndex = 2;
+            this.label10.Text = "Texto de Ticket";
+            // 
+            // splitContainer4
+            // 
+            this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer4.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer4.Name = "splitContainer4";
+            this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer4.Panel1
+            // 
+            this.splitContainer4.Panel1.Controls.Add(this.txtBoxOCR);
+            // 
+            // splitContainer4.Panel2
+            // 
+            this.splitContainer4.Panel2.Controls.Add(this.textBox2);
+            this.splitContainer4.Size = new System.Drawing.Size(174, 491);
+            this.splitContainer4.SplitterDistance = 237;
+            this.splitContainer4.SplitterWidth = 1;
+            this.splitContainer4.TabIndex = 0;
+            // 
+            // txtBoxOCR
+            // 
+            this.txtBoxOCR.AcceptsReturn = true;
+            this.txtBoxOCR.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtBoxOCR.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxOCR.Location = new System.Drawing.Point(0, 0);
+            this.txtBoxOCR.Multiline = true;
+            this.txtBoxOCR.Name = "txtBoxOCR";
+            this.txtBoxOCR.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtBoxOCR.Size = new System.Drawing.Size(174, 237);
+            this.txtBoxOCR.TabIndex = 0;
+            this.txtBoxOCR.Text = "Texto de barra presente en el ticket";
+            // 
+            // textBox2
+            // 
+            this.textBox2.AcceptsReturn = true;
+            this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox2.Location = new System.Drawing.Point(0, 0);
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox2.Size = new System.Drawing.Size(174, 253);
+            this.textBox2.TabIndex = 0;
+            this.textBox2.Text = "Códigos de barras presentes en el ticket";
             // 
             // labelBoxDireccion
             // 
@@ -265,214 +488,6 @@
             this.labelBoxRfc.TabIndex = 7;
             this.labelBoxRfc.Texto = "RFC:";
             // 
-            // splitContainer2
-            // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer2.IsSplitterFixed = true;
-            this.splitContainer2.Location = new System.Drawing.Point(318, 3);
-            this.splitContainer2.Name = "splitContainer2";
-            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.Controls.Add(this.tableLayoutPanel2);
-            this.splitContainer2.Panel1MinSize = 35;
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.visorImagenes);
-            this.splitContainer2.Size = new System.Drawing.Size(399, 530);
-            this.splitContainer2.SplitterDistance = 35;
-            this.splitContainer2.SplitterWidth = 1;
-            this.splitContainer2.TabIndex = 2;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 3;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel2.Controls.Add(this.btnCompletar, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label2, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnObtener, 1, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(399, 35);
-            this.tableLayoutPanel2.TabIndex = 1;
-            // 
-            // btnCompletar
-            // 
-            this.btnCompletar.BackColor = System.Drawing.Color.SkyBlue;
-            this.btnCompletar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnCompletar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnCompletar.Location = new System.Drawing.Point(281, 3);
-            this.btnCompletar.Name = "btnCompletar";
-            this.btnCompletar.Size = new System.Drawing.Size(115, 29);
-            this.btnCompletar.TabIndex = 3;
-            this.btnCompletar.Text = "Completar";
-            this.btnCompletar.UseVisualStyleBackColor = false;
-            this.btnCompletar.Click += new System.EventHandler(this.btnCompletar_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(153, 35);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Ticket";
-            // 
-            // btnObtener
-            // 
-            this.btnObtener.BackColor = System.Drawing.Color.Gold;
-            this.btnObtener.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnObtener.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnObtener.Location = new System.Drawing.Point(162, 3);
-            this.btnObtener.Name = "btnObtener";
-            this.btnObtener.Size = new System.Drawing.Size(113, 29);
-            this.btnObtener.TabIndex = 2;
-            this.btnObtener.Text = "Obtener";
-            this.btnObtener.UseVisualStyleBackColor = false;
-            this.btnObtener.Click += new System.EventHandler(this.btnObtener_Click);
-            // 
-            // visorImagenes
-            // 
-            this.visorImagenes.AnimateGIF = false;
-            this.visorImagenes.BackColor = System.Drawing.Color.Black;
-            this.visorImagenes.BackgroundImage = null;
-            this.visorImagenes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.visorImagenes.ContinuousViewMode = true;
-            this.visorImagenes.Cursor = System.Windows.Forms.Cursors.Default;
-            this.visorImagenes.DisplayQuality = GdPicture.DisplayQuality.DisplayQualityBicubicHQ;
-            this.visorImagenes.DisplayQualityAuto = false;
-            this.visorImagenes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.visorImagenes.DocumentAlignment = GdPicture.ViewerDocumentAlignment.DocumentAlignmentMiddleCenter;
-            this.visorImagenes.DocumentPosition = GdPicture.ViewerDocumentPosition.DocumentPositionMiddleCenter;
-            this.visorImagenes.EnabledProgressBar = true;
-            this.visorImagenes.EnableMenu = true;
-            this.visorImagenes.EnableMouseWheel = true;
-            this.visorImagenes.ForceScrollBars = false;
-            this.visorImagenes.ForceTemporaryModeForImage = false;
-            this.visorImagenes.ForceTemporaryModeForPDF = false;
-            this.visorImagenes.ForeColor = System.Drawing.Color.Black;
-            this.visorImagenes.Gamma = 1F;
-            this.visorImagenes.HQAnnotationRendering = true;
-            this.visorImagenes.IgnoreDocumentResolution = false;
-            this.visorImagenes.KeepDocumentPosition = false;
-            this.visorImagenes.Location = new System.Drawing.Point(0, 0);
-            this.visorImagenes.LockViewer = false;
-            this.visorImagenes.MagnifierHeight = 90;
-            this.visorImagenes.MagnifierWidth = 160;
-            this.visorImagenes.MagnifierZoomX = 2F;
-            this.visorImagenes.MagnifierZoomY = 2F;
-            this.visorImagenes.MouseButtonForMouseMode = GdPicture.MouseButton.MouseButtonLeft;
-            this.visorImagenes.MouseMode = GdPicture.ViewerMouseMode.MouseModePan;
-            this.visorImagenes.MouseWheelMode = GdPicture.ViewerMouseWheelMode.MouseWheelModeZoom;
-            this.visorImagenes.Name = "visorImagenes";
-            this.visorImagenes.OptimizeDrawingSpeed = false;
-            this.visorImagenes.PdfDisplayFormField = true;
-            this.visorImagenes.PdfEnableLinks = true;
-            this.visorImagenes.PDFShowDialogForPassword = true;
-            this.visorImagenes.RectBorderColor = System.Drawing.Color.Black;
-            this.visorImagenes.RectBorderSize = 1;
-            this.visorImagenes.RectIsEditable = true;
-            this.visorImagenes.RegionsAreEditable = true;
-            this.visorImagenes.ScrollBars = true;
-            this.visorImagenes.ScrollLargeChange = ((short)(50));
-            this.visorImagenes.ScrollSmallChange = ((short)(1));
-            this.visorImagenes.SilentMode = true;
-            this.visorImagenes.Size = new System.Drawing.Size(399, 494);
-            this.visorImagenes.TabIndex = 0;
-            this.visorImagenes.Zoom = 1D;
-            this.visorImagenes.ZoomCenterAtMousePosition = false;
-            this.visorImagenes.ZoomMode = GdPicture.ViewerZoomMode.ZoomMode100;
-            this.visorImagenes.ZoomStep = 25;
-            // 
-            // splitContainer3
-            // 
-            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer3.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer3.IsSplitterFixed = true;
-            this.splitContainer3.Location = new System.Drawing.Point(723, 3);
-            this.splitContainer3.Name = "splitContainer3";
-            this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer3.Panel1
-            // 
-            this.splitContainer3.Panel1.Controls.Add(this.label10);
-            this.splitContainer3.Panel1MinSize = 35;
-            // 
-            // splitContainer3.Panel2
-            // 
-            this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
-            this.splitContainer3.Size = new System.Drawing.Size(174, 530);
-            this.splitContainer3.SplitterDistance = 35;
-            this.splitContainer3.TabIndex = 3;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(0, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(195, 29);
-            this.label10.TabIndex = 2;
-            this.label10.Text = "Texto de Ticket";
-            // 
-            // splitContainer4
-            // 
-            this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer4.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer4.IsSplitterFixed = true;
-            this.splitContainer4.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer4.Name = "splitContainer4";
-            this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer4.Panel1
-            // 
-            this.splitContainer4.Panel1.Controls.Add(this.textBox1);
-            // 
-            // splitContainer4.Panel2
-            // 
-            this.splitContainer4.Panel2.Controls.Add(this.textBox2);
-            this.splitContainer4.Size = new System.Drawing.Size(174, 491);
-            this.splitContainer4.SplitterDistance = 238;
-            this.splitContainer4.SplitterWidth = 1;
-            this.splitContainer4.TabIndex = 0;
-            // 
-            // textBox1
-            // 
-            this.textBox1.AcceptsReturn = true;
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(0, 0);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(174, 238);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "Texto de barra presente en el ticket";
-            // 
-            // textBox2
-            // 
-            this.textBox2.AcceptsReturn = true;
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(0, 0);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox2.Size = new System.Drawing.Size(174, 252);
-            this.textBox2.TabIndex = 0;
-            this.textBox2.Text = "Códigos de barras presentes en el ticket";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -530,7 +545,7 @@
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.SplitContainer splitContainer4;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtBoxOCR;
         private System.Windows.Forms.TextBox textBox2;
         private Controls.LabelBox labelBoxDireccion;
         private Controls.LabelBox labelBoxNombre;
@@ -543,6 +558,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnObtener;
         private System.Windows.Forms.Button btnCompletar;
+        private System.Windows.Forms.Button btnFacturar;
     }
 }
 

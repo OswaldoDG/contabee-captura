@@ -1,5 +1,6 @@
 ﻿using ContabeeApi;
 using ContabeeCaptura.Forms;
+using ContabeeCaptura.Parciales;
 using ContabeeComunes.Configuracion;
 using ContabeeComunes.Eventos;
 using ContabeeComunes.ProxyGenerico;
@@ -62,6 +63,7 @@ namespace ContabeeCaptura
             services.AddTransient<Form1>();
             services.AddTransient<Login>();
             services.AddTransient<CompletarCaptura>();
+            services.AddTransient<BrowserFactura>();
             services.AddSingleton<ITinyMessengerHub, TinyMessengerHub>();
             services.AddSingleton<IHubEventos, HubEventos>();
             services.AddSingleton<IProxyGenerico, ProxyGenerico>();

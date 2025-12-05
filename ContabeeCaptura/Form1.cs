@@ -9,6 +9,7 @@ using ContabeeComunes.Sesion;
 using System;
 using System.IO;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -110,19 +111,8 @@ namespace ContabeeCaptura
                 }
 
                 _pagina = respuesta.Payload;
-                var http = new HttpClient();
-                var response = await http.GetAsync(_pagina.TokenSas);
 
-                if (!response.IsSuccessStatusCode)
-                {
-                    _hubEventos.PublicarNotificacionUI(this, "Ocurrió un problema al bajar el archivo de la nube", TipoNotificacion.Error);
-                }
-
-                var status = visorImagenes.DisplayFromStream(await response.Content.ReadAsStreamAsync());
-                ProcesaInicioTrabajo(_pagina);
-                //_apiContabee.ComputerVision(await response.Content.ReadAsStreamAsync());
-                visorImagenes.Visible = true;
-                visorImagenes.Focus();
+                await DescargaBlob(_pagina.TokenSas);
 
                 _hubEventos.PublicarNotificacionUI(this, "Página cargada correctamente.", TipoNotificacion.Info);
             }
@@ -143,40 +133,9 @@ namespace ContabeeCaptura
 
             if (captura.ShowDialog() == DialogResult.OK)
             {
-                var datos = captura.finalizada;
-                var comprobantes = captura.comprobantesPath;
-                datos.Id = _pagina.Id;
-
-                if (comprobantes != null && comprobantes.Count > 0)
-                {
-                    using (var http = new HttpClient())
-                    {
-                        foreach (var archivoLocal in comprobantes)
-                        {
-                            var nombreArchivo = Path.GetFileName(archivoLocal);
-                            var uri = new Uri(_pagina.TokenSas);
-                            var segmentos = uri.AbsolutePath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-                            string urlBlob = $"{uri.Scheme}://{uri.Host}/{segmentos[0]}/{_pagina.LoteId}/{nombreArchivo}?{uri.Query.TrimStart('?')}";
-
-
-                            using (var fs = new FileStream(archivoLocal, FileMode.Open, FileAccess.Read))
-                            {
-                                var content = new StreamContent(fs);
-                                content.Headers.Add("x-ms-blob-type", "BlockBlob");
-
-                                var response = await http.PutAsync(urlBlob, content);
-                                if (!response.IsSuccessStatusCode)
-                                {
-                                    _hubEventos.PublicarNotificacionUI(this, $"Error al subir {archivoLocal}.", TipoNotificacion.Error);
-                                }
-                            }
-                        }
-                    }
-
-                    _hubEventos.PublicarNotificacionUI(this, $"Archivos subidos correctamente.", TipoNotificacion.Info);
-                }
-
-                var completar = await _apiContabee.CompletarPagina(datos);
+                await SubirArchivosBlob(captura);
+                captura.finalizada.Id = _pagina.Id;
+                var completar = await _apiContabee.CompletarPagina(captura.finalizada);
 
                 if (!completar.Ok)
                 {
@@ -186,61 +145,16 @@ namespace ContabeeCaptura
                 {
                     _hubEventos.PublicarNotificacionUI(this, $"Captura finalizada correctamente", TipoNotificacion.Info);
                 }
-
-
             }
         }
 
-        /// <summary>
-        /// Muestra la informacion de la Pagina.
-        /// </summary>
-        /// <param name="pagina"></param>
-        private void ProcesaInicioTrabajo(PaginaTrabajoCapturaCloud pagina)
+        private void btnFacturar_Click(object sender, EventArgs e)
         {
-            labelBoxRfc.Informacion = pagina.Rfc;
-            labelBoxPago.Informacion = pagina.FormaPago;
-            labelBoxUso.Informacion = pagina.UsoFactura;
-            labelBoxCP.Informacion = pagina.CodigoPostal;
-            labelBoxTarjeta.Informacion = pagina.TerminacionPago;
-            labelBoxNombre.Informacion = pagina.Denominacion;
-            labelBoxDireccion.Informacion = pagina.Direccion;
-        }
-
-        /// <summary>
-        /// Realiza el refresco de token de ser necesario.
-        /// </summary>
-        /// <returns></returns>
-        public async Task<bool> EjecutarSiNecesarioAsync()
-        {
-            if (_servicioSesion.IsAuthenticated && !_servicioSesion.NeedsRefresh())
-                return true;
-
-            if (string.IsNullOrEmpty(_servicioSesion.ObtenerInfoAccesso().refresh_token))
+            var navegador = Program.ServiceProvider.GetService(typeof(ContabeeCaptura.Parciales.BrowserFactura)) as ContabeeCaptura.Parciales.BrowserFactura;
+            if (navegador != null)
             {
-                _servicioSesion.Clear();
-                return false;
-            }
-
-            await _refreshLock.WaitAsync();
-
-            try
-            {
-                if (!_servicioSesion.NeedsRefresh())
-                    return true;
-
-                var respuesta = await _apiContabee.RefreshToken(_servicioSesion.ObtenerInfoAccesso().refresh_token);
-
-                if (!respuesta.Ok)
-                {
-                    _servicioSesion.Clear();
-                    return false;
-                }
-                _servicioSesion.EstablecerSesion(_servicioSesion.ObtenerNombreUsuario(), respuesta.Payload);
-                return true;
-            }
-            finally
-            {
-                _refreshLock.Release();
+                navegador.NombreBlob = Path.GetFileNameWithoutExtension(_pagina.Ruta);
+                navegador.ShowDialog();
             }
         }
     }

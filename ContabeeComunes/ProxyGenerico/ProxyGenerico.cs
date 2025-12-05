@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ContabeeComunes.ProxyGenerico
@@ -29,6 +30,7 @@ namespace ContabeeComunes.ProxyGenerico
             _apiConfig = options.Value;
             this.logger = logger;
             this.httpClient = httpClient;
+            httpClient.Timeout = Timeout.InfiniteTimeSpan;
             _servicioSesion = servicioSesion;
         }
 

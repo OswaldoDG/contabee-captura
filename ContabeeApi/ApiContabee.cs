@@ -190,39 +190,46 @@ namespace ContabeeApi
         public async Task<RespuestaPayload<string>> ComputerVision(Stream stream)
         {
             RespuestaPayload<string> r = new RespuestaPayload<string>();
-            string endpoint = _azureConfig.Endpoint;
-            string apiKey = _azureConfig.Key;
-
-            var client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(apiKey))
-            { Endpoint = endpoint };
-
-            if (stream.CanSeek)
-                stream.Position = 0;
-
-            var textHeaders = await client.ReadInStreamAsync(stream);
-            string operationId = textHeaders.OperationLocation.Split('/').Last();
-
-            ReadOperationResult resultado;
-            do
+            try
             {
-                await Task.Delay(500);
-                resultado = await client.GetReadResultAsync(Guid.Parse(operationId));
+                string endpoint = _azureConfig.Endpoint;
+                string apiKey = _azureConfig.Key;
+
+                var client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(apiKey))
+                { Endpoint = endpoint };
+
+                if (stream.CanSeek)
+                    stream.Position = 0;
+
+                var textHeaders = await client.ReadInStreamAsync(stream).ConfigureAwait(false);
+                string operationId = textHeaders.OperationLocation.Split('/').Last();
+
+                ReadOperationResult resultado;
+                do
+                {
+                    await Task.Delay(500);
+                    resultado = await client.GetReadResultAsync(Guid.Parse(operationId));
+                }
+                while (resultado.Status == OperationStatusCodes.Running ||
+                       resultado.Status == OperationStatusCodes.NotStarted);
+
+                var builder = new StringBuilder();
+
+                var pages = resultado.AnalyzeResult.ReadResults;
+                foreach (var page in pages)
+                {
+                    foreach (var line in page.Lines)
+                        builder.AppendLine(line.Text);
+                }
+
+
+                var texto = builder.ToString().Trim();
+                r.Payload = texto;
             }
-            while (resultado.Status == OperationStatusCodes.Running ||
-                   resultado.Status == OperationStatusCodes.NotStarted);
-
-            var builder = new StringBuilder();
-
-            var pages = resultado.AnalyzeResult.ReadResults;
-            foreach (var page in pages)
+            catch(Exception ex)
             {
-                foreach (var line in page.Lines)
-                    builder.AppendLine(line.Text);
+                Console.WriteLine("ERROR: " + ex.Message);
             }
-
-
-            var texto =  builder.ToString().Trim();
-            r.Payload = texto;
             return r;
         }
     }

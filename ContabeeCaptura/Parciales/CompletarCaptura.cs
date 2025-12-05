@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using TinyMessenger;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ContabeeCaptura.Forms
 {
@@ -94,14 +95,29 @@ namespace ContabeeCaptura.Forms
 
         private void BtnRemoverComprobante_Click(object sender, EventArgs e)
         {
+            if (listViewComprobantes.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Selecciona un archivo para eliminar.");
+                return;
+            }
 
+            var item = listViewComprobantes.SelectedItems[0];
+            int index = item.Index;
+
+            string rutaArchivo = comprobantesPath[index];
+
+            if (File.Exists(rutaArchivo))
+                File.Delete(rutaArchivo);
+
+            comprobantesPath.RemoveAt(index);
+            listViewComprobantes.Items.RemoveAt(index);
         }
 
-        private void btnOk_Click(object sender, EventArgs e)
+        private void btnOk_Click_1(object sender, EventArgs e)
         {
             finalizada = new CompletarCapturaPagina()
             {
-                Reprogramar = cbxReprogramar.Text.Equals("Reprogramar", StringComparison.OrdinalIgnoreCase) ? false : true,
+                Reprogramar = cbxReprogramar.Text.Equals("Finalizar", StringComparison.OrdinalIgnoreCase) ? false : true,
                 Motivo = (MotivoEstado)Enum.Parse(typeof(MotivoEstado), cbxMotivo.Text),
                 TipoFuente = (TipoFuenteProcesamiento)Enum.Parse(typeof(TipoFuenteProcesamiento), cbxTipoFuente.Text),
                 Comentario = txtBxComentario.Text,
@@ -114,6 +130,10 @@ namespace ContabeeCaptura.Forms
             this.Close();
         }
 
-
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
     }
 }
