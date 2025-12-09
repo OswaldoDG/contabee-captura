@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using ContabeeApi;
 using ContabeeCaptura.Extensiones;
 using ContabeeComunes.Sesion;
+using TinyMessenger;
 
 namespace ContabeeCaptura.Forms
 {
@@ -11,11 +12,13 @@ namespace ContabeeCaptura.Forms
     {
         private readonly IApiContabee _apiContabee;
         private readonly IServicioSesion _servicioSesion;
-        public Login(IApiContabee apiContabee, IServicioSesion servicioSesion)
+        private readonly ITinyMessengerHub _hub;
+        public Login(IApiContabee apiContabee, IServicioSesion servicioSesion, ITinyMessengerHub hub)
         {
             InitializeComponent();
             _apiContabee = apiContabee;
             _servicioSesion = servicioSesion;
+            _hub = hub;
         }
 
         private void Login_Load(object sender, EventArgs e)
@@ -47,6 +50,23 @@ namespace ContabeeCaptura.Forms
         private void button1_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            _hub.Publish(new ContabeeComunes.Fachada.MensajeEjemplo
+            {
+                Dato = $"{DateTime.Now.ToLongTimeString()} Este es un mensaje de prueba desde el formulario de login. ",
+                Sender = this
+            });
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            _hub.Publish(new ContabeeComunes.Fachada.MensajeClear
+            {
+                Sender = this
+            });
         }
     }
 }

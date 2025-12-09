@@ -3,6 +3,7 @@ using ContabeeCaptura.Forms;
 using ContabeeCaptura.Parciales;
 using ContabeeComunes.Configuracion;
 using ContabeeComunes.Eventos;
+using ContabeeComunes.Fachada;
 using ContabeeComunes.ProxyGenerico;
 using ContabeeComunes.Sesion;
 using Microsoft.Extensions.Configuration;
@@ -66,6 +67,7 @@ namespace ContabeeCaptura
             services.AddTransient<BrowserFactura>();
             services.AddSingleton<ITinyMessengerHub, TinyMessengerHub>();
             services.AddSingleton<IHubEventos, HubEventos>();
+            services.AddSingleton<IServicioFachada, ServicioFachada>();
             services.AddSingleton<IProxyGenerico, ProxyGenerico>();
             services.AddSingleton< IServicioSesion, ServicioSesion > ();
             services.AddTransient<IApiContabee, ApiContabee>();

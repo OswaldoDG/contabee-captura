@@ -112,12 +112,16 @@
     <Compile Include="Eventos\HubEventos.cs" />
     <Compile Include="Eventos\IHubEventos.cs" />
     <Compile Include="Eventos\NotificacionUIEvent.cs" />
+    <Compile Include="Fachada\MensajeClear.cs" />
+    <Compile Include="Fachada\MensajeEjemplo.cs" />
+    <Compile Include="Fachada\ServicioFachada.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProxyGenerico\IProxyGenerico.cs" />
     <Compile Include="ProxyGenerico\ProxyGenerico.cs" />
     <Compile Include="RespuestaApi\ErrorProceso.cs" />
     <Compile Include="RespuestaApi\RespuestaApi.cs" />
     <Compile Include="Seguridad\InfoAccesso.cs" />
+    <Compile Include="Fachada\IServicioFachada.cs" />
     <Compile Include="Sesion\IServicioSesion.cs" />
     <Compile Include="Sesion\ServicioSesion.cs" />
     <Compile Include="Sesion\SesionUsuario.cs" />

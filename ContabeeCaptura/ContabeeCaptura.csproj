@@ -220,6 +220,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ControlEjemplo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlEjemplo.Designer.cs">
+      <DependentUpon>ControlEjemplo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LabelBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -264,6 +270,9 @@
     <None Include="Resources\alert-ok-icon.png" />
     <None Include="Resources\alert-info-icon.png" />
     <None Include="Resources\alert-warning-icon.png" />
+    <EmbeddedResource Include="Controls\ControlEjemplo.resx">
+      <DependentUpon>ControlEjemplo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\LabelBox.resx">
       <DependentUpon>LabelBox.cs</DependentUpon>
     </EmbeddedResource>

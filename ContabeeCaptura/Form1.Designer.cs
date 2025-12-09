@@ -35,18 +35,6 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.label1 = new System.Windows.Forms.Label();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnFacturar = new System.Windows.Forms.Button();
-            this.btnCompletar = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.btnObtener = new System.Windows.Forms.Button();
-            this.visorImagenes = new GdPicture.GdViewer();
-            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.label10 = new System.Windows.Forms.Label();
-            this.splitContainer4 = new System.Windows.Forms.SplitContainer();
-            this.txtBoxOCR = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.labelBoxDireccion = new ContabeeCaptura.Controls.LabelBox();
             this.labelBoxNombre = new ContabeeCaptura.Controls.LabelBox();
             this.labelBoxTarjeta = new ContabeeCaptura.Controls.LabelBox();
@@ -54,6 +42,18 @@
             this.labelBoxUso = new ContabeeCaptura.Controls.LabelBox();
             this.labelBoxPago = new ContabeeCaptura.Controls.LabelBox();
             this.labelBoxRfc = new ContabeeCaptura.Controls.LabelBox();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnFacturar = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnObtener = new System.Windows.Forms.Button();
+            this.btnCompletar = new System.Windows.Forms.Button();
+            this.visorImagenes = new GdPicture.GdViewer();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.label10 = new System.Windows.Forms.Label();
+            this.splitContainer4 = new System.Windows.Forms.SplitContainer();
+            this.txtBoxOCR = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -80,10 +80,10 @@
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statuLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 536);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 340);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(900, 26);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 11, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(600, 25);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -95,10 +95,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(380, 306);
-            this.button1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.button1.Location = new System.Drawing.Point(253, 199);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(84, 29);
+            this.button1.Size = new System.Drawing.Size(56, 19);
             this.button1.TabIndex = 1;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
@@ -115,10 +115,11 @@
             this.tableLayoutPanel1.Controls.Add(this.splitContainer3, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(900, 536);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(600, 340);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // splitContainer1
@@ -127,7 +128,8 @@
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer1.IsSplitterFixed = true;
-            this.splitContainer1.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer1.Location = new System.Drawing.Point(2, 2);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -145,7 +147,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.labelBoxUso);
             this.splitContainer1.Panel2.Controls.Add(this.labelBoxPago);
             this.splitContainer1.Panel2.Controls.Add(this.labelBoxRfc);
-            this.splitContainer1.Size = new System.Drawing.Size(309, 530);
+            this.splitContainer1.Size = new System.Drawing.Size(206, 336);
             this.splitContainer1.SplitterDistance = 35;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 1;
@@ -156,17 +158,119 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(154, 25);
+            this.label1.Size = new System.Drawing.Size(128, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Datos Fiscales";
+            // 
+            // labelBoxDireccion
+            // 
+            this.labelBoxDireccion.AllowResizeTextBox = false;
+            this.labelBoxDireccion.AutoScrollMargin = new System.Drawing.Size(20, 20);
+            this.labelBoxDireccion.Dock = System.Windows.Forms.DockStyle.Top;
+            this.labelBoxDireccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelBoxDireccion.Informacion = null;
+            this.labelBoxDireccion.Location = new System.Drawing.Point(0, 278);
+            this.labelBoxDireccion.Multiline = true;
+            this.labelBoxDireccion.Name = "labelBoxDireccion";
+            this.labelBoxDireccion.Size = new System.Drawing.Size(206, 88);
+            this.labelBoxDireccion.TabIndex = 13;
+            this.labelBoxDireccion.Texto = "Dirección:";
+            // 
+            // labelBoxNombre
+            // 
+            this.labelBoxNombre.AllowResizeTextBox = false;
+            this.labelBoxNombre.AutoScrollMargin = new System.Drawing.Size(20, 20);
+            this.labelBoxNombre.Dock = System.Windows.Forms.DockStyle.Top;
+            this.labelBoxNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelBoxNombre.Informacion = null;
+            this.labelBoxNombre.Location = new System.Drawing.Point(0, 190);
+            this.labelBoxNombre.Multiline = true;
+            this.labelBoxNombre.Name = "labelBoxNombre";
+            this.labelBoxNombre.Size = new System.Drawing.Size(206, 88);
+            this.labelBoxNombre.TabIndex = 12;
+            this.labelBoxNombre.Texto = "Nombre:";
+            // 
+            // labelBoxTarjeta
+            // 
+            this.labelBoxTarjeta.AllowResizeTextBox = false;
+            this.labelBoxTarjeta.AutoScrollMargin = new System.Drawing.Size(20, 20);
+            this.labelBoxTarjeta.Dock = System.Windows.Forms.DockStyle.Top;
+            this.labelBoxTarjeta.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelBoxTarjeta.Informacion = null;
+            this.labelBoxTarjeta.Location = new System.Drawing.Point(0, 152);
+            this.labelBoxTarjeta.Multiline = false;
+            this.labelBoxTarjeta.Name = "labelBoxTarjeta";
+            this.labelBoxTarjeta.Size = new System.Drawing.Size(206, 38);
+            this.labelBoxTarjeta.TabIndex = 11;
+            this.labelBoxTarjeta.Texto = "Tarjeta:";
+            // 
+            // labelBoxCP
+            // 
+            this.labelBoxCP.AllowResizeTextBox = false;
+            this.labelBoxCP.AutoScrollMargin = new System.Drawing.Size(20, 20);
+            this.labelBoxCP.Dock = System.Windows.Forms.DockStyle.Top;
+            this.labelBoxCP.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelBoxCP.Informacion = null;
+            this.labelBoxCP.Location = new System.Drawing.Point(0, 114);
+            this.labelBoxCP.Multiline = false;
+            this.labelBoxCP.Name = "labelBoxCP";
+            this.labelBoxCP.Size = new System.Drawing.Size(206, 38);
+            this.labelBoxCP.TabIndex = 10;
+            this.labelBoxCP.Texto = "CP:";
+            // 
+            // labelBoxUso
+            // 
+            this.labelBoxUso.AllowResizeTextBox = false;
+            this.labelBoxUso.AutoScrollMargin = new System.Drawing.Size(20, 20);
+            this.labelBoxUso.Dock = System.Windows.Forms.DockStyle.Top;
+            this.labelBoxUso.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelBoxUso.Informacion = null;
+            this.labelBoxUso.Location = new System.Drawing.Point(0, 76);
+            this.labelBoxUso.Multiline = false;
+            this.labelBoxUso.Name = "labelBoxUso";
+            this.labelBoxUso.Size = new System.Drawing.Size(206, 38);
+            this.labelBoxUso.TabIndex = 9;
+            this.labelBoxUso.Texto = "Uso:";
+            // 
+            // labelBoxPago
+            // 
+            this.labelBoxPago.AllowResizeTextBox = false;
+            this.labelBoxPago.AutoScrollMargin = new System.Drawing.Size(20, 20);
+            this.labelBoxPago.Dock = System.Windows.Forms.DockStyle.Top;
+            this.labelBoxPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelBoxPago.Informacion = null;
+            this.labelBoxPago.Location = new System.Drawing.Point(0, 38);
+            this.labelBoxPago.Margin = new System.Windows.Forms.Padding(2, 20, 2, 2);
+            this.labelBoxPago.Multiline = false;
+            this.labelBoxPago.Name = "labelBoxPago";
+            this.labelBoxPago.Size = new System.Drawing.Size(206, 38);
+            this.labelBoxPago.TabIndex = 8;
+            this.labelBoxPago.Texto = "Pago:";
+            // 
+            // labelBoxRfc
+            // 
+            this.labelBoxRfc.AllowResizeTextBox = false;
+            this.labelBoxRfc.AutoScrollMargin = new System.Drawing.Size(20, 20);
+            this.labelBoxRfc.Dock = System.Windows.Forms.DockStyle.Top;
+            this.labelBoxRfc.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelBoxRfc.Informacion = null;
+            this.labelBoxRfc.Location = new System.Drawing.Point(0, 0);
+            this.labelBoxRfc.Margin = new System.Windows.Forms.Padding(2, 20, 2, 2);
+            this.labelBoxRfc.Multiline = false;
+            this.labelBoxRfc.Name = "labelBoxRfc";
+            this.labelBoxRfc.Size = new System.Drawing.Size(206, 38);
+            this.labelBoxRfc.TabIndex = 7;
+            this.labelBoxRfc.Texto = "RFC:";
             // 
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer2.IsSplitterFixed = true;
-            this.splitContainer2.Location = new System.Drawing.Point(318, 3);
+            this.splitContainer2.Location = new System.Drawing.Point(212, 2);
+            this.splitContainer2.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -178,7 +282,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.visorImagenes);
-            this.splitContainer2.Size = new System.Drawing.Size(399, 530);
+            this.splitContainer2.Size = new System.Drawing.Size(266, 336);
             this.splitContainer2.SplitterDistance = 35;
             this.splitContainer2.SplitterWidth = 1;
             this.splitContainer2.TabIndex = 2;
@@ -196,10 +300,11 @@
             this.tableLayoutPanel2.Controls.Add(this.btnCompletar, 3, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(399, 35);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(266, 35);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // btnFacturar
@@ -208,35 +313,24 @@
             this.btnFacturar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnFacturar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnFacturar.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnFacturar.Location = new System.Drawing.Point(185, 3);
+            this.btnFacturar.Location = new System.Drawing.Point(123, 2);
+            this.btnFacturar.Margin = new System.Windows.Forms.Padding(2);
             this.btnFacturar.Name = "btnFacturar";
-            this.btnFacturar.Size = new System.Drawing.Size(102, 29);
+            this.btnFacturar.Size = new System.Drawing.Size(68, 31);
             this.btnFacturar.TabIndex = 4;
             this.btnFacturar.Text = "Facturar";
             this.btnFacturar.UseVisualStyleBackColor = false;
             this.btnFacturar.Click += new System.EventHandler(this.btnFacturar_Click);
-            // 
-            // btnCompletar
-            // 
-            this.btnCompletar.BackColor = System.Drawing.Color.SkyBlue;
-            this.btnCompletar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnCompletar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnCompletar.Location = new System.Drawing.Point(293, 3);
-            this.btnCompletar.Name = "btnCompletar";
-            this.btnCompletar.Size = new System.Drawing.Size(103, 29);
-            this.btnCompletar.TabIndex = 3;
-            this.btnCompletar.Text = "Completar";
-            this.btnCompletar.UseVisualStyleBackColor = false;
-            this.btnCompletar.Click += new System.EventHandler(this.btnCompletar_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 0);
+            this.label2.Location = new System.Drawing.Point(2, 0);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 35);
+            this.label2.Size = new System.Drawing.Size(51, 35);
             this.label2.TabIndex = 1;
             this.label2.Text = "Ticket";
             // 
@@ -245,13 +339,28 @@
             this.btnObtener.BackColor = System.Drawing.Color.Gold;
             this.btnObtener.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnObtener.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnObtener.Location = new System.Drawing.Point(86, 3);
+            this.btnObtener.Location = new System.Drawing.Point(57, 2);
+            this.btnObtener.Margin = new System.Windows.Forms.Padding(2);
             this.btnObtener.Name = "btnObtener";
-            this.btnObtener.Size = new System.Drawing.Size(93, 29);
+            this.btnObtener.Size = new System.Drawing.Size(62, 31);
             this.btnObtener.TabIndex = 2;
             this.btnObtener.Text = "Obtener";
             this.btnObtener.UseVisualStyleBackColor = false;
             this.btnObtener.Click += new System.EventHandler(this.btnObtener_Click);
+            // 
+            // btnCompletar
+            // 
+            this.btnCompletar.BackColor = System.Drawing.Color.SkyBlue;
+            this.btnCompletar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnCompletar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.btnCompletar.Location = new System.Drawing.Point(195, 2);
+            this.btnCompletar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCompletar.Name = "btnCompletar";
+            this.btnCompletar.Size = new System.Drawing.Size(69, 31);
+            this.btnCompletar.TabIndex = 3;
+            this.btnCompletar.Text = "Completar";
+            this.btnCompletar.UseVisualStyleBackColor = false;
+            this.btnCompletar.Click += new System.EventHandler(this.btnCompletar_Click);
             // 
             // visorImagenes
             // 
@@ -283,6 +392,7 @@
             this.visorImagenes.MagnifierWidth = 160;
             this.visorImagenes.MagnifierZoomX = 2F;
             this.visorImagenes.MagnifierZoomY = 2F;
+            this.visorImagenes.Margin = new System.Windows.Forms.Padding(2);
             this.visorImagenes.MouseButtonForMouseMode = GdPicture.MouseButton.MouseButtonLeft;
             this.visorImagenes.MouseMode = GdPicture.ViewerMouseMode.MouseModePan;
             this.visorImagenes.MouseWheelMode = GdPicture.ViewerMouseWheelMode.MouseWheelModeZoom;
@@ -299,7 +409,7 @@
             this.visorImagenes.ScrollLargeChange = ((short)(50));
             this.visorImagenes.ScrollSmallChange = ((short)(1));
             this.visorImagenes.SilentMode = true;
-            this.visorImagenes.Size = new System.Drawing.Size(399, 494);
+            this.visorImagenes.Size = new System.Drawing.Size(266, 300);
             this.visorImagenes.TabIndex = 0;
             this.visorImagenes.Zoom = 1D;
             this.visorImagenes.ZoomCenterAtMousePosition = false;
@@ -311,7 +421,8 @@
             this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer3.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer3.IsSplitterFixed = true;
-            this.splitContainer3.Location = new System.Drawing.Point(723, 3);
+            this.splitContainer3.Location = new System.Drawing.Point(482, 2);
+            this.splitContainer3.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainer3.Name = "splitContainer3";
             this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -323,8 +434,9 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
-            this.splitContainer3.Size = new System.Drawing.Size(174, 530);
+            this.splitContainer3.Size = new System.Drawing.Size(116, 336);
             this.splitContainer3.SplitterDistance = 35;
+            this.splitContainer3.SplitterWidth = 3;
             this.splitContainer3.TabIndex = 3;
             // 
             // label10
@@ -333,8 +445,9 @@
             this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(0, 0);
+            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(162, 25);
+            this.label10.Size = new System.Drawing.Size(131, 20);
             this.label10.TabIndex = 2;
             this.label10.Text = "Texto de Ticket";
             // 
@@ -342,6 +455,7 @@
             // 
             this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer4.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer4.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainer4.Name = "splitContainer4";
             this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -352,8 +466,8 @@
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.textBox2);
-            this.splitContainer4.Size = new System.Drawing.Size(174, 491);
-            this.splitContainer4.SplitterDistance = 237;
+            this.splitContainer4.Size = new System.Drawing.Size(116, 298);
+            this.splitContainer4.SplitterDistance = 143;
             this.splitContainer4.SplitterWidth = 1;
             this.splitContainer4.TabIndex = 0;
             // 
@@ -363,10 +477,11 @@
             this.txtBoxOCR.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtBoxOCR.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBoxOCR.Location = new System.Drawing.Point(0, 0);
+            this.txtBoxOCR.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxOCR.Multiline = true;
             this.txtBoxOCR.Name = "txtBoxOCR";
             this.txtBoxOCR.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtBoxOCR.Size = new System.Drawing.Size(174, 237);
+            this.txtBoxOCR.Size = new System.Drawing.Size(116, 143);
             this.txtBoxOCR.TabIndex = 0;
             this.txtBoxOCR.Text = "Texto de barra presente en el ticket";
             // 
@@ -376,128 +491,24 @@
             this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox2.Location = new System.Drawing.Point(0, 0);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(2);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox2.Size = new System.Drawing.Size(174, 253);
+            this.textBox2.Size = new System.Drawing.Size(116, 154);
             this.textBox2.TabIndex = 0;
             this.textBox2.Text = "Códigos de barras presentes en el ticket";
             // 
-            // labelBoxDireccion
-            // 
-            this.labelBoxDireccion.AllowResizeTextBox = false;
-            this.labelBoxDireccion.AutoScrollMargin = new System.Drawing.Size(20, 20);
-            this.labelBoxDireccion.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelBoxDireccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelBoxDireccion.Informacion = null;
-            this.labelBoxDireccion.Location = new System.Drawing.Point(0, 431);
-            this.labelBoxDireccion.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.labelBoxDireccion.Multiline = true;
-            this.labelBoxDireccion.Name = "labelBoxDireccion";
-            this.labelBoxDireccion.Size = new System.Drawing.Size(309, 136);
-            this.labelBoxDireccion.TabIndex = 13;
-            this.labelBoxDireccion.Texto = "Dirección:";
-            // 
-            // labelBoxNombre
-            // 
-            this.labelBoxNombre.AllowResizeTextBox = false;
-            this.labelBoxNombre.AutoScrollMargin = new System.Drawing.Size(20, 20);
-            this.labelBoxNombre.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelBoxNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelBoxNombre.Informacion = null;
-            this.labelBoxNombre.Location = new System.Drawing.Point(0, 295);
-            this.labelBoxNombre.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.labelBoxNombre.Multiline = true;
-            this.labelBoxNombre.Name = "labelBoxNombre";
-            this.labelBoxNombre.Size = new System.Drawing.Size(309, 136);
-            this.labelBoxNombre.TabIndex = 12;
-            this.labelBoxNombre.Texto = "Nombre:";
-            // 
-            // labelBoxTarjeta
-            // 
-            this.labelBoxTarjeta.AllowResizeTextBox = false;
-            this.labelBoxTarjeta.AutoScrollMargin = new System.Drawing.Size(20, 20);
-            this.labelBoxTarjeta.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelBoxTarjeta.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelBoxTarjeta.Informacion = null;
-            this.labelBoxTarjeta.Location = new System.Drawing.Point(0, 236);
-            this.labelBoxTarjeta.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.labelBoxTarjeta.Multiline = false;
-            this.labelBoxTarjeta.Name = "labelBoxTarjeta";
-            this.labelBoxTarjeta.Size = new System.Drawing.Size(309, 59);
-            this.labelBoxTarjeta.TabIndex = 11;
-            this.labelBoxTarjeta.Texto = "Tarjeta:";
-            // 
-            // labelBoxCP
-            // 
-            this.labelBoxCP.AllowResizeTextBox = false;
-            this.labelBoxCP.AutoScrollMargin = new System.Drawing.Size(20, 20);
-            this.labelBoxCP.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelBoxCP.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelBoxCP.Informacion = null;
-            this.labelBoxCP.Location = new System.Drawing.Point(0, 177);
-            this.labelBoxCP.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.labelBoxCP.Multiline = false;
-            this.labelBoxCP.Name = "labelBoxCP";
-            this.labelBoxCP.Size = new System.Drawing.Size(309, 59);
-            this.labelBoxCP.TabIndex = 10;
-            this.labelBoxCP.Texto = "CP:";
-            // 
-            // labelBoxUso
-            // 
-            this.labelBoxUso.AllowResizeTextBox = false;
-            this.labelBoxUso.AutoScrollMargin = new System.Drawing.Size(20, 20);
-            this.labelBoxUso.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelBoxUso.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelBoxUso.Informacion = null;
-            this.labelBoxUso.Location = new System.Drawing.Point(0, 118);
-            this.labelBoxUso.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.labelBoxUso.Multiline = false;
-            this.labelBoxUso.Name = "labelBoxUso";
-            this.labelBoxUso.Size = new System.Drawing.Size(309, 59);
-            this.labelBoxUso.TabIndex = 9;
-            this.labelBoxUso.Texto = "Uso:";
-            // 
-            // labelBoxPago
-            // 
-            this.labelBoxPago.AllowResizeTextBox = false;
-            this.labelBoxPago.AutoScrollMargin = new System.Drawing.Size(20, 20);
-            this.labelBoxPago.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelBoxPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelBoxPago.Informacion = null;
-            this.labelBoxPago.Location = new System.Drawing.Point(0, 59);
-            this.labelBoxPago.Margin = new System.Windows.Forms.Padding(3, 30, 3, 3);
-            this.labelBoxPago.Multiline = false;
-            this.labelBoxPago.Name = "labelBoxPago";
-            this.labelBoxPago.Size = new System.Drawing.Size(309, 59);
-            this.labelBoxPago.TabIndex = 8;
-            this.labelBoxPago.Texto = "Pago:";
-            // 
-            // labelBoxRfc
-            // 
-            this.labelBoxRfc.AllowResizeTextBox = false;
-            this.labelBoxRfc.AutoScrollMargin = new System.Drawing.Size(20, 20);
-            this.labelBoxRfc.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelBoxRfc.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelBoxRfc.Informacion = null;
-            this.labelBoxRfc.Location = new System.Drawing.Point(0, 0);
-            this.labelBoxRfc.Margin = new System.Windows.Forms.Padding(3, 30, 3, 3);
-            this.labelBoxRfc.Multiline = false;
-            this.labelBoxRfc.Name = "labelBoxRfc";
-            this.labelBoxRfc.Size = new System.Drawing.Size(309, 59);
-            this.labelBoxRfc.TabIndex = 7;
-            this.labelBoxRfc.Texto = "RFC:";
-            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(900, 562);
+            this.ClientSize = new System.Drawing.Size(600, 365);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "Form1";
             this.Text = "Contabee Captura";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
