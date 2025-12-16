@@ -1,9 +1,11 @@
 ﻿using ContabeeApi;
 using ContabeeApi.Modelos.Captura;
 using ContabeeCaptura.Extensiones;
+using ContabeeCaptura.Fachada;
 using ContabeeCaptura.Forms;
 using ContabeeComunes;
 using ContabeeComunes.Eventos;
+using ContabeeComunes.Fachada;
 using ContabeeComunes.RespuestaApi;
 using ContabeeComunes.Sesion;
 using System;
@@ -22,19 +24,21 @@ namespace ContabeeCaptura
         private readonly ServicioSesion _servicioSesion;
         private readonly IHubEventos _hubEventos;
         private readonly ITinyMessengerHub _hub;
-        private readonly IApiContabee _apiContabee;
-        private PaginaTrabajoCapturaCloud _pagina;
-        private readonly SemaphoreSlim _refreshLock = new SemaphoreSlim(1, 1);
-        public Form1(IServicioSesion servicioSesion, ITinyMessengerHub hub ,IHubEventos hubEventos, IApiContabee apiContabee)
+        private readonly IServicioFachada _servicioFachada;
+        private Guid _subDialog;
+        public Form1(IServicioFachada servicioFachada, IServicioSesion servicioSesion, ITinyMessengerHub hub ,IHubEventos hubEventos, IApiContabee apiContabee)
         {
             _servicioSesion = servicioSesion as ServicioSesion;
-            _hubEventos = hubEventos;
             _hub = hub;
-            _apiContabee = apiContabee;
-            InitializeComponent();
-            SetupUI();
-            this.visorImagenes.SetLicenseNumber(GetGDlic());
+            _hubEventos = hubEventos;
+            _servicioFachada = servicioFachada;
 
+            InitializeComponent();
+            ctlDatosFiscales1.Configurar(_hubEventos);
+            ctlImagen1.Configurar(_hubEventos);
+            ctlOCR1.Configurar(_hubEventos);
+            ctlFacturacion1.Configurar(_hubEventos);
+            SetupUI();
         }
 
         /// <summary>
@@ -62,6 +66,17 @@ namespace ContabeeCaptura
         private void Form1_Load(object sender, System.EventArgs e)
         {
             SetupHooks();
+            _subDialog = _hubEventos.Suscribir<MostrarCompletarCapturaDialogMensaje>(OnMostrarDialog);
+        }
+
+        private async void OnMostrarDialog(MostrarCompletarCapturaDialogMensaje msg)
+        {
+            var captura = Program.ServiceProvider.GetService(typeof(ContabeeCaptura.Forms.CompletarCaptura)) as ContabeeCaptura.Forms.CompletarCaptura;
+
+            if (captura.ShowDialog(this) == DialogResult.OK)
+            {
+                await _servicioFachada.CompletarCapturaAsync(captura.finalizada, captura.comprobantesPath);
+            }
         }
 
         private void button1_Click(object sender, System.EventArgs e)
@@ -74,87 +89,53 @@ namespace ContabeeCaptura
             Application.Exit();
         }
 
-        private async void btnObtener_Click(object sender, System.EventArgs e)
+        //private async void btnCompletar_Click(object sender, EventArgs e)
+        //{
+        //    var captura = Program.ServiceProvider.GetService(typeof(App.Forms.CompletarCaptura)) as App.Forms.CompletarCaptura;
+
+        //    if (captura.ShowDialog() == DialogResult.OK)
+        //    {
+        //        await SubirArchivosBlob(captura);
+        //        captura.finalizada.Id = _pagina.Id;
+        //        var completar = await _apiBackend.CompletarPagina(captura.finalizada);
+
+        //        if (!completar.Ok)
+        //        {
+        //            _hubEventos.PublicarNotificacionUI(this, $"Error al completar la captura {completar.Error.Mensaje}", TipoNotificacion.Error);
+        //        }
+        //        else
+        //        {
+        //            _hubEventos.PublicarNotificacionUI(this, $"Captura finalizada correctamente", TipoNotificacion.Info);
+        //        }
+        //    }
+        //}
+
+        //private void btnFacturar_Click(object sender, EventArgs e)
+        //{
+        //    var navegador = Program.ServiceProvider.GetService(typeof(ContabeeCaptura.Parciales.BrowserFactura)) as ContabeeCaptura.Parciales.BrowserFactura;
+        //    if (navegador != null)
+        //    {
+        //        navegador.NombreBlob = Path.GetFileNameWithoutExtension(_pagina.Ruta);
+        //        navegador.ShowDialog();
+        //    }
+        //}
+
+        private async void btnSiguiente_Click(object sender, EventArgs e)
         {
+            btnSiguiente.Enabled = false;
+            this.Cursor = Cursors.WaitCursor;
             try
             {
-                btnObtener.Enabled = false;
-                visorImagenes.CloseDocument();
-
-                var sesionValida = await EjecutarSiNecesarioAsync();
-
-                if (!sesionValida)
-                {
-                    _hubEventos.PublicarNotificacionUI(this, "Sesión Expirada, por favor inicie sesión nuevamente", TipoNotificacion.Alerta);
-                }
-
-                _hubEventos.PublicarNotificacionUI(this, "Obteniendo página...", TipoNotificacion.Info);
-
-                var respuesta = await _apiContabee.ObtienePagina();
-
-                if (respuesta == null)
-                {
-                    _hubEventos.PublicarNotificacionUI(this, "La API no devolvió ninguna respuesta.", TipoNotificacion.Error);
-                    return;
-                }
-
-                if (!respuesta.Ok)
-                {
-                    _hubEventos.PublicarNotificacionUI(this, respuesta.Error.Mensaje ?? "Error al obtener la página.", TipoNotificacion.Error);
-                    return;
-                }
-
-                if (respuesta.Payload == null)
-                {
-                    _hubEventos.PublicarNotificacionUI(this,"El documento está vacío.",TipoNotificacion.Alerta);
-                    return;
-                }
-
-                _pagina = respuesta.Payload;
-
-                await DescargaBlob(_pagina.TokenSas);
-
-                _hubEventos.PublicarNotificacionUI(this, "Página cargada correctamente.", TipoNotificacion.Info);
+                await _servicioFachada.SiguienteTrabajoAsync();
             }
             catch (Exception ex)
             {
-                _hubEventos.PublicarNotificacionUI(this, $"Ocurrió un error inesperado: {ex.Message}", TipoNotificacion.Error
-                );
+                _hubEventos.PublicarNotificacionUI(this, $"Ocurrió un error inesperado: {ex.Message}", TipoNotificacion.Error);
             }
             finally
             {
-                btnObtener.Enabled = true;
-            }
-        }
-
-        private async void btnCompletar_Click(object sender, EventArgs e)
-        {
-            var captura = Program.ServiceProvider.GetService(typeof(ContabeeCaptura.Forms.CompletarCaptura)) as ContabeeCaptura.Forms.CompletarCaptura;
-
-            if (captura.ShowDialog() == DialogResult.OK)
-            {
-                await SubirArchivosBlob(captura);
-                captura.finalizada.Id = _pagina.Id;
-                var completar = await _apiContabee.CompletarPagina(captura.finalizada);
-
-                if (!completar.Ok)
-                {
-                    _hubEventos.PublicarNotificacionUI(this, $"Error al completar la captura {completar.Error.Mensaje}", TipoNotificacion.Error);
-                }
-                else
-                {
-                    _hubEventos.PublicarNotificacionUI(this, $"Captura finalizada correctamente", TipoNotificacion.Info);
-                }
-            }
-        }
-
-        private void btnFacturar_Click(object sender, EventArgs e)
-        {
-            var navegador = Program.ServiceProvider.GetService(typeof(ContabeeCaptura.Parciales.BrowserFactura)) as ContabeeCaptura.Parciales.BrowserFactura;
-            if (navegador != null)
-            {
-                navegador.NombreBlob = Path.GetFileNameWithoutExtension(_pagina.Ruta);
-                navegador.ShowDialog();
+                btnSiguiente.Enabled = true;
+                this.Cursor = Cursors.Default;
             }
         }
     }

@@ -1,4 +1,9 @@
 ﻿using ContabeeApi;
+using ContabeeApi.Auth;
+using ContabeeApi.Blob;
+using ContabeeApi.Vision;
+using ContabeeApi.XML;
+using ContabeeCaptura.Fachada;
 using ContabeeCaptura.Forms;
 using ContabeeCaptura.Parciales;
 using ContabeeComunes.Configuracion;
@@ -63,14 +68,16 @@ namespace ContabeeCaptura
             // Registrar Form1
             services.AddTransient<Form1>();
             services.AddTransient<Login>();
-            services.AddTransient<CompletarCaptura>();
-            services.AddTransient<BrowserFactura>();
             services.AddSingleton<ITinyMessengerHub, TinyMessengerHub>();
             services.AddSingleton<IHubEventos, HubEventos>();
-            services.AddSingleton<IServicioFachada, ServicioFachada>();
             services.AddSingleton<IProxyGenerico, ProxyGenerico>();
-            services.AddSingleton< IServicioSesion, ServicioSesion > ();
+            services.AddSingleton<IServicioSesion, ServicioSesion >();
+            services.AddSingleton<IServicioAuth, ServicioAuth>();
             services.AddTransient<IApiContabee, ApiContabee>();
+            services.AddTransient<IServicioBlob, ServicioBlob>();
+            services.AddTransient<IServicioVision, ServicioVision>();
+            services.AddTransient<IServicioXML, ServicioXML>();
+            services.AddTransient<IServicioFachada, ServicioFachada>();
             services.AddHttpClient();
 
             ServiceProvider = services.BuildServiceProvider();

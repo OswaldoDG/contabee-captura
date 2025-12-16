@@ -5,6 +5,7 @@ using ContabeeApi;
 using ContabeeCaptura.Extensiones;
 using ContabeeComunes.Sesion;
 using TinyMessenger;
+using ContabeeComunes.Fachada;
 
 namespace ContabeeCaptura.Forms
 {
@@ -54,7 +55,7 @@ namespace ContabeeCaptura.Forms
 
         private void button2_Click(object sender, EventArgs e)
         {
-            _hub.Publish(new ContabeeComunes.Fachada.MensajeEjemplo
+            _hub.Publish(new MensajeEjemplo
             {
                 Dato = $"{DateTime.Now.ToLongTimeString()} Este es un mensaje de prueba desde el formulario de login. ",
                 Sender = this
@@ -63,7 +64,7 @@ namespace ContabeeCaptura.Forms
 
         private void button3_Click(object sender, EventArgs e)
         {
-            _hub.Publish(new ContabeeComunes.Fachada.MensajeClear
+            _hub.Publish(new ContabeeCaptura.Fachada.MensajeClear
             {
                 Sender = this
             });

@@ -1,6 +1,6 @@
 ﻿using TinyMessenger;
 
-namespace ContabeeComunes.Fachada
+namespace ContabeeCaptura.Fachada
 {
     /// <summary>
     /// Este mensaje no tiene payload es solo para limpiar la UI;

@@ -226,6 +226,30 @@
     <Compile Include="Controls\ControlEjemplo.Designer.cs">
       <DependentUpon>ControlEjemplo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CtlDatosFiscales.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CtlDatosFiscales.Designer.cs">
+      <DependentUpon>CtlDatosFiscales.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CtlFacturacion.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CtlFacturacion.Designer.cs">
+      <DependentUpon>CtlFacturacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CtlImagen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CtlImagen.Designer.cs">
+      <DependentUpon>CtlImagen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CtlOCR.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CtlOCR.Designer.cs">
+      <DependentUpon>CtlOCR.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LabelBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -233,6 +257,10 @@
       <DependentUpon>LabelBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensiones\ExtensionesNotificacion.cs" />
+    <Compile Include="Fachada\IServicioFachada.cs" />
+    <Compile Include="Fachada\MensajeClear.cs" />
+    <Compile Include="Fachada\Mensajes.cs" />
+    <Compile Include="Fachada\ServicioFachada.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -272,6 +300,18 @@
     <None Include="Resources\alert-warning-icon.png" />
     <EmbeddedResource Include="Controls\ControlEjemplo.resx">
       <DependentUpon>ControlEjemplo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CtlDatosFiscales.resx">
+      <DependentUpon>CtlDatosFiscales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CtlFacturacion.resx">
+      <DependentUpon>CtlFacturacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CtlImagen.resx">
+      <DependentUpon>CtlImagen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CtlOCR.resx">
+      <DependentUpon>CtlOCR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LabelBox.resx">
       <DependentUpon>LabelBox.cs</DependentUpon>

@@ -1,4 +1,5 @@
-﻿using ContabeeComunes.Eventos;
+﻿using ContabeeCaptura.Fachada;
+using ContabeeComunes.Eventos;
 using ContabeeComunes.Fachada;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows.Forms;
