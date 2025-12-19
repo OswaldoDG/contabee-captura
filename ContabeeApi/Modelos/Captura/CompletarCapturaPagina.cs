@@ -31,7 +31,7 @@ namespace ContabeeApi.Modelos.Captura
         /// <summary>
         /// Cometario opcional para la captura.
         /// </summary>
-        public string Comentario { get; set; }
+        public string Comentario { get; set; } = null;
 
         /// <summary>
         /// Especifica si no tiene un XML.
@@ -46,12 +46,22 @@ namespace ContabeeApi.Modelos.Captura
         /// <summary>
         /// URL de la página de captura.
         /// </summary>
-        public string Url { get; set; }
+        public string Url { get; set; } = null;
 
         /// <summary>
         /// Especifica si la URL utiliza captcha para realizar la captura.
         /// </summary>
         public bool TieneCaptcha { get; set; }
+
+        /// <summary>
+        /// IDentificador único del CFDI.
+        /// </summary>
+        public string CfdiId { get; set; } = null;
+
+        /// <summary>
+        /// Fecha del CFDI.
+        /// </summary>
+        public DateTime FechaCfdi { get; set; }
     }
 
 }

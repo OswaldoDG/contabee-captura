@@ -41,14 +41,14 @@ namespace ContabeeCaptura.Controls
 
         private void OnLimpiarUI(MensajeClear msg)
         {
-            if (this.InvokeRequired) { this.Invoke(new Action(() => OnLimpiarUI(msg))); return; }
+            if (this.InvokeRequired) { this.BeginInvoke(new Action(() => OnLimpiarUI(msg))); return; }
 
             textBoxOCR.Text = string.Empty;
         }
 
         private void OnResultadoOcr(OCRMensaje msg)
         {
-            if (this.InvokeRequired) { this.Invoke(new Action(() => OnResultadoOcr(msg))); return; }
+            if (this.InvokeRequired) { this.BeginInvoke(new Action(() => OnResultadoOcr(msg))); return; }
 
             textBoxOCR.Text = msg.TextoDetectado;
         }

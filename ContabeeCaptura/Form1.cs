@@ -26,6 +26,9 @@ namespace ContabeeCaptura
         private readonly ITinyMessengerHub _hub;
         private readonly IServicioFachada _servicioFachada;
         private Guid _subDialog;
+        private Guid _subCFDI;
+        private string _UUID;
+        private DateTime? _FechaCFDI = null;
         public Form1(IServicioFachada servicioFachada, IServicioSesion servicioSesion, ITinyMessengerHub hub ,IHubEventos hubEventos, IApiContabee apiContabee)
         {
             _servicioSesion = servicioSesion as ServicioSesion;
@@ -67,16 +70,33 @@ namespace ContabeeCaptura
         {
             SetupHooks();
             _subDialog = _hubEventos.Suscribir<MostrarCompletarCapturaDialogMensaje>(OnMostrarDialog);
+            _subCFDI = _hubEventos.Suscribir<CFDIMensaje>(OnDatosCFDI);
         }
 
         private async void OnMostrarDialog(MostrarCompletarCapturaDialogMensaje msg)
         {
+            if (this.InvokeRequired) { this.BeginInvoke(new Action(() => OnMostrarDialog(msg))); return; }
+
             var captura = Program.ServiceProvider.GetService(typeof(ContabeeCaptura.Forms.CompletarCaptura)) as ContabeeCaptura.Forms.CompletarCaptura;
 
             if (captura.ShowDialog(this) == DialogResult.OK)
             {
+
+                if (_UUID != null && _FechaCFDI != null)
+                {
+                    captura.finalizada.FechaCfdi = (DateTime)_FechaCFDI;
+                    captura.finalizada.CfdiId = _UUID;
+                }
                 await _servicioFachada.CompletarCapturaAsync(captura.finalizada, captura.comprobantesPath);
             }
+        }
+
+        private async void OnDatosCFDI(CFDIMensaje msg)
+        {
+            if (this.InvokeRequired) { this.BeginInvoke(new Action(() => OnDatosCFDI(msg))); return; }
+
+            this._UUID = msg.UUID;
+            this._FechaCFDI = msg.Fecha;
         }
 
         private void button1_Click(object sender, System.EventArgs e)

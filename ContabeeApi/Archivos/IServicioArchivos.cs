@@ -15,6 +15,6 @@ namespace ContabeeApi.Archivos
         /// <summary>
         /// Almacena el archivo localmente.
         /// </summary>
-        Respuesta ProcesarDescarga(string nombreBlob, string rutaTemp, string extension);
+        RespuestaPayload<string> ProcesarDescarga(string nombreBlob, string rutaTemp, string extension);
     }
 }

@@ -12,7 +12,6 @@ namespace ContabeeApi.XML
     {
         public (string UUID, string Fecha) ExtraerInfoCFDI(string rutaXml)
         {
-            rutaXml = "C:\\borrame2\\LectorXML\\LectorXML\\EjemploV4.xml";
             if (!File.Exists(rutaXml)) return (null, null);
 
             XDocument xmlDoc = XDocument.Load(rutaXml);

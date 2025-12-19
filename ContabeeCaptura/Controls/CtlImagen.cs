@@ -65,14 +65,14 @@ namespace ContabeeCaptura.Controls
 
         private void OnLimpiarUI(MensajeClear msg)
         {
-            if (this.InvokeRequired) { this.Invoke(new Action(() => OnLimpiarUI(msg))); return; }
+            if (this.InvokeRequired) { this.BeginInvoke(new Action(() => OnLimpiarUI(msg))); return; }
 
             CerrarImagen();
         }
 
         private void OnBytesRecibidos(ImagenBlobMensaje msg)
         {
-            if (this.InvokeRequired) { this.Invoke(new Action(() => OnBytesRecibidos(msg))); return; }
+            if (this.InvokeRequired) { this.BeginInvoke(new Action(() => OnBytesRecibidos(msg))); return; }
 
             if (msg.Imagen == null || msg.Imagen.Length == 0) return;
 

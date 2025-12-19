@@ -31,7 +31,7 @@ namespace ContabeeCaptura.Fachada
 
         private PaginaTrabajoCapturaCloud _pagina;
 
-        public ServicioFachada(IApiContabee api, IHubEventos hub, IServicioBlob blob, IServicioVision vision, IServicioAuth auth, IServicioXML xml)
+        public ServicioFachada(IApiContabee api, IHubEventos hub, IServicioBlob blob, IServicioVision vision, IServicioAuth auth, IServicioXML xml, IServicioArchivos archivos)
         {
             _api = api;
             _hub = hub;
@@ -39,6 +39,7 @@ namespace ContabeeCaptura.Fachada
             _blob = blob;
             _auth = auth;
             _xml = xml;
+            _archivos = archivos;
             _subDescarga = _hub.Suscribir<DescargaDetectadaMensaje>(OnDescargaDetectada);
             _subFinalizar = _hub.Suscribir<SolicitarCompletarCapturaMensaje>(OnSolicitarCompletar);
         }
@@ -47,9 +48,7 @@ namespace ContabeeCaptura.Fachada
         {
             if (!await _auth.AsegurarSesionValidaAsync())
             {
-                _hub.Publicar(new NotificacionUIEvent(this, "Refresco de Autorización.", TipoNotificacion.Info));
-
-                return;
+                _hub.Publicar(new NotificacionUIEvent(this, "Refresco de Autorización.", TipoNotificacion.Info)); return;
             }
 
 
@@ -57,6 +56,9 @@ namespace ContabeeCaptura.Fachada
 
             var datos = await _api.ObtienePagina();
 
+            if (!datos.Ok) { _hub.Publicar(new NotificacionUIEvent(this, datos.Error.Mensaje, TipoNotificacion.Info)); return; }
+
+            _pagina = datos.Payload;
             _hub.Publicar(new DatosFiscalesMensaje
             {
                 Sender = this,
@@ -79,6 +81,9 @@ namespace ContabeeCaptura.Fachada
                 using (var msOcr = new MemoryStream(Imagen))
                 {
                     var r = await _vision.TextoOCR(msOcr);
+
+                    if (!r.Ok) { _hub.Publicar(new NotificacionUIEvent(this, r.Error.Mensaje, TipoNotificacion.Info)); return; }; 
+
                     textoOcr = r.Payload;
                 }
 
@@ -115,22 +120,25 @@ namespace ContabeeCaptura.Fachada
                 return;
             }
 
-            if (msg.Extension.Equals(".xml", StringComparison.OrdinalIgnoreCase))
+            if (respuesta.Payload != null)
             {
-                string rutaFinal = Path.Combine(
-                    @"C:\comprobante",
-                    msg.NombreArchivo,
-                    msg.NombreArchivo + ".xml");
-
-                var info = _xml.ExtraerInfoCFDI(rutaFinal);
+                var info = _xml.ExtraerInfoCFDI(respuesta.Payload);
 
                 if (info.UUID != null && info.Fecha != null)
                 {
+
+                    DateTime? fechaCFDI = null;
+
+                    if (DateTime.TryParse(info.Fecha, out DateTime temp))
+                    {
+                        fechaCFDI = temp;
+                    }
+
                     _hub.Publicar(new CFDIMensaje
                     {
                         Sender = this,
                         UUID = info.UUID,
-                        Fecha = info.Fecha
+                        Fecha = fechaCFDI
                     });
                 }
             }
@@ -138,7 +146,7 @@ namespace ContabeeCaptura.Fachada
 
             _hub.Publicar(new NotificacionUIEvent(
                 this,
-                "Archivo procesado correctamente",
+                "Comprobantes descargados correctamente",
                 TipoNotificacion.Info
             ));
         }
@@ -161,14 +169,14 @@ namespace ContabeeCaptura.Fachada
         public async Task CompletarCapturaAsync(CompletarCapturaPagina datos, List<string> archivos)
         {
             await _blob.SubirArchivosBlob(_pagina,archivos);
-
+            datos.Id = _pagina.Id;
             var r = await _api.CompletarPagina(datos);
 
             if (!r.Ok)
             {
                 _hub.Publicar(new NotificacionUIEvent(
                     this,
-                    "Error al completar la captura",
+                    $"Error al completar la captura: {r.Error.Mensaje}",
                     TipoNotificacion.Error));
             }
             else

@@ -62,7 +62,7 @@ namespace ContabeeComunes.Fachada
     public class CFDIMensaje : ITinyMessage 
     {
         public string UUID { get; set; }
-        public string Fecha { get; set; }
+        public DateTime? Fecha { get; set; }
         public object Sender { get; set; }
     }
 }

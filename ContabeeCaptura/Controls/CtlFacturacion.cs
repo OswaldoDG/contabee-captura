@@ -49,17 +49,18 @@ namespace ContabeeCaptura.Controls
             if (msg == null) return;
 
             _nombreBlob = msg.NombreBlob;
-
-            chkBoxXML.Checked = false;
-            chxBoxPDF.Checked = false;
         }
 
         private void OnDatosCFDI(CFDIMensaje msg)
         {
             if (msg == null) return;
 
+
+            if (this.InvokeRequired) { this.Invoke(new Action(() => OnDatosCFDI(msg))); return; }
+
+
             textBoxUUID.Text = msg.UUID;
-            textBoxFecha.Text = msg.Fecha;
+            textBoxFecha.Text = msg.Fecha.ToString();
         }
 
         private void OnLimpiarDatos(MensajeClear msg)
@@ -97,25 +98,39 @@ namespace ContabeeCaptura.Controls
                         RutaTemp = archivoTemporal,
                         Extension = extension
                     });
+
+                    if (extension.Equals(".xml"))
+                        chkBoxXML.Checked = true;
+                    if (extension.Equals(".pdf"))
+                        chxBoxPDF.Checked = true;
                 }
             };
         }
 
         private async void btnBuscar_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(textBoxUrl.Text))
-                return;
+            try
+            {
+                if (string.IsNullOrWhiteSpace(textBoxUrl.Text))
+                    return;
 
-            if (navegador.CoreWebView2 == null)
-                await navegador.EnsureCoreWebView2Async(null);
+                if (navegador.CoreWebView2 == null)
+                    await navegador.EnsureCoreWebView2Async(null);
 
-            string url = textBoxUrl.Text;
+                string url = textBoxUrl.Text;
 
-            if (!url.StartsWith("http://") && !url.StartsWith("https://"))
-                url = "https://" + url;
+                if (!url.StartsWith("http://") && !url.StartsWith("https://"))
+                    url = "https://" + url;
 
-            navegador.CoreWebView2.Navigate(url);
+                navegador.CoreWebView2.Navigate(url);
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            
         }
+
 
         private void btnFinalizar_Click(object sender, EventArgs e)
         {

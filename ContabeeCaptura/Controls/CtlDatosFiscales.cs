@@ -41,7 +41,7 @@ namespace ContabeeCaptura.Controls
         {
             if (this.InvokeRequired)
             {
-                this.Invoke(new Action(() => OnLimpiarUI(msg)));
+                this.BeginInvoke(new Action(() => OnLimpiarUI(msg)));
                 return;
             }
 
@@ -58,7 +58,7 @@ namespace ContabeeCaptura.Controls
         {
             if (this.InvokeRequired)
             {
-                this.Invoke(new Action(() => OnDatosRecibidos(msg)));
+                this.BeginInvoke(new Action(() => OnDatosRecibidos(msg)));
                 return;
             }
 

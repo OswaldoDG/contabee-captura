@@ -1,4 +1,5 @@
 ﻿using ContabeeApi;
+using ContabeeApi.Archivos;
 using ContabeeApi.Auth;
 using ContabeeApi.Blob;
 using ContabeeApi.Vision;
@@ -68,6 +69,7 @@ namespace ContabeeCaptura
             // Registrar Form1
             services.AddTransient<Form1>();
             services.AddTransient<Login>();
+            services.AddTransient<CompletarCaptura>();
             services.AddSingleton<ITinyMessengerHub, TinyMessengerHub>();
             services.AddSingleton<IHubEventos, HubEventos>();
             services.AddSingleton<IProxyGenerico, ProxyGenerico>();
@@ -77,6 +79,7 @@ namespace ContabeeCaptura
             services.AddTransient<IServicioBlob, ServicioBlob>();
             services.AddTransient<IServicioVision, ServicioVision>();
             services.AddTransient<IServicioXML, ServicioXML>();
+            services.AddTransient<IServicioArchivos, ServicioArchivos>();
             services.AddTransient<IServicioFachada, ServicioFachada>();
             services.AddHttpClient();
 
