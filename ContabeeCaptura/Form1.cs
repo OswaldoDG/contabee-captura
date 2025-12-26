@@ -1,19 +1,11 @@
 ﻿using ContabeeApi;
-using ContabeeApi.Modelos.Captura;
 using ContabeeCaptura.Extensiones;
 using ContabeeCaptura.Fachada;
-using ContabeeCaptura.Forms;
 using ContabeeComunes;
 using ContabeeComunes.Eventos;
 using ContabeeComunes.Fachada;
-using ContabeeComunes.RespuestaApi;
 using ContabeeComunes.Sesion;
 using System;
-using System.IO;
-using System.Net.Http;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TinyMessenger;
 
@@ -37,10 +29,11 @@ namespace ContabeeCaptura
             _servicioFachada = servicioFachada;
 
             InitializeComponent();
-            ctlDatosFiscales1.Configurar(_hubEventos);
-            ctlImagen1.Configurar(_hubEventos);
-            ctlOCR1.Configurar(_hubEventos);
-            ctlFacturacion1.Configurar(_hubEventos);
+            ConfiguracionBtnSplit();
+            ctlDatosFiscales2.Configurar(_hubEventos, _servicioSesion);
+            ctlImagen2.Configurar(_hubEventos);
+            ctlOCR2.Configurar(_hubEventos);
+            ctlFacturacion2.Configurar(_hubEventos);
             SetupUI();
         }
 
@@ -87,6 +80,7 @@ namespace ContabeeCaptura
                     captura.finalizada.FechaCfdi = (DateTime)_FechaCFDI;
                     captura.finalizada.CfdiId = _UUID;
                 }
+                captura.finalizada.Total = msg.Total;
                 await _servicioFachada.CompletarCapturaAsync(captura.finalizada, captura.comprobantesPath);
             }
         }
@@ -109,37 +103,6 @@ namespace ContabeeCaptura
             Application.Exit();
         }
 
-        //private async void btnCompletar_Click(object sender, EventArgs e)
-        //{
-        //    var captura = Program.ServiceProvider.GetService(typeof(App.Forms.CompletarCaptura)) as App.Forms.CompletarCaptura;
-
-        //    if (captura.ShowDialog() == DialogResult.OK)
-        //    {
-        //        await SubirArchivosBlob(captura);
-        //        captura.finalizada.Id = _pagina.Id;
-        //        var completar = await _apiBackend.CompletarPagina(captura.finalizada);
-
-        //        if (!completar.Ok)
-        //        {
-        //            _hubEventos.PublicarNotificacionUI(this, $"Error al completar la captura {completar.Error.Mensaje}", TipoNotificacion.Error);
-        //        }
-        //        else
-        //        {
-        //            _hubEventos.PublicarNotificacionUI(this, $"Captura finalizada correctamente", TipoNotificacion.Info);
-        //        }
-        //    }
-        //}
-
-        //private void btnFacturar_Click(object sender, EventArgs e)
-        //{
-        //    var navegador = Program.ServiceProvider.GetService(typeof(ContabeeCaptura.Parciales.BrowserFactura)) as ContabeeCaptura.Parciales.BrowserFactura;
-        //    if (navegador != null)
-        //    {
-        //        navegador.NombreBlob = Path.GetFileNameWithoutExtension(_pagina.Ruta);
-        //        navegador.ShowDialog();
-        //    }
-        //}
-
         private async void btnSiguiente_Click(object sender, EventArgs e)
         {
             btnSiguiente.Enabled = false;
@@ -157,6 +120,49 @@ namespace ContabeeCaptura
                 btnSiguiente.Enabled = true;
                 this.Cursor = Cursors.Default;
             }
+        }
+
+        private void ConfiguracionBtnSplit()
+        {
+            btnPosSplit1.Tag = 1.0 / 3.0;
+            btnPosSplit2.Tag = 1.0 / 2.0;
+            btnPosSplit3.Tag = 2.0 / 3.0;
+
+            btnPosSplit1.Click += PosicionSplit_Click;
+            btnPosSplit2.Click += PosicionSplit_Click;
+            btnPosSplit3.Click += PosicionSplit_Click;
+
+        }
+
+        private void PosicionSplit_Click(object sender, EventArgs e)
+        {
+            if (sender is Button boton && boton.Tag is double porcentaje)
+            {
+                CambiarSplitContainer(porcentaje);
+            }
+        }
+
+        private void CambiarSplitContainer(double porcentaje)
+        {
+            int tamañoTotal;
+
+            if (splitContainer2.Orientation == Orientation.Vertical)
+                tamañoTotal = splitContainer2.Width;
+            else
+                tamañoTotal = splitContainer2.Height;
+
+            int nuevaDistancia = (int)(tamañoTotal * porcentaje);
+
+            int minimo = splitContainer2.Panel1MinSize;
+            int maximo = tamañoTotal - splitContainer2.Panel2MinSize;
+
+            if (nuevaDistancia < minimo)
+                nuevaDistancia = minimo;
+
+            if (nuevaDistancia > maximo)
+                nuevaDistancia = maximo;
+
+            splitContainer2.SplitterDistance = nuevaDistancia;
         }
     }
 }

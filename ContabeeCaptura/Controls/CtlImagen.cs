@@ -27,6 +27,7 @@ namespace ContabeeCaptura.Controls
         public CtlImagen()
         {
             InitializeComponent();
+            this.AutoScaleMode = AutoScaleMode.Dpi;
             this.visorImagen.SetLicenseNumber(GetGDlic());
             this.HandleDestroyed += (s, e) => LimpiarTodo();
         }

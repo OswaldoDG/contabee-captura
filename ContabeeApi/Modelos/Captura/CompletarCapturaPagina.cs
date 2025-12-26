@@ -62,6 +62,11 @@ namespace ContabeeApi.Modelos.Captura
         /// Fecha del CFDI.
         /// </summary>
         public DateTime FechaCfdi { get; set; }
+
+        /// <summary>
+        /// Monto total del comprobante una vez obtenida la factura, sirve para comprbaciones y devoluciones.
+        /// </summary>
+        public decimal? Total { get; set; } = null;
     }
 
 }

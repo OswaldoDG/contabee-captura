@@ -19,6 +19,8 @@ namespace ContabeeCaptura.Controls
         public CtlFacturacion()
         {
             InitializeComponent();
+            CopiarDatos();
+            this.AutoScaleMode = AutoScaleMode.Dpi;
             this.HandleDestroyed += (s, e) => {
                 if (_hub != null)
                 {
@@ -111,13 +113,13 @@ namespace ContabeeCaptura.Controls
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(textBoxUrl.Text))
+                if (string.IsNullOrWhiteSpace(textBoxURL.Text))
                     return;
 
                 if (navegador.CoreWebView2 == null)
                     await navegador.EnsureCoreWebView2Async(null);
 
-                string url = textBoxUrl.Text;
+                string url = textBoxURL.Text;
 
                 if (!url.StartsWith("http://") && !url.StartsWith("https://"))
                     url = "https://" + url;
@@ -131,13 +133,32 @@ namespace ContabeeCaptura.Controls
             
         }
 
-
         private void btnFinalizar_Click(object sender, EventArgs e)
         {
+
             _hub.Publicar(new SolicitarCompletarCapturaMensaje
             {
-                Sender = this
+                Sender = this,
+                Total = decimal.TryParse(textBoxTotal.Text, out var valor) ? valor : 0
+
             });
+        }
+
+        private void CopiarDatos()
+        {
+            btnUUID.Tag = textBoxUUID.Text;
+            btnFecha.Tag = textBoxFecha.Text;
+
+            btnUUID.Click += Copiar_Click;
+            btnFecha.Click += Copiar_Click;
+        }
+
+        private void Copiar_Click(object sender, EventArgs e)
+        {
+            if (sender is Button btn && btn.Tag is TextBox txt)
+            {
+                Clipboard.SetText(txt.Text);
+            }
         }
     }
 }

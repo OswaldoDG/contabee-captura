@@ -45,9 +45,11 @@
             // textBoxOCR
             // 
             this.textBoxOCR.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxOCR.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.textBoxOCR.Location = new System.Drawing.Point(0, 0);
             this.textBoxOCR.Multiline = true;
             this.textBoxOCR.Name = "textBoxOCR";
+            this.textBoxOCR.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxOCR.Size = new System.Drawing.Size(826, 561);
             this.textBoxOCR.TabIndex = 0;
             // 

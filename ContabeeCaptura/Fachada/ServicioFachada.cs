@@ -46,11 +46,12 @@ namespace ContabeeCaptura.Fachada
 
         public async Task SiguienteTrabajoAsync()
         {
+            _hub.Publicar(new NotificacionUIEvent(this, "Buscando nuevo trabajo.", TipoNotificacion.Info));
+
             if (!await _auth.AsegurarSesionValidaAsync())
             {
                 _hub.Publicar(new NotificacionUIEvent(this, "Refresco de Autorización.", TipoNotificacion.Info)); return;
             }
-
 
             _hub.Publicar(new MensajeClear { Sender = this });
 
@@ -59,6 +60,7 @@ namespace ContabeeCaptura.Fachada
             if (!datos.Ok) { _hub.Publicar(new NotificacionUIEvent(this, datos.Error.Mensaje, TipoNotificacion.Info)); return; }
 
             _pagina = datos.Payload;
+
             _hub.Publicar(new DatosFiscalesMensaje
             {
                 Sender = this,
@@ -72,35 +74,44 @@ namespace ContabeeCaptura.Fachada
             });
 
             var bytesImagen = await _blob.DescargaImagenSaSAsync(datos.Payload.TokenSas);
+
+            if (!bytesImagen.Ok)
+            {
+                _hub.Publicar(new NotificacionUIEvent(this, bytesImagen.Error.Mensaje, TipoNotificacion.Info)); return;
+            }
+
             byte[] Imagen = bytesImagen.Payload;
 
-            if (Imagen != null && Imagen.Length > 0)
+            if (Imagen == null && Imagen.Length == 0)
             {
-                string textoOcr = string.Empty;
+                _hub.Publicar(new NotificacionUIEvent(this, "No hay datos para mostrar", TipoNotificacion.Info)); return;
+            }
 
-                using (var msOcr = new MemoryStream(Imagen))
+            string textoOcr = string.Empty;
+
+            using (var msOcr = new MemoryStream(Imagen))
+            {
+                var r = await _vision.TextoOCR(msOcr);
+
+                if (!r.Ok) { _hub.Publicar(new NotificacionUIEvent(this, r.Error.Mensaje, TipoNotificacion.Info)); return; }
+                ;
+
+                textoOcr = r.Payload;
+            }
+
+            if (!string.IsNullOrEmpty(textoOcr))
+            {
+                _hub.Publicar(new OCRMensaje
                 {
-                    var r = await _vision.TextoOCR(msOcr);
+                    Sender = this,
+                    TextoDetectado = textoOcr
+                });
 
-                    if (!r.Ok) { _hub.Publicar(new NotificacionUIEvent(this, r.Error.Mensaje, TipoNotificacion.Info)); return; }; 
-
-                    textoOcr = r.Payload;
-                }
-
-                if (!string.IsNullOrEmpty(textoOcr))
+                _hub.Publicar(new ImagenBlobMensaje
                 {
-                    _hub.Publicar(new OCRMensaje
-                    {
-                        Sender = this,
-                        TextoDetectado = textoOcr
-                    });
-
-                    _hub.Publicar(new ImagenBlobMensaje
-                    {
-                        Sender = this,
-                        Imagen = Imagen
-                    });
-                }
+                    Sender = this,
+                    Imagen = Imagen
+                });
             }
         }
 
@@ -162,7 +173,8 @@ namespace ContabeeCaptura.Fachada
 
             _hub.Publicar(new MostrarCompletarCapturaDialogMensaje
             {
-                Sender = this
+                Sender = this,
+                Total = msg.Total
             });
         }
 

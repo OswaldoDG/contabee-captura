@@ -52,22 +52,5 @@ namespace ContabeeCaptura.Forms
         {
             Application.Exit();
         }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            _hub.Publish(new MensajeEjemplo
-            {
-                Dato = $"{DateTime.Now.ToLongTimeString()} Este es un mensaje de prueba desde el formulario de login. ",
-                Sender = this
-            });
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            _hub.Publish(new ContabeeCaptura.Fachada.MensajeClear
-            {
-                Sender = this
-            });
-        }
     }
 }

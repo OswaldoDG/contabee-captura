@@ -18,50 +18,50 @@ namespace ContabeeApi.Archivos
         public RespuestaPayload<string> ProcesarDescarga(string nombreBlob, string rutaTemp, string extension)
         {
             var respuesta = new RespuestaPayload<string> { Ok = false };
-            var blob = Path.GetFileNameWithoutExtension(nombreBlob);
-            string carpetaDestino = @"C:\comprobante";
-            string carpetaBlob = Path.Combine(carpetaDestino, blob);
+
+            string carpetaPadre = Path.GetDirectoryName(nombreBlob);
+            string nombreArchivo = Path.GetFileNameWithoutExtension(nombreBlob);
+
+            string carpetaDestinoBase = @"C:\comprobante";
+            string carpetaDestino = Path.Combine(carpetaDestinoBase, carpetaPadre);
+
             int contador = 1;
+
             try
             {
-                if (!Directory.Exists(carpetaBlob))
-                    Directory.CreateDirectory(carpetaBlob);
+                if (!Directory.Exists(carpetaDestino))
+                    Directory.CreateDirectory(carpetaDestino);
 
                 if (extension.Equals(".pdf", StringComparison.OrdinalIgnoreCase) ||
                     extension.Equals(".xml", StringComparison.OrdinalIgnoreCase))
                 {
-                    string nuevoNombre = blob;
-                    nuevoNombre += $"_{contador++}";
-                    string rutaFinal = Path.Combine(carpetaBlob, nuevoNombre + extension);
+                    string nuevoNombre = $"{nombreArchivo}_{contador++}{extension}";
+                    string rutaFinal = Path.Combine(carpetaDestino, nuevoNombre);
 
                     if (File.Exists(rutaFinal))
                         File.Delete(rutaFinal);
 
                     File.Copy(rutaTemp, rutaFinal);
                     File.Delete(rutaTemp);
+
                     if (extension.Equals(".xml", StringComparison.OrdinalIgnoreCase))
                         respuesta.Payload = rutaFinal;
+
                     respuesta.Ok = true;
                 }
                 else if (extension.Equals(".zip", StringComparison.OrdinalIgnoreCase))
                 {
-                    System.IO.Compression.ZipFile.ExtractToDirectory(rutaTemp, carpetaBlob);
+                    System.IO.Compression.ZipFile.ExtractToDirectory(rutaTemp, carpetaDestino);
                     File.Delete(rutaTemp);
 
-                    var archivos = Directory.GetFiles(carpetaBlob, "*.*", SearchOption.AllDirectories);
+                    var archivos = Directory.GetFiles(carpetaDestino, "*.*", SearchOption.AllDirectories);
 
                     foreach (var archivo in archivos)
                     {
                         string ext = Path.GetExtension(archivo);
                         string rutaDirectorio = Path.GetDirectoryName(archivo);
 
-                        string nuevoNombre = blob;
-
-                        if (archivos.Length > 1)
-                            nuevoNombre += $"_{contador++}";
-
-                        nuevoNombre += ext;
-
+                        string nuevoNombre = $"{nombreArchivo}_{contador++}{ext}";
                         string rutaDestino = Path.Combine(rutaDirectorio, nuevoNombre);
 
                         if (!archivo.Equals(rutaDestino, StringComparison.OrdinalIgnoreCase))
@@ -70,6 +70,7 @@ namespace ContabeeApi.Archivos
                                 File.Delete(rutaDestino);
 
                             File.Move(archivo, rutaDestino);
+
                             if (ext.Equals(".xml", StringComparison.OrdinalIgnoreCase))
                                 respuesta.Payload = rutaDestino;
                         }
@@ -98,5 +99,6 @@ namespace ContabeeApi.Archivos
 
             return respuesta;
         }
+
     }
 }

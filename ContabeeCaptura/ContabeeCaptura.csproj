@@ -250,12 +250,6 @@
     <Compile Include="Controls\CtlOCR.Designer.cs">
       <DependentUpon>CtlOCR.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\LabelBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\LabelBox.Designer.cs">
-      <DependentUpon>LabelBox.cs</DependentUpon>
-    </Compile>
     <Compile Include="Extensiones\ExtensionesNotificacion.cs" />
     <Compile Include="Fachada\IServicioFachada.cs" />
     <Compile Include="Fachada\MensajeClear.cs" />
@@ -312,9 +306,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CtlOCR.resx">
       <DependentUpon>CtlOCR.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\LabelBox.resx">
-      <DependentUpon>LabelBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

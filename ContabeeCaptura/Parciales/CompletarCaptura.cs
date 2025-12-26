@@ -113,7 +113,13 @@ namespace ContabeeCaptura.Forms
             listViewComprobantes.Items.RemoveAt(index);
         }
 
-        private void btnOk_Click_1(object sender, EventArgs e)
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+
+        private void btnOk_Click(object sender, EventArgs e)
         {
             finalizada = new CompletarCapturaPagina()
             {
@@ -127,12 +133,6 @@ namespace ContabeeCaptura.Forms
                 TieneCaptcha = cbxTieneCaptcha.Checked,
             };
             this.DialogResult = DialogResult.OK;
-            this.Close();
-        }
-
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
     }

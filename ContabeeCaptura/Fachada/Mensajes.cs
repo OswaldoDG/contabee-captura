@@ -52,11 +52,13 @@ namespace ContabeeComunes.Fachada
     public class SolicitarCompletarCapturaMensaje : ITinyMessage
     {
         public object Sender { get; set; }
+        public decimal Total { get; set; }
     }
 
     public class MostrarCompletarCapturaDialogMensaje : ITinyMessage
     {
         public object Sender { get; set; }
+        public decimal Total { get; set; }
     }
 
     public class CFDIMensaje : ITinyMessage 
