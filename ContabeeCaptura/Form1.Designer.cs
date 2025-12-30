@@ -43,11 +43,11 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.ctlFacturacion2 = new ContabeeCaptura.Controls.CtlFacturacion();
             this.ctlOCR2 = new ContabeeCaptura.Controls.CtlOCR();
             this.ctlDatosFiscales2 = new ContabeeCaptura.Controls.CtlDatosFiscales();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.ctlImagen2 = new ContabeeCaptura.Controls.CtlImagen();
+            this.ctlFacturacion2 = new ContabeeCaptura.Controls.CtlFacturacion();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -267,27 +267,6 @@
             this.splitContainer3.SplitterWidth = 1;
             this.splitContainer3.TabIndex = 0;
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.ctlImagen2);
-            this.tabPage2.Location = new System.Drawing.Point(4, 4);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(416, 630);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Imagen";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // ctlFacturacion2
-            // 
-            this.ctlFacturacion2.AutoSize = true;
-            this.ctlFacturacion2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ctlFacturacion2.Location = new System.Drawing.Point(0, 0);
-            this.ctlFacturacion2.Margin = new System.Windows.Forms.Padding(2);
-            this.ctlFacturacion2.Name = "ctlFacturacion2";
-            this.ctlFacturacion2.Size = new System.Drawing.Size(855, 659);
-            this.ctlFacturacion2.TabIndex = 0;
-            // 
             // ctlOCR2
             // 
             this.ctlOCR2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -305,6 +284,17 @@
             this.ctlDatosFiscales2.Size = new System.Drawing.Size(410, 336);
             this.ctlDatosFiscales2.TabIndex = 0;
             // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.ctlImagen2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 4);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(416, 630);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Imagen";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
             // ctlImagen2
             // 
             this.ctlImagen2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -312,6 +302,16 @@
             this.ctlImagen2.Name = "ctlImagen2";
             this.ctlImagen2.Size = new System.Drawing.Size(410, 624);
             this.ctlImagen2.TabIndex = 0;
+            // 
+            // ctlFacturacion2
+            // 
+            this.ctlFacturacion2.AutoSize = true;
+            this.ctlFacturacion2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ctlFacturacion2.Location = new System.Drawing.Point(0, 0);
+            this.ctlFacturacion2.Margin = new System.Windows.Forms.Padding(2);
+            this.ctlFacturacion2.Name = "ctlFacturacion2";
+            this.ctlFacturacion2.Size = new System.Drawing.Size(855, 659);
+            this.ctlFacturacion2.TabIndex = 0;
             // 
             // Form1
             // 
@@ -369,10 +369,10 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.SplitContainer splitContainer3;
-        private Controls.CtlFacturacion ctlFacturacion2;
         private Controls.CtlOCR ctlOCR2;
         private Controls.CtlDatosFiscales ctlDatosFiscales2;
         private Controls.CtlImagen ctlImagen2;
+        private Controls.CtlFacturacion ctlFacturacion2;
     }
 }
 

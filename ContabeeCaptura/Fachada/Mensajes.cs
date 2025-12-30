@@ -49,16 +49,11 @@ namespace ContabeeComunes.Fachada
 
     }
 
-    public class SolicitarCompletarCapturaMensaje : ITinyMessage
+    public class CompletarCapturaMensaje : ITinyMessage
     {
         public object Sender { get; set; }
-        public decimal Total { get; set; }
-    }
-
-    public class MostrarCompletarCapturaDialogMensaje : ITinyMessage
-    {
-        public object Sender { get; set; }
-        public decimal Total { get; set; }
+        public CompletarCapturaPagina CapturaCompleta { get; set; }
+        public List<string> Archivos { get; set; }
     }
 
     public class CFDIMensaje : ITinyMessage 
@@ -66,5 +61,11 @@ namespace ContabeeComunes.Fachada
         public string UUID { get; set; }
         public DateTime? Fecha { get; set; }
         public object Sender { get; set; }
+    }
+
+    public class DesglosarIEPSMensaje : ITinyMessage
+    {
+        public object Sender { get; set; } 
+        public bool DesglosarIEPS {  get; set; }
     }
 }

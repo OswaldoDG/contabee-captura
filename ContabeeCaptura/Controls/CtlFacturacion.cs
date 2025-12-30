@@ -1,10 +1,15 @@
 ﻿using ContabeeApi.Archivos;
+using ContabeeApi.Modelos;
+using ContabeeApi.Modelos.Captura;
 using ContabeeCaptura.Fachada;
+using ContabeeComunes;
 using ContabeeComunes.Eventos;
 using ContabeeComunes.Fachada;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ContabeeCaptura.Controls
 {
@@ -15,11 +20,12 @@ namespace ContabeeCaptura.Controls
         private Guid _subDatos;
         private Guid _subClear;
         private Guid _subCfdi;
+        private Guid _subIEPS;
+        public List<string> comprobantesPath = new List<string>();
 
         public CtlFacturacion()
         {
             InitializeComponent();
-            CopiarDatos();
             this.AutoScaleMode = AutoScaleMode.Dpi;
             this.HandleDestroyed += (s, e) => {
                 if (_hub != null)
@@ -27,6 +33,7 @@ namespace ContabeeCaptura.Controls
                     _hub.Desuscribir(_subDatos);
                     _hub.Desuscribir(_subClear);
                     _hub.Desuscribir(_subCfdi); 
+                    _hub.Desuscribir(_subIEPS);
                 }
             };
         }
@@ -34,7 +41,15 @@ namespace ContabeeCaptura.Controls
         private async void IniciarWeb()
         {
             await navegador.EnsureCoreWebView2Async(null);
+            navegador.NavigationCompleted += Navegador_NavigationCompleted;
             navegador.CoreWebView2.DownloadStarting += CoreWebView2_DownloadStarting;
+        }
+
+        private void Navegador_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
+        {
+            textBoxURL.Text = navegador.Source.ToString();
+            btnAtras.Enabled = navegador.CanGoBack;
+            btnAdelante.Enabled = navegador.CanGoForward;
         }
 
         public void Configurar(IHubEventos hub)
@@ -43,6 +58,7 @@ namespace ContabeeCaptura.Controls
             _subDatos = _hub.Suscribir<NombreBlobMensaje>(OnDatosRecibidos);
             _subCfdi = _hub.Suscribir<CFDIMensaje>(OnDatosCFDI);
             _subClear = _hub.Suscribir<MensajeClear>(OnLimpiarDatos);
+            _subIEPS = _hub.Suscribir<DesglosarIEPSMensaje>(OnDesglosarIEPS);
             IniciarWeb();
         }
 
@@ -73,6 +89,17 @@ namespace ContabeeCaptura.Controls
 
             chkBoxXML.Checked = false;
             chxBoxPDF.Checked = false;
+            checkBoxIEPS.Checked = false;
+            comprobantesPath.Clear();
+        }
+        
+        private void OnDesglosarIEPS(DesglosarIEPSMensaje msg)
+        {
+            if (msg == null) return;
+
+            if (this.InvokeRequired) { this.Invoke(new Action(() => OnDesglosarIEPS(msg))); return; }
+
+            checkBoxIEPS.Checked = msg.DesglosarIEPS;
         }
 
         private void CoreWebView2_DownloadStarting(object sender, Microsoft.Web.WebView2.Core.CoreWebView2DownloadStartingEventArgs e)
@@ -117,12 +144,22 @@ namespace ContabeeCaptura.Controls
                     return;
 
                 if (navegador.CoreWebView2 == null)
-                    await navegador.EnsureCoreWebView2Async(null);
+                    await navegador.EnsureCoreWebView2Async();
 
-                string url = textBoxURL.Text;
+                string texto = textBoxURL.Text.Trim();
+                string url;
 
-                if (!url.StartsWith("http://") && !url.StartsWith("https://"))
-                    url = "https://" + url;
+                if (texto.Contains(".") && !texto.Contains(" "))
+                {
+                    if (!texto.StartsWith("http://") && !texto.StartsWith("https://"))
+                        texto = "https://" + texto;
+
+                    url = texto;
+                }
+                else
+                {
+                    url = "https://www.google.com/search?q=" + Uri.EscapeDataString(texto);
+                }
 
                 navegador.CoreWebView2.Navigate(url);
             }
@@ -135,30 +172,102 @@ namespace ContabeeCaptura.Controls
 
         private void btnFinalizar_Click(object sender, EventArgs e)
         {
+            var completar = new CompletarCapturaPagina()
+            {
+                Reprogramar = cbxReprogramar.Text.Equals("Finalizar", StringComparison.OrdinalIgnoreCase) ? false : true,
+                Motivo = (MotivoEstado)Enum.Parse(typeof(MotivoEstado), cbxMotivo.Text),
+                TipoFuente = (TipoFuenteProcesamiento)Enum.Parse(typeof(TipoFuenteProcesamiento), cbxTipoFuente.Text),
+                Comentario = txtBxComentario.Text,
+                SinXml = chxXml.Checked,
+                SinPdf = chxPdf.Checked,
+                Url = txtBxUrl.Text,
+                TieneCaptcha = cbxTieneCaptcha.Checked,
+                Total = decimal.TryParse(textBoxTotal.Text, out var valor) ? valor : 0,
+                CfdiId = string.IsNullOrWhiteSpace(textBoxUUID.Text) ? "" : textBoxUUID.Text
+            };
 
-            _hub.Publicar(new SolicitarCompletarCapturaMensaje
+            if (DateTime.TryParse(textBoxFecha.Text, out DateTime temp))
+            {
+                completar.FechaCfdi = temp;
+            }
+            else
+            {
+                completar.FechaCfdi = null;
+            }
+
+            _hub.Publicar(new CompletarCapturaMensaje
             {
                 Sender = this,
-                Total = decimal.TryParse(textBoxTotal.Text, out var valor) ? valor : 0
-
+                CapturaCompleta = completar,
+                Archivos = comprobantesPath
             });
         }
 
-        private void CopiarDatos()
+        private void btnComprobantes_Click(object sender, EventArgs e)
         {
-            btnUUID.Tag = textBoxUUID.Text;
-            btnFecha.Tag = textBoxFecha.Text;
+            if (comprobantesPath.Count >= 2)
+            {
+                _hub.PublicarNotificacionUI(this, "Seleccione únicamente 2 comprobantes (PDF o XML)", TipoNotificacion.Alerta);
+                return;
+            }
 
-            btnUUID.Click += Copiar_Click;
-            btnFecha.Click += Copiar_Click;
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Multiselect = true;
+                ofd.Filter = "Archivos permitidos|*.pdf;*.jpg;*.jpeg;*.png;*.xml;*.html;*.txt;*.json;*.csv";
+
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    foreach (string file in ofd.FileNames)
+                    {
+                        if (comprobantesPath.Count >= 2)
+                        {
+                            _hub.PublicarNotificacionUI(this, "Solo se permiten 2 comprobantes (PDF o XML).", TipoNotificacion.Alerta);
+                            break;
+                        }
+
+                        comprobantesPath.Add(file);
+
+                        FileInfo fi = new FileInfo(file);
+
+                        ListViewItem item = new ListViewItem(fi.Name);
+
+                        listViewComprobantes.Items.Add(item);
+                    }
+                }
+            }
         }
 
-        private void Copiar_Click(object sender, EventArgs e)
+        private void BtnRemoverComprobante_Click(object sender, EventArgs e)
         {
-            if (sender is Button btn && btn.Tag is TextBox txt)
+            if (listViewComprobantes.SelectedItems.Count == 0)
             {
-                Clipboard.SetText(txt.Text);
+                _hub.PublicarNotificacionUI(this, "Selecciona un archivo para eliminar", TipoNotificacion.Alerta);
+                return;
             }
+
+            var item = listViewComprobantes.SelectedItems[0];
+            int index = item.Index;
+
+            comprobantesPath.RemoveAt(index);
+            listViewComprobantes.Items.RemoveAt(index);
+        }
+
+        private void btnAtras_Click(object sender, EventArgs e)
+        {
+            if (navegador.CanGoBack)
+                navegador.GoBack();
+        }
+
+        private void btnAdelante_Click(object sender, EventArgs e)
+        {
+            if (navegador.CanGoForward)
+                navegador.GoForward();
+        }
+
+        private void btnRecarga_Click(object sender, EventArgs e)
+        {
+            navegador.Reload();
         }
     }
 }

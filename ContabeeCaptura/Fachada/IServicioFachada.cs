@@ -6,7 +6,12 @@ namespace ContabeeCaptura.Fachada
 {
     public interface IServicioFachada
     {
-        Task SiguienteTrabajoAsync();
-        Task CompletarCapturaAsync(CompletarCapturaPagina datos, List<string> archivos);
+        Task<bool> SiguienteTrabajoAsync();
+
+        Task<bool> DescargaProcesamientoXML(string RutaTemp, string NombreArchivo, string Extension);
+
+        Task<bool> SubirArchivosAsync(List<string> comprobantes);
+
+        Task<bool> CompletarCapturaAsync(CompletarCapturaPagina completar);
     }
 }

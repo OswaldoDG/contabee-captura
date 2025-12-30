@@ -39,7 +39,7 @@ namespace ContabeeApi.Blob
                     _logger.LogError("ProxyGenerico - CompletarPagina", "Ocurrió un problema al bajar el archivo de la nube");
                     respuesta.Error = new ErrorProceso() 
                     { 
-                        Mensaje = response.Content.ToString(),
+                        Mensaje = "No se pudo obtener el comprobante de la nube.",
                         HttpCode = response.StatusCode
                     };
                     respuesta.HttpCode = response.StatusCode;
@@ -58,7 +58,7 @@ namespace ContabeeApi.Blob
                 _logger.LogError(ex, "Excepción al DescargaImagenSaSAsync");
                 respuesta.Error = new ErrorProceso()
                 {
-                    Mensaje = ex.Message
+                    Mensaje = "Error al descargar la imagen del comprobante"
                 };
             }
             return respuesta;
@@ -92,14 +92,15 @@ namespace ContabeeApi.Blob
                                 {
                                     Mensaje = response.Content.ToString()
                                 };
+                                return respuesta;
                             }
+                            respuesta.Ok = true;
                         }
                     }
                 }
 
                 _logger.LogDebug("Archivos subidos correctamente");
             }
-
             return respuesta;
         }
     }

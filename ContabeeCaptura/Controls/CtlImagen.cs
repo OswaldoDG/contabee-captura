@@ -2,18 +2,10 @@
 using ContabeeComunes.Eventos;
 using ContabeeComunes.Fachada;
 using GdPicture;
-using Serilog.Parsing;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static GdPicture.GdViewer;
 
 namespace ContabeeCaptura.Controls
 {
@@ -22,7 +14,8 @@ namespace ContabeeCaptura.Controls
         private IHubEventos _hub;
         private Guid _subImg;
         private Guid _subClear;
-        private MemoryStream _streamActual;
+        private Stream _streamActual;
+        private int _imageId;
 
         public CtlImagen()
         {
@@ -45,6 +38,13 @@ namespace ContabeeCaptura.Controls
 
         private void CerrarImagen()
         {
+            if (_imageId != 0)
+            {
+                var gd = new GdPictureImaging();
+                gd.ReleaseGdPictureImage(_imageId);
+                _imageId = 0;
+            }
+
             if (visorImagen.GetStat() == GdPictureStatus.OK)
             {
                 visorImagen.CloseDocument();
@@ -80,10 +80,12 @@ namespace ContabeeCaptura.Controls
             try
             {
                 CerrarImagen();
-
+                var gd = new GdPictureImaging();
                 _streamActual = new MemoryStream(msg.Imagen);
 
-                visorImagen.DisplayFromStream(_streamActual);
+                _imageId = gd.CreateGdPictureImageFromStream(_streamActual);
+
+                visorImagen.DisplayFromGdPictureImage(_imageId);
                 visorImagen.ZoomMode = ViewerZoomMode.ZoomModeFitToViewer;
                 visorImagen.Focus();
             }
@@ -96,6 +98,26 @@ namespace ContabeeCaptura.Controls
         private string GetGDlic()
         {
             return ContabeeComunes.Constantes.GDPARAM.Replace("A", "4");
+        }
+
+        private void btnIzquierda_Click(object sender, EventArgs e)
+        {
+            if (_imageId == 0) return;
+
+            var gd = new GdPictureImaging();
+            gd.Rotate(_imageId, RotateFlipType.Rotate270FlipNone);
+
+            visorImagen.DisplayFromGdPictureImage(_imageId);
+        }
+
+        private void btnDerecha_Click(object sender, EventArgs e)
+        {
+            if (_imageId == 0) return;
+
+            var gd = new GdPictureImaging();
+            gd.Rotate(_imageId, RotateFlipType.Rotate90FlipNone);
+
+            visorImagen.DisplayFromGdPictureImage(_imageId);
         }
     }
 }

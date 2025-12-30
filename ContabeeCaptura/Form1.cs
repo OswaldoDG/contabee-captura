@@ -6,6 +6,8 @@ using ContabeeComunes.Eventos;
 using ContabeeComunes.Fachada;
 using ContabeeComunes.Sesion;
 using System;
+using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using TinyMessenger;
 
@@ -17,10 +19,10 @@ namespace ContabeeCaptura
         private readonly IHubEventos _hubEventos;
         private readonly ITinyMessengerHub _hub;
         private readonly IServicioFachada _servicioFachada;
-        private Guid _subDialog;
-        private Guid _subCFDI;
-        private string _UUID;
-        private DateTime? _FechaCFDI = null;
+        private Guid _subClear;
+        private Guid _subDescarga;
+        private Guid _subCompletar;
+        private Guid _subNombreCaptura;
         public Form1(IServicioFachada servicioFachada, IServicioSesion servicioSesion, ITinyMessengerHub hub ,IHubEventos hubEventos, IApiContabee apiContabee)
         {
             _servicioSesion = servicioSesion as ServicioSesion;
@@ -34,6 +36,14 @@ namespace ContabeeCaptura
             ctlImagen2.Configurar(_hubEventos);
             ctlOCR2.Configurar(_hubEventos);
             ctlFacturacion2.Configurar(_hubEventos);
+            this.HandleDestroyed += (s, e) => {
+                if (_hubEventos != null)
+                {
+                    _hubEventos.Desuscribir(_subCompletar);
+                    _hubEventos.Desuscribir(_subDescarga);
+                    _hubEventos.Desuscribir(_subNombreCaptura);
+                }
+            };
             SetupUI();
         }
 
@@ -57,40 +67,15 @@ namespace ContabeeCaptura
             {
                 this.statuLabel.Mensaje(evento.Mensaje, evento.Tipo);
             });
+            _subClear = _hubEventos.Suscribir<MensajeClear>(OnLimpiarDatos);
+            _subCompletar = _hubEventos.Suscribir<CompletarCapturaMensaje>(OnCompletarDatos);
+            _subDescarga = _hubEventos.Suscribir<DescargaDetectadaMensaje>(OnDescargaDetectada);
+            _subNombreCaptura = _hubEventos.Suscribir<NombreBlobMensaje>(OnNombreMensajeDetectado);
         }
 
         private void Form1_Load(object sender, System.EventArgs e)
         {
             SetupHooks();
-            _subDialog = _hubEventos.Suscribir<MostrarCompletarCapturaDialogMensaje>(OnMostrarDialog);
-            _subCFDI = _hubEventos.Suscribir<CFDIMensaje>(OnDatosCFDI);
-        }
-
-        private async void OnMostrarDialog(MostrarCompletarCapturaDialogMensaje msg)
-        {
-            if (this.InvokeRequired) { this.BeginInvoke(new Action(() => OnMostrarDialog(msg))); return; }
-
-            var captura = Program.ServiceProvider.GetService(typeof(ContabeeCaptura.Forms.CompletarCaptura)) as ContabeeCaptura.Forms.CompletarCaptura;
-
-            if (captura.ShowDialog(this) == DialogResult.OK)
-            {
-
-                if (_UUID != null && _FechaCFDI != null)
-                {
-                    captura.finalizada.FechaCfdi = (DateTime)_FechaCFDI;
-                    captura.finalizada.CfdiId = _UUID;
-                }
-                captura.finalizada.Total = msg.Total;
-                await _servicioFachada.CompletarCapturaAsync(captura.finalizada, captura.comprobantesPath);
-            }
-        }
-
-        private async void OnDatosCFDI(CFDIMensaje msg)
-        {
-            if (this.InvokeRequired) { this.BeginInvoke(new Action(() => OnDatosCFDI(msg))); return; }
-
-            this._UUID = msg.UUID;
-            this._FechaCFDI = msg.Fecha;
         }
 
         private void button1_Click(object sender, System.EventArgs e)
@@ -101,6 +86,48 @@ namespace ContabeeCaptura
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void OnLimpiarDatos(MensajeClear msg)
+        {
+            if (msg == null) return;
+
+            if (this.InvokeRequired) { this.Invoke(new Action(() => OnLimpiarDatos(msg))); return; }
+
+            labelBlob.Text = "PROCESO DE CAPTURA";
+        }
+        private void OnNombreMensajeDetectado(NombreBlobMensaje msg)
+        {
+            if (msg == null) return;
+
+            if (this.InvokeRequired) { this.Invoke(new Action(() => OnNombreMensajeDetectado(msg))); return; }
+
+            labelBlob.Text = "PROCESO DE CAPTURA: " + Path.GetDirectoryName(msg.NombreBlob);
+        }
+
+        private async void OnCompletarDatos(CompletarCapturaMensaje msg)
+        {
+            if (msg == null) return;
+
+
+            if (this.InvokeRequired) { this.Invoke(new Action(() => OnCompletarDatos(msg))); return; }
+
+            var respuestaArchivos = await _servicioFachada.SubirArchivosAsync(msg.Archivos);
+            if (!respuestaArchivos)
+            {
+                return;
+            }
+            var respuesta = await _servicioFachada.CompletarCapturaAsync(msg.CapturaCompleta);
+        }
+
+        private async void OnDescargaDetectada(DescargaDetectadaMensaje msg)
+        {
+            if (msg == null) return;
+
+
+            if (this.InvokeRequired) { this.Invoke(new Action(() => OnDescargaDetectada(msg))); return; }
+
+            await _servicioFachada.DescargaProcesamientoXML(msg.NombreArchivo, msg.RutaTemp, msg.Extension);
         }
 
         private async void btnSiguiente_Click(object sender, EventArgs e)

@@ -73,5 +73,10 @@ namespace ContabeeApi.Modelos.Captura
         /// Comentarios del lote.
         /// </summary>
         public string Comentarios { get; set; }
+
+        /// <summary>
+        /// Determina si el IEPS se desglosa.
+        /// </summary>
+        public bool DesglosarIEPS { get; set; }
     }
 }

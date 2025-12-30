@@ -1,18 +1,17 @@
 ﻿using ContabeeApi;
+using ContabeeApi.Archivos;
 using ContabeeApi.Auth;
 using ContabeeApi.Blob;
 using ContabeeApi.Modelos.Captura;
-using ContabeeApi.Archivos;
 using ContabeeApi.Vision;
+using ContabeeApi.XML;
 using ContabeeComunes;
 using ContabeeComunes.Eventos;
 using ContabeeComunes.Fachada;
-using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using ContabeeApi.XML;
 
 namespace ContabeeCaptura.Fachada
 {
@@ -26,9 +25,6 @@ namespace ContabeeCaptura.Fachada
         private readonly IServicioAuth _auth;
         private readonly IServicioXML _xml;
 
-        private Guid _subDescarga;
-        private Guid _subFinalizar;
-
         private PaginaTrabajoCapturaCloud _pagina;
 
         public ServicioFachada(IApiContabee api, IHubEventos hub, IServicioBlob blob, IServicioVision vision, IServicioAuth auth, IServicioXML xml, IServicioArchivos archivos)
@@ -40,24 +36,22 @@ namespace ContabeeCaptura.Fachada
             _auth = auth;
             _xml = xml;
             _archivos = archivos;
-            _subDescarga = _hub.Suscribir<DescargaDetectadaMensaje>(OnDescargaDetectada);
-            _subFinalizar = _hub.Suscribir<SolicitarCompletarCapturaMensaje>(OnSolicitarCompletar);
         }
 
-        public async Task SiguienteTrabajoAsync()
+        public async Task<bool> SiguienteTrabajoAsync()
         {
-            _hub.Publicar(new NotificacionUIEvent(this, "Buscando nuevo trabajo.", TipoNotificacion.Info));
+            _hub.Publicar(new NotificacionUIEvent(this, "Buscando nuevo trabajo espere por favor.", TipoNotificacion.Info));
 
             if (!await _auth.AsegurarSesionValidaAsync())
             {
-                _hub.Publicar(new NotificacionUIEvent(this, "Refresco de Autorización.", TipoNotificacion.Info)); return;
+                _hub.Publicar(new NotificacionUIEvent(this, "Refresco de Autorización.", TipoNotificacion.Info)); return false;
             }
 
             _hub.Publicar(new MensajeClear { Sender = this });
 
             var datos = await _api.ObtienePagina();
 
-            if (!datos.Ok) { _hub.Publicar(new NotificacionUIEvent(this, datos.Error.Mensaje, TipoNotificacion.Info)); return; }
+            if (!datos.Ok) { _hub.Publicar(new NotificacionUIEvent(this, datos.Error.Mensaje, TipoNotificacion.Info)); return false; }
 
             _pagina = datos.Payload;
 
@@ -65,6 +59,12 @@ namespace ContabeeCaptura.Fachada
             {
                 Sender = this,
                 Datos = datos.Payload
+            });
+
+            _hub.Publicar(new DesglosarIEPSMensaje 
+            { 
+                Sender = this,
+                DesglosarIEPS = datos.Payload.DesglosarIEPS
             });
 
             _hub.Publicar(new NombreBlobMensaje 
@@ -77,14 +77,14 @@ namespace ContabeeCaptura.Fachada
 
             if (!bytesImagen.Ok)
             {
-                _hub.Publicar(new NotificacionUIEvent(this, bytesImagen.Error.Mensaje, TipoNotificacion.Info)); return;
+                _hub.Publicar(new NotificacionUIEvent(this, bytesImagen.Error.Mensaje, TipoNotificacion.Info)); return false;
             }
 
             byte[] Imagen = bytesImagen.Payload;
 
             if (Imagen == null && Imagen.Length == 0)
             {
-                _hub.Publicar(new NotificacionUIEvent(this, "No hay datos para mostrar", TipoNotificacion.Info)); return;
+                _hub.Publicar(new NotificacionUIEvent(this, "No hay datos para mostrar", TipoNotificacion.Info)); return false;
             }
 
             string textoOcr = string.Empty;
@@ -93,7 +93,7 @@ namespace ContabeeCaptura.Fachada
             {
                 var r = await _vision.TextoOCR(msOcr);
 
-                if (!r.Ok) { _hub.Publicar(new NotificacionUIEvent(this, r.Error.Mensaje, TipoNotificacion.Info)); return; }
+                if (!r.Ok) { _hub.Publicar(new NotificacionUIEvent(this, r.Error.Mensaje, TipoNotificacion.Info)); return false; }
                 ;
 
                 textoOcr = r.Payload;
@@ -113,26 +113,28 @@ namespace ContabeeCaptura.Fachada
                     Imagen = Imagen
                 });
             }
+
+            _hub.Publicar(new NotificacionUIEvent(this, "Trabajo encontrado puede continuar con la captura.", TipoNotificacion.Info));
+
+            return true;
         }
 
-        private void OnDescargaDetectada(DescargaDetectadaMensaje msg)
+        public async Task<bool> DescargaProcesamientoXML(string NombreArchivo, string RutaTemp, string Extension)
         {
-            if (msg == null) return;
-
-            var respuesta = _archivos.ProcesarDescarga(msg.NombreArchivo, msg.RutaTemp, msg.Extension);
-
-            if (!respuesta.Ok)
+            try
             {
-                _hub.Publicar(new NotificacionUIEvent(
-                    this,
-                    respuesta.Error.Mensaje ?? "Error al procesar archivo",
-                    TipoNotificacion.Error
-                ));
-                return;
-            }
+                var respuesta = _archivos.ProcesarDescarga(NombreArchivo, RutaTemp, Extension);
 
-            if (respuesta.Payload != null)
-            {
+                if (!respuesta.Ok) 
+                {
+                    _hub.Publicar(new NotificacionUIEvent(
+                        this,
+                        respuesta.Error.Mensaje ?? "Error al procesar archivo",
+                        TipoNotificacion.Error
+                    ));
+                    return false;
+                }
+
                 var info = _xml.ExtraerInfoCFDI(respuesta.Payload);
 
                 if (info.UUID != null && info.Fecha != null)
@@ -152,52 +154,84 @@ namespace ContabeeCaptura.Fachada
                         Fecha = fechaCFDI
                     });
                 }
-            }
-
-
-            _hub.Publicar(new NotificacionUIEvent(
-                this,
-                "Comprobantes descargados correctamente",
-                TipoNotificacion.Info
-            ));
-        }
-
-        private async void OnSolicitarCompletar(SolicitarCompletarCapturaMensaje msg)
-        {
-            if (!await _auth.AsegurarSesionValidaAsync())
-            {
-                _hub.Publicar(new NotificacionUIEvent(this, "Refresco de Autorización.", TipoNotificacion.Info));
-
-                return;
-            }
-
-            _hub.Publicar(new MostrarCompletarCapturaDialogMensaje
-            {
-                Sender = this,
-                Total = msg.Total
-            });
-        }
-
-        public async Task CompletarCapturaAsync(CompletarCapturaPagina datos, List<string> archivos)
-        {
-            await _blob.SubirArchivosBlob(_pagina,archivos);
-            datos.Id = _pagina.Id;
-            var r = await _api.CompletarPagina(datos);
-
-            if (!r.Ok)
-            {
                 _hub.Publicar(new NotificacionUIEvent(
                     this,
-                    $"Error al completar la captura: {r.Error.Mensaje}",
-                    TipoNotificacion.Error));
+                    "Comprobantes descargados correctamente",
+                    TipoNotificacion.Info
+                ));
+
+
             }
-            else
+            catch (Exception ex)
             {
+                _hub.Publicar(new NotificacionUIEvent(
+                this,
+                ex.ToString(),
+                TipoNotificacion.Info
+                ));
+            }
+
+            return true;
+        }
+
+        public async Task<bool> SubirArchivosAsync(List<string> comprobantes)
+        {
+            try
+            {
+                var respuesta = await _blob.SubirArchivosBlob(_pagina, comprobantes);
+                if (!respuesta.Ok)
+                {
+                    _hub.Publicar(new NotificacionUIEvent(
+                        this,
+                        respuesta.Error.Mensaje ?? "Error al procesar archivo",
+                        TipoNotificacion.Error
+                    ));
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                _hub.Publicar(new NotificacionUIEvent(
+                this,
+                ex.ToString(),
+                TipoNotificacion.Info
+                ));
+            }
+            return true;
+        }
+
+        public async Task<bool> CompletarCapturaAsync(CompletarCapturaPagina completar)
+        {
+            try
+            {
+                completar.Id = _pagina.Id;
+                var r = await _api.CompletarPagina(completar);
+
+                if (!r.Ok)
+                {
+                    _hub.Publicar(new NotificacionUIEvent(
+                        this,
+                        $"Error al completar la captura: {r.Error.Mensaje}",
+                        TipoNotificacion.Error));
+
+                    return false;
+                }
+
                 _hub.Publicar(new NotificacionUIEvent(
                     this,
                     "Captura finalizada correctamente",
                     TipoNotificacion.Info));
             }
+            catch (Exception ex)
+            {
+                _hub.Publicar(new NotificacionUIEvent(
+                this,
+                ex.ToString(),
+                TipoNotificacion.Info
+                ));
+            }
+
+            return true;
         }
     }
 }
