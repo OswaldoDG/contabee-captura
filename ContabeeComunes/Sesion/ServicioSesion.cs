@@ -11,11 +11,18 @@ namespace ContabeeComunes.Sesion
 
         public bool IsAuthenticated => !string.IsNullOrEmpty(InfoAccesso.access_token) && DateTime.UtcNow < Expiration;
 
-        public void EstablecerSesion(string userName, InfoAccesso infoAccesso)
+        public bool EstablecerSesion(string userName, InfoAccesso infoAccesso)
         {
+            if (infoAccesso == null)
+            {
+                return false;
+            }
+
             this.UserName = userName;  
             this.InfoAccesso = infoAccesso;
             Expiration = DateTime.UtcNow.AddSeconds(infoAccesso.expires_in - 60);
+
+            return true;
         }
 
         public InfoAccesso ObtenerInfoAccesso()

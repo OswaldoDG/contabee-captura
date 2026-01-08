@@ -10,6 +10,7 @@ using ContabeeComunes.Eventos;
 using ContabeeComunes.Fachada;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -44,14 +45,14 @@ namespace ContabeeCaptura.Fachada
 
             if (!await _auth.AsegurarSesionValidaAsync())
             {
-                _hub.Publicar(new NotificacionUIEvent(this, "Refresco de Autorización.", TipoNotificacion.Info)); return false;
+                _hub.Publicar(new NotificacionUIEvent(this, "Refresco de Autorización.", TipoNotificacion.Alerta)); return false;
             }
 
             _hub.Publicar(new MensajeClear { Sender = this });
 
             var datos = await _api.ObtienePagina();
 
-            if (!datos.Ok) { _hub.Publicar(new NotificacionUIEvent(this, datos.Error.Mensaje, TipoNotificacion.Info)); return false; }
+            if (!datos.Ok) { _hub.Publicar(new NotificacionUIEvent(this, "No fue posible la obtención de datos de la Captura intente más tarde", TipoNotificacion.Error)); return false; }
 
             _pagina = datos.Payload;
 
@@ -77,14 +78,14 @@ namespace ContabeeCaptura.Fachada
 
             if (!bytesImagen.Ok)
             {
-                _hub.Publicar(new NotificacionUIEvent(this, bytesImagen.Error.Mensaje, TipoNotificacion.Info)); return false;
+                _hub.Publicar(new NotificacionUIEvent(this, "Ocurrió un problema con la descarga del comprobante intente más tarde.", TipoNotificacion.Error)); return false;
             }
 
             byte[] Imagen = bytesImagen.Payload;
 
             if (Imagen == null && Imagen.Length == 0)
             {
-                _hub.Publicar(new NotificacionUIEvent(this, "No hay datos para mostrar", TipoNotificacion.Info)); return false;
+                _hub.Publicar(new NotificacionUIEvent(this, "No hay datos para mostrar", TipoNotificacion.Alerta)); return false;
             }
 
             string textoOcr = string.Empty;
@@ -93,7 +94,7 @@ namespace ContabeeCaptura.Fachada
             {
                 var r = await _vision.TextoOCR(msOcr);
 
-                if (!r.Ok) { _hub.Publicar(new NotificacionUIEvent(this, r.Error.Mensaje, TipoNotificacion.Info)); return false; }
+                if (!r.Ok) { _hub.Publicar(new NotificacionUIEvent(this, "No fue posible detectar texto de la imagen notifique al equipo técnico sobre el comprobante.", TipoNotificacion.Error)); return false; }
                 ;
 
                 textoOcr = r.Payload;
@@ -129,7 +130,7 @@ namespace ContabeeCaptura.Fachada
                 {
                     _hub.Publicar(new NotificacionUIEvent(
                         this,
-                        respuesta.Error.Mensaje ?? "Error al procesar archivo",
+                        "Ocurrió un problema la descargar los datos del XML por favor ingrese manualmente si fue posible la descarga del PDF.",
                         TipoNotificacion.Error
                     ));
                     return false;
@@ -137,7 +138,7 @@ namespace ContabeeCaptura.Fachada
 
                 var info = _xml.ExtraerInfoCFDI(respuesta.Payload);
 
-                if (info.UUID != null && info.Fecha != null)
+                if (info.UUID != null && info.Fecha != null && info.Total != null)
                 {
 
                     DateTime? fechaCFDI = null;
@@ -151,16 +152,15 @@ namespace ContabeeCaptura.Fachada
                     {
                         Sender = this,
                         UUID = info.UUID,
-                        Fecha = fechaCFDI
-                    });
+                        Fecha = fechaCFDI,
+                        Total = decimal.Parse(info.Total, CultureInfo.InvariantCulture)
+                });
                 }
                 _hub.Publicar(new NotificacionUIEvent(
                     this,
                     "Comprobantes descargados correctamente",
                     TipoNotificacion.Info
                 ));
-
-
             }
             catch (Exception ex)
             {
@@ -183,7 +183,7 @@ namespace ContabeeCaptura.Fachada
                 {
                     _hub.Publicar(new NotificacionUIEvent(
                         this,
-                        respuesta.Error.Mensaje ?? "Error al procesar archivo",
+                        "Error al subir los archivos a la nube",
                         TipoNotificacion.Error
                     ));
                     return false;
@@ -211,7 +211,7 @@ namespace ContabeeCaptura.Fachada
                 {
                     _hub.Publicar(new NotificacionUIEvent(
                         this,
-                        $"Error al completar la captura: {r.Error.Mensaje}",
+                        $"Error al completar la captura",
                         TipoNotificacion.Error));
 
                     return false;

@@ -59,7 +59,7 @@ namespace ContabeeCaptura.Controls
             textBoxRegimen.Text = "";
             textBoxCorreo.Text = "";
             textBoxDomicilio.Text = "";
-            textBoxRegimen.Text = "";
+            textBoxNombre.Text = "";
         }
 
         private void OnDatosRecibidos(DatosFiscalesMensaje msg)

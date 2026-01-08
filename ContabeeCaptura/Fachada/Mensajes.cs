@@ -58,6 +58,7 @@ namespace ContabeeComunes.Fachada
 
     public class CFDIMensaje : ITinyMessage 
     {
+        public decimal Total { get; set; }
         public string UUID { get; set; }
         public DateTime? Fecha { get; set; }
         public object Sender { get; set; }
@@ -65,7 +66,7 @@ namespace ContabeeComunes.Fachada
 
     public class DesglosarIEPSMensaje : ITinyMessage
     {
-        public object Sender { get; set; } 
-        public bool DesglosarIEPS {  get; set; }
+        public object Sender { get; set; }
+        public bool DesglosarIEPS { get; set; }
     }
 }

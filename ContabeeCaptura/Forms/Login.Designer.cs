@@ -34,7 +34,7 @@
             this.txtUser = new System.Windows.Forms.TextBox();
             this.txtPass = new System.Windows.Forms.TextBox();
             this.btnLogin = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnSalir = new System.Windows.Forms.Button();
             this.labelError = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -81,6 +81,7 @@
             // btnLogin
             // 
             this.btnLogin.BackColor = System.Drawing.Color.Gold;
+            this.btnLogin.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLogin.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnLogin.Location = new System.Drawing.Point(290, 77);
@@ -91,18 +92,19 @@
             this.btnLogin.UseVisualStyleBackColor = false;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
-            // button1
+            // btnSalir
             // 
-            this.button1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.button1.Location = new System.Drawing.Point(140, 77);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 40);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Salir";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnSalir.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.btnSalir.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSalir.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.btnSalir.Location = new System.Drawing.Point(140, 77);
+            this.btnSalir.Name = "btnSalir";
+            this.btnSalir.Size = new System.Drawing.Size(100, 40);
+            this.btnSalir.TabIndex = 5;
+            this.btnSalir.Text = "Salir";
+            this.btnSalir.UseVisualStyleBackColor = false;
+            this.btnSalir.Click += new System.EventHandler(this.button1_Click);
             // 
             // labelError
             // 
@@ -119,7 +121,7 @@
             this.ClientSize = new System.Drawing.Size(407, 132);
             this.Controls.Add(this.txtPass);
             this.Controls.Add(this.labelError);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.txtUser);
             this.Controls.Add(this.label2);
@@ -142,7 +144,7 @@
         private System.Windows.Forms.TextBox txtUser;
         private System.Windows.Forms.TextBox txtPass;
         private System.Windows.Forms.Button btnLogin;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSalir;
         private System.Windows.Forms.Label labelError;
     }
 }

@@ -25,8 +25,6 @@ namespace ContabeeApi.Archivos
             string carpetaDestinoBase = @"C:\comprobante";
             string carpetaDestino = Path.Combine(carpetaDestinoBase, carpetaPadre);
 
-            int contador = 1;
-
             try
             {
                 if (!Directory.Exists(carpetaDestino))
@@ -35,7 +33,7 @@ namespace ContabeeApi.Archivos
                 if (extension.Equals(".pdf", StringComparison.OrdinalIgnoreCase) ||
                     extension.Equals(".xml", StringComparison.OrdinalIgnoreCase))
                 {
-                    string nuevoNombre = $"{nombreArchivo}_{contador++}{extension}";
+                    string nuevoNombre = $"{nombreArchivo}-cfdi{extension}";
                     string rutaFinal = Path.Combine(carpetaDestino, nuevoNombre);
 
                     if (File.Exists(rutaFinal))
@@ -61,7 +59,7 @@ namespace ContabeeApi.Archivos
                         string ext = Path.GetExtension(archivo);
                         string rutaDirectorio = Path.GetDirectoryName(archivo);
 
-                        string nuevoNombre = $"{nombreArchivo}_{contador++}{ext}";
+                        string nuevoNombre = $"{nombreArchivo}-cdif{ext}";
                         string rutaDestino = Path.Combine(rutaDirectorio, nuevoNombre);
 
                         if (!archivo.Equals(rutaDestino, StringComparison.OrdinalIgnoreCase))

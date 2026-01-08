@@ -10,18 +10,18 @@ namespace ContabeeApi.XML
 {
     public class ServicioXML : IServicioXML
     {
-        public (string UUID, string Fecha) ExtraerInfoCFDI(string rutaXml)
+        public (string UUID, string Fecha, string Total) ExtraerInfoCFDI(string rutaXml)
         {
-            if (!File.Exists(rutaXml)) return (null, null);
+            if (!File.Exists(rutaXml)) return (null, null, null);
 
             XDocument xmlDoc = XDocument.Load(rutaXml);
 
             var comprobante = xmlDoc.Root;
-            if (comprobante == null) return (null, null);
+            if (comprobante == null) return (null, null, null);
 
             string version = comprobante.Attribute("Version")?.Value ?? comprobante.Attribute("version")?.Value;
 
-            if (string.IsNullOrEmpty(version)) return (null, null);
+            if (string.IsNullOrEmpty(version)) return (null, null, null);
 
             XNamespace cfdi = version.StartsWith("3")
                 ? "http://www.sat.gob.mx/cfd/3"
@@ -30,14 +30,14 @@ namespace ContabeeApi.XML
             XNamespace tfd = "http://www.sat.gob.mx/TimbreFiscalDigital";
 
             string fecha = comprobante.Attribute("Fecha")?.Value;
-
+            string Total = comprobante.Attribute("Total")?.Value;
             var timbre = comprobante
                 .Element(cfdi + "Complemento")
                 ?.Element(tfd + "TimbreFiscalDigital");
 
             string uuid = timbre?.Attribute("UUID")?.Value;
 
-            return (uuid, fecha);
+            return (uuid, fecha, Total);
         }
     }
 }

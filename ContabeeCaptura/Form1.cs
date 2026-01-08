@@ -42,6 +42,7 @@ namespace ContabeeCaptura
                     _hubEventos.Desuscribir(_subCompletar);
                     _hubEventos.Desuscribir(_subDescarga);
                     _hubEventos.Desuscribir(_subNombreCaptura);
+                    _hubEventos.Desuscribir(_subClear);
                 }
             };
             SetupUI();
@@ -95,6 +96,7 @@ namespace ContabeeCaptura
             if (this.InvokeRequired) { this.Invoke(new Action(() => OnLimpiarDatos(msg))); return; }
 
             labelBlob.Text = "PROCESO DE CAPTURA";
+            btnSiguiente.Enabled = true;
         }
         private void OnNombreMensajeDetectado(NombreBlobMensaje msg)
         {
@@ -102,7 +104,7 @@ namespace ContabeeCaptura
 
             if (this.InvokeRequired) { this.Invoke(new Action(() => OnNombreMensajeDetectado(msg))); return; }
 
-            labelBlob.Text = "PROCESO DE CAPTURA: " + Path.GetDirectoryName(msg.NombreBlob);
+            labelBlob.Text = "PROCESO DE CAPTURA LOTE " + Path.GetDirectoryName(msg.NombreBlob) + " COMPROBANTE " + Path.GetFileNameWithoutExtension(msg.NombreBlob);
         }
 
         private async void OnCompletarDatos(CompletarCapturaMensaje msg)
@@ -112,12 +114,18 @@ namespace ContabeeCaptura
 
             if (this.InvokeRequired) { this.Invoke(new Action(() => OnCompletarDatos(msg))); return; }
 
-            var respuestaArchivos = await _servicioFachada.SubirArchivosAsync(msg.Archivos);
-            if (!respuestaArchivos)
-            {
-                return;
+            if (msg.Archivos.Count > 0) 
+            { 
+                var respuestaArchivos = await _servicioFachada.SubirArchivosAsync(msg.Archivos); 
             }
+
             var respuesta = await _servicioFachada.CompletarCapturaAsync(msg.CapturaCompleta);
+
+
+            _hubEventos.Publicar(new MensajeClear()
+            {
+                Sender = this
+            });
         }
 
         private async void OnDescargaDetectada(DescargaDetectadaMensaje msg)
@@ -127,12 +135,13 @@ namespace ContabeeCaptura
 
             if (this.InvokeRequired) { this.Invoke(new Action(() => OnDescargaDetectada(msg))); return; }
 
-            await _servicioFachada.DescargaProcesamientoXML(msg.NombreArchivo, msg.RutaTemp, msg.Extension);
+            var r = await _servicioFachada.DescargaProcesamientoXML(msg.NombreArchivo, msg.RutaTemp, msg.Extension);
         }
 
         private async void btnSiguiente_Click(object sender, EventArgs e)
         {
             btnSiguiente.Enabled = false;
+
             this.Cursor = Cursors.WaitCursor;
             try
             {
@@ -144,7 +153,6 @@ namespace ContabeeCaptura
             }
             finally
             {
-                btnSiguiente.Enabled = true;
                 this.Cursor = Cursors.Default;
             }
         }

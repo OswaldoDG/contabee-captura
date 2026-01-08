@@ -43,11 +43,19 @@ namespace ContabeeCaptura.Controls
             await navegador.EnsureCoreWebView2Async(null);
             navegador.NavigationCompleted += Navegador_NavigationCompleted;
             navegador.CoreWebView2.DownloadStarting += CoreWebView2_DownloadStarting;
+            navegador.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
+        }
+
+        private void CoreWebView2_NewWindowRequested(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NewWindowRequestedEventArgs e)
+        {
+            e.Handled = true;
+            navegador.CoreWebView2.Navigate(e.Uri);
         }
 
         private void Navegador_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
         {
             textBoxURL.Text = navegador.Source.ToString();
+            txtBxUrl.Text = textBoxURL.Text;
             btnAtras.Enabled = navegador.CanGoBack;
             btnAdelante.Enabled = navegador.CanGoForward;
         }
@@ -79,18 +87,39 @@ namespace ContabeeCaptura.Controls
 
             textBoxUUID.Text = msg.UUID;
             textBoxFecha.Text = msg.Fecha.ToString();
+            textBoxTotal.Text = msg.Total.ToString();
         }
 
         private void OnLimpiarDatos(MensajeClear msg)
         {
+            if (msg == null) return;
+
+
+            if (this.InvokeRequired) { this.Invoke(new Action(() => OnLimpiarDatos(msg))); return; }
+
             _nombreBlob = string.Empty;
-            textBoxFecha.Text = string.Empty;
-            textBoxUUID.Text = string.Empty;
+            comprobantesPath.Clear();
+            listViewComprobantes.Clear();
+
+            labelIEPS.Visible = false;
+
+
+            textBoxURL.Text = string.Empty;
+            cbxTipoFuente.SelectedItem = null;
+            cbxMotivo.SelectedItem = null;
 
             chkBoxXML.Checked = false;
             chxBoxPDF.Checked = false;
-            checkBoxIEPS.Checked = false;
-            comprobantesPath.Clear();
+            sinChxXml.Checked = true;
+            sinChxPdf.Checked = true;
+            txtBxUrl.Text = string.Empty;
+            cbxTieneCaptcha.Checked = false;
+            textBoxFecha.Text = string.Empty;
+            textBoxUUID.Text = string.Empty;
+            txtBxComentario.Text = string.Empty;
+            textBoxTotal.Text = string.Empty;
+            cbxReprogramar.SelectedItem = null;
+            btnFinalizar.Enabled = false;
         }
         
         private void OnDesglosarIEPS(DesglosarIEPSMensaje msg)
@@ -99,7 +128,7 @@ namespace ContabeeCaptura.Controls
 
             if (this.InvokeRequired) { this.Invoke(new Action(() => OnDesglosarIEPS(msg))); return; }
 
-            checkBoxIEPS.Checked = msg.DesglosarIEPS;
+            labelIEPS.Visible = msg.DesglosarIEPS;
         }
 
         private void CoreWebView2_DownloadStarting(object sender, Microsoft.Web.WebView2.Core.CoreWebView2DownloadStartingEventArgs e)
@@ -128,10 +157,18 @@ namespace ContabeeCaptura.Controls
                         Extension = extension
                     });
 
-                    if (extension.Equals(".xml"))
+                    if (extension.Equals(".xml")) 
+                    {
                         chkBoxXML.Checked = true;
+                        sinChxXml.Checked = false;
+                    }      
+
                     if (extension.Equals(".pdf"))
+                    {
                         chxBoxPDF.Checked = true;
+                        sinChxPdf.Checked = false;
+                    }
+                        
                 }
             };
         }
@@ -170,39 +207,6 @@ namespace ContabeeCaptura.Controls
             
         }
 
-        private void btnFinalizar_Click(object sender, EventArgs e)
-        {
-            var completar = new CompletarCapturaPagina()
-            {
-                Reprogramar = cbxReprogramar.Text.Equals("Finalizar", StringComparison.OrdinalIgnoreCase) ? false : true,
-                Motivo = (MotivoEstado)Enum.Parse(typeof(MotivoEstado), cbxMotivo.Text),
-                TipoFuente = (TipoFuenteProcesamiento)Enum.Parse(typeof(TipoFuenteProcesamiento), cbxTipoFuente.Text),
-                Comentario = txtBxComentario.Text,
-                SinXml = chxXml.Checked,
-                SinPdf = chxPdf.Checked,
-                Url = txtBxUrl.Text,
-                TieneCaptcha = cbxTieneCaptcha.Checked,
-                Total = decimal.TryParse(textBoxTotal.Text, out var valor) ? valor : 0,
-                CfdiId = string.IsNullOrWhiteSpace(textBoxUUID.Text) ? "" : textBoxUUID.Text
-            };
-
-            if (DateTime.TryParse(textBoxFecha.Text, out DateTime temp))
-            {
-                completar.FechaCfdi = temp;
-            }
-            else
-            {
-                completar.FechaCfdi = null;
-            }
-
-            _hub.Publicar(new CompletarCapturaMensaje
-            {
-                Sender = this,
-                CapturaCompleta = completar,
-                Archivos = comprobantesPath
-            });
-        }
-
         private void btnComprobantes_Click(object sender, EventArgs e)
         {
             if (comprobantesPath.Count >= 2)
@@ -215,25 +219,34 @@ namespace ContabeeCaptura.Controls
             {
                 ofd.Multiselect = true;
                 ofd.Filter = "Archivos permitidos|*.pdf;*.jpg;*.jpeg;*.png;*.xml;*.html;*.txt;*.json;*.csv";
-
+                ofd.InitialDirectory = @"C:\comprobante";
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    foreach (string file in ofd.FileNames)
+                    listViewComprobantes.BeginUpdate();
+                    try
                     {
-                        if (comprobantesPath.Count >= 2)
+                        foreach (string file in ofd.FileNames)
                         {
-                            _hub.PublicarNotificacionUI(this, "Solo se permiten 2 comprobantes (PDF o XML).", TipoNotificacion.Alerta);
-                            break;
+                            if (comprobantesPath.Count >= 2)
+                            {
+                                _hub.PublicarNotificacionUI(this, "Solo se permiten 2 comprobantes (PDF o XML).", TipoNotificacion.Alerta);
+                                break;
+                            }
+
+                            comprobantesPath.Add(file);
+
+                            FileInfo fi = new FileInfo(file);
+
+                            ListViewItem item = new ListViewItem(fi.Name);
+
+                            listViewComprobantes.Items.Add(item);
                         }
-
-                        comprobantesPath.Add(file);
-
-                        FileInfo fi = new FileInfo(file);
-
-                        ListViewItem item = new ListViewItem(fi.Name);
-
-                        listViewComprobantes.Items.Add(item);
                     }
+                    finally
+                    {
+                        listViewComprobantes.EndUpdate();
+                    }
+                    
                 }
             }
         }
@@ -268,6 +281,78 @@ namespace ContabeeCaptura.Controls
         private void btnRecarga_Click(object sender, EventArgs e)
         {
             navegador.Reload();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            CancelarDatos();
+
+        }
+
+        private void CancelarDatos()
+        {
+            _nombreBlob = string.Empty;
+            comprobantesPath.Clear();
+            listViewComprobantes.Clear();
+            labelIEPS.Visible = false;
+
+
+            textBoxURL.Text = string.Empty;
+            cbxTipoFuente.SelectedItem = null;
+            cbxMotivo.SelectedItem = null;
+
+            chkBoxXML.Checked = false;
+            chxBoxPDF.Checked = false;
+            sinChxXml.Checked = true;
+            sinChxPdf.Checked = true; 
+            txtBxUrl.Text = string.Empty;
+            cbxTieneCaptcha.Checked = false;
+            textBoxFecha.Text = string.Empty;
+            textBoxUUID.Text = string.Empty;
+            txtBxComentario.Text = string.Empty;
+            textBoxTotal.Text = string.Empty;
+            cbxReprogramar.SelectedItem = null;
+            btnFinalizar.Enabled = false;
+
+            _hub.Publicar(new MensajeClear() { Sender = this});
+        }
+
+        private void cbxReprogramar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnFinalizar.Enabled = cbxReprogramar.SelectedIndex != -1;
+        }
+
+        private void btnFinalizar_Click_1(object sender, EventArgs e)
+        {
+            var completar = new CompletarCapturaPagina()
+            {
+                Reprogramar = cbxReprogramar.Text.Equals("Finalizar", StringComparison.OrdinalIgnoreCase) ? false : true,
+                Motivo = Enum.TryParse(cbxMotivo.Text, out MotivoEstado motivo) ? motivo : MotivoEstado.OtroError,
+                TipoFuente = Enum.TryParse(cbxTipoFuente.Text, out TipoFuenteProcesamiento tipoFuente) ? tipoFuente : TipoFuenteProcesamiento.Ninguno,
+                Comentario = string.IsNullOrWhiteSpace(txtBxComentario.Text) ? "" : txtBxComentario.Text,
+                SinXml = sinChxXml.Checked,
+                SinPdf = sinChxPdf.Checked,
+                Url = string.IsNullOrWhiteSpace(txtBxUrl.Text) ? "" : textBoxURL.Text,
+                TieneCaptcha = cbxTieneCaptcha.Checked,
+                Total = decimal.TryParse(textBoxTotal.Text, out var valor) ? valor : 0,
+                CfdiId = string.IsNullOrWhiteSpace(textBoxUUID.Text) ? "" : textBoxUUID.Text
+            };
+
+            if (DateTime.TryParse(textBoxFecha.Text, out DateTime temp))
+            {
+                completar.FechaCfdi = temp;
+            }
+            else
+            {
+                completar.FechaCfdi = null;
+            }
+
+            _hub.Publicar(new CompletarCapturaMensaje
+            {
+                Sender = this,
+                CapturaCompleta = completar,
+                Archivos = comprobantesPath
+            });
         }
     }
 }

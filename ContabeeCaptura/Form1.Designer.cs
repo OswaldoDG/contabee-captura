@@ -43,9 +43,9 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.ctlOCR2 = new ContabeeCaptura.Controls.CtlOCR();
             this.ctlDatosFiscales2 = new ContabeeCaptura.Controls.CtlDatosFiscales();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.ctlImagen2 = new ContabeeCaptura.Controls.CtlImagen();
             this.ctlFacturacion2 = new ContabeeCaptura.Controls.CtlFacturacion();
             this.statusStrip1.SuspendLayout();
@@ -140,9 +140,10 @@
             // btnSiguiente
             // 
             this.btnSiguiente.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnSiguiente.BackColor = System.Drawing.Color.Gold;
+            this.btnSiguiente.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.btnSiguiente.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSiguiente.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold);
+            this.btnSiguiente.ForeColor = System.Drawing.SystemColors.WindowText;
             this.btnSiguiente.Location = new System.Drawing.Point(1017, 13);
             this.btnSiguiente.Name = "btnSiguiente";
             this.btnSiguiente.Size = new System.Drawing.Size(192, 43);
@@ -220,7 +221,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.ctlFacturacion2);
             this.splitContainer2.Size = new System.Drawing.Size(1283, 659);
-            this.splitContainer2.SplitterDistance = 424;
+            this.splitContainer2.SplitterDistance = 423;
             this.splitContainer2.TabIndex = 0;
             // 
             // tabControl1
@@ -234,7 +235,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(424, 659);
+            this.tabControl1.Size = new System.Drawing.Size(423, 659);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -242,8 +243,8 @@
             this.tabPage1.Controls.Add(this.splitContainer3);
             this.tabPage1.Location = new System.Drawing.Point(4, 4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(416, 630);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Size = new System.Drawing.Size(415, 630);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Datos";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -262,17 +263,29 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.ctlDatosFiscales2);
-            this.splitContainer3.Size = new System.Drawing.Size(410, 624);
-            this.splitContainer3.SplitterDistance = 287;
+            this.splitContainer3.Size = new System.Drawing.Size(409, 624);
+            this.splitContainer3.SplitterDistance = 286;
             this.splitContainer3.SplitterWidth = 1;
             this.splitContainer3.TabIndex = 0;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.ctlImagen2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 4);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Size = new System.Drawing.Size(415, 630);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Imagen";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // ctlOCR2
             // 
             this.ctlOCR2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ctlOCR2.Location = new System.Drawing.Point(0, 0);
+            this.ctlOCR2.Margin = new System.Windows.Forms.Padding(4);
             this.ctlOCR2.Name = "ctlOCR2";
-            this.ctlOCR2.Size = new System.Drawing.Size(410, 287);
+            this.ctlOCR2.Size = new System.Drawing.Size(409, 286);
             this.ctlOCR2.TabIndex = 0;
             // 
             // ctlDatosFiscales2
@@ -280,27 +293,18 @@
             this.ctlDatosFiscales2.AutoScroll = true;
             this.ctlDatosFiscales2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ctlDatosFiscales2.Location = new System.Drawing.Point(0, 0);
+            this.ctlDatosFiscales2.Margin = new System.Windows.Forms.Padding(4);
             this.ctlDatosFiscales2.Name = "ctlDatosFiscales2";
-            this.ctlDatosFiscales2.Size = new System.Drawing.Size(410, 336);
+            this.ctlDatosFiscales2.Size = new System.Drawing.Size(409, 337);
             this.ctlDatosFiscales2.TabIndex = 0;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.ctlImagen2);
-            this.tabPage2.Location = new System.Drawing.Point(4, 4);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(416, 630);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Imagen";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // ctlImagen2
             // 
             this.ctlImagen2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ctlImagen2.Location = new System.Drawing.Point(3, 3);
+            this.ctlImagen2.Margin = new System.Windows.Forms.Padding(4);
             this.ctlImagen2.Name = "ctlImagen2";
-            this.ctlImagen2.Size = new System.Drawing.Size(410, 624);
+            this.ctlImagen2.Size = new System.Drawing.Size(409, 624);
             this.ctlImagen2.TabIndex = 0;
             // 
             // ctlFacturacion2
@@ -310,7 +314,7 @@
             this.ctlFacturacion2.Location = new System.Drawing.Point(0, 0);
             this.ctlFacturacion2.Margin = new System.Windows.Forms.Padding(2);
             this.ctlFacturacion2.Name = "ctlFacturacion2";
-            this.ctlFacturacion2.Size = new System.Drawing.Size(855, 659);
+            this.ctlFacturacion2.Size = new System.Drawing.Size(856, 659);
             this.ctlFacturacion2.TabIndex = 0;
             // 
             // Form1

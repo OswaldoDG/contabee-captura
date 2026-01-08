@@ -11,6 +11,6 @@ namespace ContabeeApi.XML
     /// </summary>
     public interface IServicioXML
     {
-        (string UUID, string Fecha) ExtraerInfoCFDI(string rutaXml);
+        (string UUID, string Fecha, string Total) ExtraerInfoCFDI(string rutaXml);
     }
 }

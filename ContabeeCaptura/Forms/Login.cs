@@ -30,20 +30,31 @@ namespace ContabeeCaptura.Forms
         private async void btnLogin_Click(object sender, EventArgs e)
         {
             this.btnLogin.Enabled = false;
+            this.btnSalir.Enabled = false;
             var respuesta = await _apiContabee.Login(txtUser.Text, txtPass.Text);
             if (respuesta.Ok)
             {
-                _servicioSesion.EstablecerSesion(txtUser.Text, respuesta.Payload);    
-                this.Hide();
-                var form1 = Program.ServiceProvider.GetService(typeof(ContabeeCaptura.Form1)) as ContabeeCaptura.Form1;
-                form1.Show(); 
-                // No cerrar la forma Login, mantiene la referencia a la app.
+                var r = _servicioSesion.EstablecerSesion(txtUser.Text, respuesta.Payload);
+
+                if (!r)
+                {
+                    labelError.MensajeEnLabel("Ocurrió un problema con el servidor intente más tarde.", TipoNotificacion.Error);
+                    this.btnSalir.Enabled = true;
+                }
+                else
+                {
+                    this.Hide();
+                    var form1 = Program.ServiceProvider.GetService(typeof(ContabeeCaptura.Form1)) as ContabeeCaptura.Form1;
+                    form1.Show();
+
+                }
             }
             else
             {
                 labelError.MensajeEnLabel("Usuario o contraseña incorrectos.", TipoNotificacion.Error);
 
                 this.btnLogin.Enabled = true;
+                this.btnSalir.Enabled = true;
             }
 
         }
