@@ -69,4 +69,10 @@ namespace ContabeeComunes.Fachada
         public object Sender { get; set; }
         public bool DesglosarIEPS { get; set; }
     }
+
+    public class SiguienteMensaje : ITinyMessage
+    { 
+        public object Sender { get; set; }
+        public bool ActivarSiguiente { get; set; }
+    }
 }

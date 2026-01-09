@@ -211,7 +211,7 @@ namespace ContabeeCaptura.Fachada
                 {
                     _hub.Publicar(new NotificacionUIEvent(
                         this,
-                        $"Error al completar la captura",
+                        $"Error al completar la captura. Tome nota del número de Lote y Comprobante.",
                         TipoNotificacion.Error));
 
                     return false;
@@ -221,6 +221,12 @@ namespace ContabeeCaptura.Fachada
                     this,
                     "Captura finalizada correctamente",
                     TipoNotificacion.Info));
+
+                _hub.Publicar(new SiguienteMensaje()
+                {
+                    Sender = this,
+                    ActivarSiguiente = true
+                });
             }
             catch (Exception ex)
             {

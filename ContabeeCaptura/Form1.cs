@@ -23,6 +23,7 @@ namespace ContabeeCaptura
         private Guid _subDescarga;
         private Guid _subCompletar;
         private Guid _subNombreCaptura;
+        private Guid _subSiguiente;
         public Form1(IServicioFachada servicioFachada, IServicioSesion servicioSesion, ITinyMessengerHub hub ,IHubEventos hubEventos, IApiContabee apiContabee)
         {
             _servicioSesion = servicioSesion as ServicioSesion;
@@ -43,6 +44,7 @@ namespace ContabeeCaptura
                     _hubEventos.Desuscribir(_subDescarga);
                     _hubEventos.Desuscribir(_subNombreCaptura);
                     _hubEventos.Desuscribir(_subClear);
+                    _hubEventos.Desuscribir(_subSiguiente);
                 }
             };
             SetupUI();
@@ -72,6 +74,7 @@ namespace ContabeeCaptura
             _subCompletar = _hubEventos.Suscribir<CompletarCapturaMensaje>(OnCompletarDatos);
             _subDescarga = _hubEventos.Suscribir<DescargaDetectadaMensaje>(OnDescargaDetectada);
             _subNombreCaptura = _hubEventos.Suscribir<NombreBlobMensaje>(OnNombreMensajeDetectado);
+            _subSiguiente = _hubEventos.Suscribir<SiguienteMensaje>(OnSiguienteActivacion);
         }
 
         private void Form1_Load(object sender, System.EventArgs e)
@@ -96,8 +99,17 @@ namespace ContabeeCaptura
             if (this.InvokeRequired) { this.Invoke(new Action(() => OnLimpiarDatos(msg))); return; }
 
             labelBlob.Text = "PROCESO DE CAPTURA";
+        }
+
+        private void OnSiguienteActivacion(SiguienteMensaje msg)
+        {
+            if (msg == null) return;
+
+            if (this.InvokeRequired) { this.Invoke(new Action(() => OnSiguienteActivacion(msg))); return; }
+
             btnSiguiente.Enabled = true;
         }
+
         private void OnNombreMensajeDetectado(NombreBlobMensaje msg)
         {
             if (msg == null) return;

@@ -5,6 +5,7 @@ using ContabeeCaptura.Fachada;
 using ContabeeComunes;
 using ContabeeComunes.Eventos;
 using ContabeeComunes.Fachada;
+using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,6 +42,7 @@ namespace ContabeeCaptura.Controls
         private async void IniciarWeb()
         {
             await navegador.EnsureCoreWebView2Async(null);
+            navegador.CoreWebView2.Navigate("https://www.google.com");
             navegador.NavigationCompleted += Navegador_NavigationCompleted;
             navegador.CoreWebView2.DownloadStarting += CoreWebView2_DownloadStarting;
             navegador.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
@@ -120,6 +122,7 @@ namespace ContabeeCaptura.Controls
             textBoxTotal.Text = string.Empty;
             cbxReprogramar.SelectedItem = null;
             btnFinalizar.Enabled = false;
+            navegador.Source = new Uri("https://www.google.com");
         }
         
         private void OnDesglosarIEPS(DesglosarIEPSMensaje msg)
@@ -138,11 +141,13 @@ namespace ContabeeCaptura.Controls
             string carpetaDestino = @"C:\comprobante";
             Directory.CreateDirectory(carpetaDestino);
 
-            string extension = Path.GetExtension(downloadOperation.ResultFilePath).ToLower();
-            string archivoTemporal = Path.Combine(carpetaDestino, "temp_descarga" + extension);
+            string nombreArchivo = Path.GetFileName(e.ResultFilePath);
+            string extension = Path.GetExtension(nombreArchivo).ToLower();
 
-            e.ResultFilePath = archivoTemporal;
-            e.Handled = false;
+            string rutaFinal = Path.Combine(carpetaDestino, nombreArchivo);
+
+            e.ResultFilePath = rutaFinal;
+            e.Handled = true;
 
             downloadOperation.StateChanged += (s, ev) =>
             {
@@ -153,7 +158,7 @@ namespace ContabeeCaptura.Controls
                     {
                         Sender = this,
                         NombreArchivo = _nombreBlob,
-                        RutaTemp = archivoTemporal,
+                        RutaTemp = rutaFinal,
                         Extension = extension
                     });
 
@@ -314,7 +319,14 @@ namespace ContabeeCaptura.Controls
             cbxReprogramar.SelectedItem = null;
             btnFinalizar.Enabled = false;
 
+            navegador.Source = new Uri("https://www.google.com");
+
             _hub.Publicar(new MensajeClear() { Sender = this});
+            _hub.Publicar(new SiguienteMensaje()
+            {
+                Sender = this,
+                ActivarSiguiente = true
+            });
         }
 
         private void cbxReprogramar_SelectedIndexChanged(object sender, EventArgs e)
@@ -324,6 +336,10 @@ namespace ContabeeCaptura.Controls
 
         private void btnFinalizar_Click_1(object sender, EventArgs e)
         {
+            btnFinalizar.Enabled = false;
+
+            _hub.PublicarNotificacionUI(this, "Por favor espere, se está finalizando la captura. Cuando se limpien los datos de la pantalla puede continuar.", TipoNotificacion.Alerta);
+
             var completar = new CompletarCapturaPagina()
             {
                 Reprogramar = cbxReprogramar.Text.Equals("Finalizar", StringComparison.OrdinalIgnoreCase) ? false : true,

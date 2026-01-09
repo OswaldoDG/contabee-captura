@@ -336,6 +336,7 @@
             this.tableLayoutPanel6.Controls.Add(this.label10, 0, 8);
             this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel5, 0, 7);
             this.tableLayoutPanel6.Controls.Add(this.btnCancel, 0, 12);
+            this.tableLayoutPanel6.Cursor = System.Windows.Forms.Cursors.Default;
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.ForeColor = System.Drawing.SystemColors.ControlText;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 3);
@@ -497,6 +498,7 @@
             // 
             // cbxMotivo
             // 
+            this.cbxMotivo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.cbxMotivo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbxMotivo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxMotivo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
@@ -519,6 +521,7 @@
             // 
             // cbxTipoFuente
             // 
+            this.cbxTipoFuente.Cursor = System.Windows.Forms.Cursors.Hand;
             this.cbxTipoFuente.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbxTipoFuente.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxTipoFuente.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
@@ -647,6 +650,7 @@
             // 
             // cbxReprogramar
             // 
+            this.cbxReprogramar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.cbxReprogramar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxReprogramar.FormattingEnabled = true;
             this.cbxReprogramar.Items.AddRange(new object[] {

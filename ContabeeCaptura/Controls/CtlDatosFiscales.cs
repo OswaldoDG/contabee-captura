@@ -60,6 +60,7 @@ namespace ContabeeCaptura.Controls
             textBoxCorreo.Text = "";
             textBoxDomicilio.Text = "";
             textBoxNombre.Text = "";
+            textBoxComentario.Text = "";
         }
 
         private void OnDatosRecibidos(DatosFiscalesMensaje msg)
@@ -81,6 +82,7 @@ namespace ContabeeCaptura.Controls
                 textBoxCorreo.Text = _servicioSesion.ObtenerNombreUsuario();
                 textBoxDomicilio.Text = msg.Datos.Direccion;
                 textBoxNombre.Text = msg.Datos.Denominacion;
+                textBoxComentario.Text = msg.Datos.Comentarios;
             }
         }
 
@@ -96,6 +98,7 @@ namespace ContabeeCaptura.Controls
             btnDomicilio.Tag = textBoxDomicilio;
             btnCorreo.Tag = textBoxCorreo;
             btnNombre.Tag = textBoxNombre;
+            btnComentario.Tag = textBoxComentario;
 
             btnRFC.Click += Copiar_Click;
             btnPago.Click += Copiar_Click;
@@ -107,6 +110,7 @@ namespace ContabeeCaptura.Controls
             btnDomicilio.Click += Copiar_Click;
             btnCorreo.Click += Copiar_Click;
             btnNombre.Click += Copiar_Click;
+            btnComentario.Click += Copiar_Click;
         }
 
         private void Copiar_Click(object sender, EventArgs e)
