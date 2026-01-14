@@ -1,7 +1,15 @@
 ﻿using ContabeeApi;
+using ContabeeApi.Archivos;
+using ContabeeApi.Auth;
+using ContabeeApi.Blob;
+using ContabeeApi.Vision;
+using ContabeeApi.XML;
+using ContabeeCaptura.Fachada;
 using ContabeeCaptura.Forms;
+using ContabeeCaptura.Parciales;
 using ContabeeComunes.Configuracion;
 using ContabeeComunes.Eventos;
+using ContabeeComunes.Fachada;
 using ContabeeComunes.ProxyGenerico;
 using ContabeeComunes.Sesion;
 using Microsoft.Extensions.Configuration;
@@ -55,17 +63,24 @@ namespace ContabeeCaptura
 
             // Configuración de ApiConfig desde appsettings
             services.Configure<ApiConfig>(Configuration.GetSection("ApiConfig"));
-
+            services.Configure<AzureConfig>(Configuration.GetSection("AzureConfig"));
 
 
             // Registrar Form1
             services.AddTransient<Form1>();
             services.AddTransient<Login>();
+            services.AddTransient<CompletarCaptura>();
             services.AddSingleton<ITinyMessengerHub, TinyMessengerHub>();
             services.AddSingleton<IHubEventos, HubEventos>();
             services.AddSingleton<IProxyGenerico, ProxyGenerico>();
-            services.AddSingleton< IServicioSesion, ServicioSesion > ();
+            services.AddSingleton<IServicioSesion, ServicioSesion >();
+            services.AddSingleton<IServicioAuth, ServicioAuth>();
             services.AddTransient<IApiContabee, ApiContabee>();
+            services.AddTransient<IServicioBlob, ServicioBlob>();
+            services.AddTransient<IServicioVision, ServicioVision>();
+            services.AddTransient<IServicioXML, ServicioXML>();
+            services.AddTransient<IServicioArchivos, ServicioArchivos>();
+            services.AddTransient<IServicioFachada, ServicioFachada>();
             services.AddHttpClient();
 
             ServiceProvider = services.BuildServiceProvider();

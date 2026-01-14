@@ -34,7 +34,7 @@
             this.txtUser = new System.Windows.Forms.TextBox();
             this.txtPass = new System.Windows.Forms.TextBox();
             this.btnLogin = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnSalir = new System.Windows.Forms.Button();
             this.labelError = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -44,7 +44,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(12, 13);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(74, 20);
+            this.label1.Size = new System.Drawing.Size(64, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "Usuario";
             // 
@@ -54,7 +54,7 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(12, 45);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(105, 20);
+            this.label2.Size = new System.Drawing.Size(91, 17);
             this.label2.TabIndex = 1;
             this.label2.Text = "Contraseña";
             // 
@@ -63,20 +63,25 @@
             this.txtUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtUser.Location = new System.Drawing.Point(140, 13);
             this.txtUser.Name = "txtUser";
-            this.txtUser.Size = new System.Drawing.Size(250, 26);
+            this.txtUser.Size = new System.Drawing.Size(250, 23);
             this.txtUser.TabIndex = 2;
+            this.txtUser.Text = "admin@externo.com";
             // 
             // txtPass
             // 
+            this.txtPass.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPass.Location = new System.Drawing.Point(140, 45);
+            this.txtPass.Location = new System.Drawing.Point(140, 46);
             this.txtPass.Name = "txtPass";
-            this.txtPass.Size = new System.Drawing.Size(250, 26);
+            this.txtPass.Size = new System.Drawing.Size(250, 16);
             this.txtPass.TabIndex = 3;
+            this.txtPass.Text = "Pa$$w0rd";
+            this.txtPass.UseSystemPasswordChar = true;
             // 
             // btnLogin
             // 
             this.btnLogin.BackColor = System.Drawing.Color.Gold;
+            this.btnLogin.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLogin.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnLogin.Location = new System.Drawing.Point(290, 77);
@@ -87,22 +92,24 @@
             this.btnLogin.UseVisualStyleBackColor = false;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
-            // button1
+            // btnSalir
             // 
-            this.button1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.button1.Location = new System.Drawing.Point(140, 77);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 40);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Salir";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnSalir.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.btnSalir.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSalir.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.btnSalir.Location = new System.Drawing.Point(140, 77);
+            this.btnSalir.Name = "btnSalir";
+            this.btnSalir.Size = new System.Drawing.Size(100, 40);
+            this.btnSalir.TabIndex = 5;
+            this.btnSalir.Text = "Salir";
+            this.btnSalir.UseVisualStyleBackColor = false;
+            this.btnSalir.Click += new System.EventHandler(this.button1_Click);
             // 
             // labelError
             // 
             this.labelError.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.labelError.Location = new System.Drawing.Point(0, 137);
+            this.labelError.Location = new System.Drawing.Point(0, 116);
             this.labelError.Name = "labelError";
             this.labelError.Size = new System.Drawing.Size(407, 16);
             this.labelError.TabIndex = 6;
@@ -111,11 +118,11 @@
             // Login
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(407, 153);
-            this.Controls.Add(this.labelError);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.btnLogin);
+            this.ClientSize = new System.Drawing.Size(407, 132);
             this.Controls.Add(this.txtPass);
+            this.Controls.Add(this.labelError);
+            this.Controls.Add(this.btnSalir);
+            this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.txtUser);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -137,7 +144,7 @@
         private System.Windows.Forms.TextBox txtUser;
         private System.Windows.Forms.TextBox txtPass;
         private System.Windows.Forms.Button btnLogin;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSalir;
         private System.Windows.Forms.Label labelError;
     }
 }

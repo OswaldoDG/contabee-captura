@@ -1,4 +1,12 @@
-﻿using System.Windows.Forms;
+﻿using ContabeeApi.Modelos.Captura;
+using ContabeeCaptura.Forms;
+using ContabeeComunes;
+using System;
+using System.IO;
+using System.Net.Http;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ContabeeCaptura
 {
@@ -15,7 +23,6 @@ namespace ContabeeCaptura
         {
             return ContabeeComunes.Constantes.GDPARAM.Replace("A", "4");
         }
-
 
     }
 }
