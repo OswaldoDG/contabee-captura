@@ -20,6 +20,10 @@ namespace ContabeeCaptura.Controls
         public CtlImagen()
         {
             InitializeComponent();
+            SetStyle(ControlStyles.AllPaintingInWmPaint |
+                    ControlStyles.OptimizedDoubleBuffer |
+                    ControlStyles.UserPaint, true);
+            UpdateStyles();
             this.AutoScaleMode = AutoScaleMode.Dpi;
             this.visorImagen.SetLicenseNumber(GetGDlic());
             this.HandleDestroyed += (s, e) => LimpiarTodo();

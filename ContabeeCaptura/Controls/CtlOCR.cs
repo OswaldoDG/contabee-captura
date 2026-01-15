@@ -23,6 +23,10 @@ namespace ContabeeCaptura.Controls
         public CtlOCR()
         {
             InitializeComponent();
+            SetStyle(ControlStyles.AllPaintingInWmPaint |
+                    ControlStyles.OptimizedDoubleBuffer |
+                    ControlStyles.UserPaint, true);
+            UpdateStyles();
             this.AutoScaleMode = AutoScaleMode.Dpi;
             this.HandleDestroyed += (s, e) => {
                 if (_hub != null)

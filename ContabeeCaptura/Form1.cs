@@ -47,6 +47,10 @@ namespace ContabeeCaptura
                     _hubEventos.Desuscribir(_subSiguiente);
                 }
             };
+            SetStyle(ControlStyles.AllPaintingInWmPaint |
+                    ControlStyles.OptimizedDoubleBuffer |
+                    ControlStyles.UserPaint, true);
+            UpdateStyles();
             SetupUI();
         }
 

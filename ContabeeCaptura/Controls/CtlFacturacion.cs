@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ContabeeCaptura.Controls
 {
@@ -27,6 +26,10 @@ namespace ContabeeCaptura.Controls
         public CtlFacturacion()
         {
             InitializeComponent();
+            SetStyle(ControlStyles.AllPaintingInWmPaint |
+                    ControlStyles.OptimizedDoubleBuffer |
+                    ControlStyles.UserPaint, true);
+            UpdateStyles();
             this.AutoScaleMode = AutoScaleMode.Dpi;
             this.HandleDestroyed += (s, e) => {
                 if (_hub != null)
@@ -102,16 +105,10 @@ namespace ContabeeCaptura.Controls
             _nombreBlob = string.Empty;
             comprobantesPath.Clear();
             listViewComprobantes.Clear();
-
             labelIEPS.Visible = false;
-
-
             textBoxURL.Text = string.Empty;
             cbxTipoFuente.SelectedItem = null;
             cbxMotivo.SelectedItem = null;
-
-            chkBoxXML.Checked = false;
-            chxBoxPDF.Checked = false;
             sinChxXml.Checked = true;
             sinChxPdf.Checked = true;
             txtBxUrl.Text = string.Empty;
@@ -149,33 +146,45 @@ namespace ContabeeCaptura.Controls
             e.ResultFilePath = rutaFinal;
             e.Handled = true;
 
-            downloadOperation.StateChanged += (s, ev) =>
+            downloadOperation.StateChanged += DownloadOperation_StateChanged;
+        }
+
+        private void DownloadOperation_StateChanged(object sender, object e)
+        {
+            var download = (CoreWebView2DownloadOperation)sender;
+
+            if (download.State == CoreWebView2DownloadState.Completed)
             {
-                if (downloadOperation.State ==
-                    Microsoft.Web.WebView2.Core.CoreWebView2DownloadState.Completed)
+                if ((ulong)download.BytesReceived == download.TotalBytesToReceive)
                 {
+                    var extension = Path.GetExtension(download.ResultFilePath);
+                    _hub.PublicarNotificacionUI(this, "La descarga se completó satisfactoriamente", TipoNotificacion.Info);
+
                     _hub.Publicar(new DescargaDetectadaMensaje
                     {
                         Sender = this,
                         NombreArchivo = _nombreBlob,
-                        RutaTemp = rutaFinal,
+                        RutaTemp = download.ResultFilePath,
                         Extension = extension
                     });
 
-                    if (extension.Equals(".xml")) 
+                    if (extension.Equals(".xml"))
                     {
-                        chkBoxXML.Checked = true;
                         sinChxXml.Checked = false;
-                    }      
+                    }
 
                     if (extension.Equals(".pdf"))
                     {
-                        chxBoxPDF.Checked = true;
                         sinChxPdf.Checked = false;
                     }
-                        
                 }
-            };
+
+            }
+            else if (download.State == CoreWebView2DownloadState.Interrupted)
+            {
+                _hub.PublicarNotificacionUI(this, "La descarga se completó satisfactoriamente", TipoNotificacion.Info);
+            }
+
         }
 
         private async void btnBuscar_Click(object sender, EventArgs e)
@@ -236,6 +245,16 @@ namespace ContabeeCaptura.Controls
                             {
                                 _hub.PublicarNotificacionUI(this, "Solo se permiten 2 comprobantes (PDF o XML).", TipoNotificacion.Alerta);
                                 break;
+                            }
+
+                            if (Path.GetExtension(file).Equals(".xml"))
+                            {
+                                sinChxXml.Checked = false;
+                            }
+
+                            if (Path.GetExtension(file).Equals(".pdf"))
+                            {
+                                sinChxPdf.Checked = false;
                             }
 
                             comprobantesPath.Add(file);
@@ -300,14 +319,9 @@ namespace ContabeeCaptura.Controls
             comprobantesPath.Clear();
             listViewComprobantes.Clear();
             labelIEPS.Visible = false;
-
-
             textBoxURL.Text = string.Empty;
             cbxTipoFuente.SelectedItem = null;
             cbxMotivo.SelectedItem = null;
-
-            chkBoxXML.Checked = false;
-            chxBoxPDF.Checked = false;
             sinChxXml.Checked = true;
             sinChxPdf.Checked = true; 
             txtBxUrl.Text = string.Empty;
