@@ -2,6 +2,7 @@
 using ContabeeApi.Archivos;
 using ContabeeApi.Auth;
 using ContabeeApi.Blob;
+using ContabeeApi.DB;
 using ContabeeApi.Modelos.Captura;
 using ContabeeApi.Vision;
 using ContabeeApi.XML;
@@ -25,16 +26,18 @@ namespace ContabeeCaptura.Fachada
         private readonly IServicioArchivos _archivos;
         private readonly IServicioAuth _auth;
         private readonly IServicioXML _xml;
+        private readonly IServicioDB _dB;
 
         private PaginaTrabajoCapturaCloud _pagina;
 
-        public ServicioFachada(IApiContabee api, IHubEventos hub, IServicioBlob blob, IServicioVision vision, IServicioAuth auth, IServicioXML xml, IServicioArchivos archivos)
+        public ServicioFachada(IApiContabee api, IHubEventos hub, IServicioBlob blob, IServicioVision vision, IServicioAuth auth, IServicioXML xml, IServicioArchivos archivos, IServicioDB dB)
         {
             _api = api;
             _hub = hub;
             _vision = vision;
             _blob = blob;
             _auth = auth;
+            _dB = dB;
             _xml = xml;
             _archivos = archivos;
         }
@@ -45,14 +48,20 @@ namespace ContabeeCaptura.Fachada
 
             if (!await _auth.AsegurarSesionValidaAsync())
             {
-                _hub.Publicar(new NotificacionUIEvent(this, "Refresco de Autorización.", TipoNotificacion.Alerta)); return false;
+                _hub.Publicar(new NotificacionUIEvent(this, "Refresco de Autorización.", TipoNotificacion.Alerta));
+                return false; 
             }
 
             _hub.Publicar(new MensajeClear { Sender = this });
 
             var datos = await _api.ObtienePagina();
 
-            if (!datos.Ok) { _hub.Publicar(new NotificacionUIEvent(this, "No fue posible la obtención de datos de la Captura intente más tarde", TipoNotificacion.Error)); return false; }
+            if (!datos.Ok) 
+            {
+                _hub.Publicar(new NotificacionUIEvent(this, "No fue posible la obtención de datos de la Captura intente más tarde", TipoNotificacion.Error));
+                _hub.Publicar(new MensajeClear { Sender = this });
+                return false; 
+            }
 
             _pagina = datos.Payload;
 
@@ -78,14 +87,18 @@ namespace ContabeeCaptura.Fachada
 
             if (!bytesImagen.Ok)
             {
-                _hub.Publicar(new NotificacionUIEvent(this, "Ocurrió un problema con la descarga del comprobante intente más tarde.", TipoNotificacion.Error)); return false;
+                _hub.Publicar(new NotificacionUIEvent(this, "Ocurrió un problema con la descarga del comprobante intente más tarde.", TipoNotificacion.Error));
+                _hub.Publicar(new MensajeClear { Sender = this });
+                return false;
             }
 
             byte[] Imagen = bytesImagen.Payload;
 
             if (Imagen == null && Imagen.Length == 0)
             {
-                _hub.Publicar(new NotificacionUIEvent(this, "No hay datos para mostrar", TipoNotificacion.Alerta)); return false;
+                _hub.Publicar(new NotificacionUIEvent(this, "No hay datos para mostrar", TipoNotificacion.Alerta));
+                _hub.Publicar(new MensajeClear { Sender = this });
+                return false;
             }
 
             string textoOcr = string.Empty;
@@ -94,8 +107,12 @@ namespace ContabeeCaptura.Fachada
             {
                 var r = await _vision.TextoOCR(msOcr);
 
-                if (!r.Ok) { _hub.Publicar(new NotificacionUIEvent(this, "No fue posible detectar texto de la imagen notifique al equipo técnico sobre el comprobante.", TipoNotificacion.Error)); return false; }
-                ;
+                if (!r.Ok) 
+                {
+                    _hub.Publicar(new NotificacionUIEvent(this, "No fue posible detectar texto de la imagen notifique al equipo técnico sobre el comprobante.", TipoNotificacion.Error));
+                    _hub.Publicar(new MensajeClear { Sender = this });
+                    return false; 
+                }
 
                 textoOcr = r.Payload;
             }
@@ -168,7 +185,7 @@ namespace ContabeeCaptura.Fachada
                 this,
                 ex.ToString(),
                 TipoNotificacion.Info
-                ));
+                ));                
             }
 
             return true;
@@ -214,6 +231,8 @@ namespace ContabeeCaptura.Fachada
                         $"Error al completar la captura. Tome nota del número de Lote y Comprobante.",
                         TipoNotificacion.Error));
 
+                    _hub.Publicar(new MensajeClear { Sender = this });
+
                     return false;
                 }
 
@@ -238,6 +257,17 @@ namespace ContabeeCaptura.Fachada
             }
 
             return true;
+        }
+
+        public async Task<bool> MataZombies()
+        {
+            _hub.Publicar(new NotificacionUIEvent(
+                this,
+                "Matando zombies...",
+                TipoNotificacion.Info
+            ));
+
+            return await _dB.EliminaZombies();
         }
     }
 }

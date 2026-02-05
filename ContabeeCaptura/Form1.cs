@@ -1,5 +1,4 @@
-﻿using ContabeeApi;
-using ContabeeCaptura.Extensiones;
+﻿using ContabeeCaptura.Extensiones;
 using ContabeeCaptura.Fachada;
 using ContabeeComunes;
 using ContabeeComunes.Eventos;
@@ -7,7 +6,6 @@ using ContabeeComunes.Fachada;
 using ContabeeComunes.Sesion;
 using System;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TinyMessenger;
 
@@ -24,7 +22,7 @@ namespace ContabeeCaptura
         private Guid _subCompletar;
         private Guid _subNombreCaptura;
         private Guid _subSiguiente;
-        public Form1(IServicioFachada servicioFachada, IServicioSesion servicioSesion, ITinyMessengerHub hub ,IHubEventos hubEventos, IApiContabee apiContabee)
+        public Form1(IServicioFachada servicioFachada, IServicioSesion servicioSesion, ITinyMessengerHub hub ,IHubEventos hubEventos)
         {
             _servicioSesion = servicioSesion as ServicioSesion;
             _hub = hub;
@@ -103,6 +101,7 @@ namespace ContabeeCaptura
             if (this.InvokeRequired) { this.Invoke(new Action(() => OnLimpiarDatos(msg))); return; }
 
             labelBlob.Text = "PROCESO DE CAPTURA";
+            btnSiguiente.Enabled = true;
         }
 
         private void OnSiguienteActivacion(SiguienteMensaje msg)
@@ -161,6 +160,14 @@ namespace ContabeeCaptura
             this.Cursor = Cursors.WaitCursor;
             try
             {
+                var r = await _servicioFachada.MataZombies();
+
+                if (!r)
+                {
+                    _hubEventos.PublicarNotificacionUI(this, $"No se encontraron zombies para eliminar.", TipoNotificacion.Error);
+                }
+                    
+                _hubEventos.PublicarNotificacionUI(this, $"Zombies eliminados...", TipoNotificacion.Info);
                 await _servicioFachada.SiguienteTrabajoAsync();
             }
             catch (Exception ex)

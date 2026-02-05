@@ -9,6 +9,7 @@ using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Windows.Forms;
 
 namespace ContabeeCaptura.Controls
@@ -22,6 +23,7 @@ namespace ContabeeCaptura.Controls
         private Guid _subCfdi;
         private Guid _subIEPS;
         public List<string> comprobantesPath = new List<string>();
+        private bool _descargaProcesada = false;
 
         public CtlFacturacion()
         {
@@ -49,6 +51,84 @@ namespace ContabeeCaptura.Controls
             navegador.NavigationCompleted += Navegador_NavigationCompleted;
             navegador.CoreWebView2.DownloadStarting += CoreWebView2_DownloadStarting;
             navegador.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
+            navegador.CoreWebView2.NavigationStarting += CoreWebView2_NavigationStarting;
+        }
+
+        private void CoreWebView2_NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
+        {
+            string url = e.Uri;
+
+            if (url.EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
+            {
+                e.Cancel = true;
+
+                string carpetaDestino = @"C:\comprobante";
+                Directory.CreateDirectory(carpetaDestino);
+
+                string nombreArchivo = Path.GetFileName(url);
+                string rutaFinal = Path.Combine(carpetaDestino, nombreArchivo);
+
+                using (var client = new System.Net.WebClient())
+                {
+                    client.DownloadFile(url, rutaFinal);
+                }
+
+                PublicarDescarga(rutaFinal);
+            }
+        }
+
+        private void CoreWebView2_DownloadStarting(object sender, Microsoft.Web.WebView2.Core.CoreWebView2DownloadStartingEventArgs e)
+        {
+            var downloadOperation = e.DownloadOperation;
+            _descargaProcesada = false;
+
+            string carpetaDestino = @"C:\comprobante";
+            Directory.CreateDirectory(carpetaDestino);
+
+            string nombreArchivo = Path.GetFileName(e.ResultFilePath);
+            string extension = Path.GetExtension(nombreArchivo).ToLower();
+
+            string rutaFinal = Path.Combine(carpetaDestino, nombreArchivo);
+
+            e.ResultFilePath = rutaFinal;
+            e.Handled = true;
+
+            downloadOperation.StateChanged += DownloadOperation_StateChanged;
+
+            if (downloadOperation.State == CoreWebView2DownloadState.Completed && !_descargaProcesada)
+            {
+                _descargaProcesada = true;
+                PublicarDescarga(rutaFinal);
+            }
+        }
+
+        private void DownloadOperation_StateChanged(object sender, object e)
+        {
+            var download = (CoreWebView2DownloadOperation)sender;
+
+            if (download.State == CoreWebView2DownloadState.Completed && !_descargaProcesada)
+            {
+                _descargaProcesada = true;
+                PublicarDescarga(download.ResultFilePath);
+            }
+        }
+
+        private void PublicarDescarga(string rutaArchivo)
+        {
+            string extension = Path.GetExtension(rutaArchivo).ToLower();
+
+            _hub.PublicarNotificacionUI(this, "La descarga se completó satisfactoriamente", TipoNotificacion.Info);
+
+            _hub.Publicar(new DescargaDetectadaMensaje
+            {
+                Sender = this,
+                NombreArchivo = _nombreBlob,
+                RutaTemp = rutaArchivo,
+                Extension = extension
+            });
+
+            if (extension == ".xml") sinChxXml.Checked = false;
+            if (extension == ".pdf") sinChxPdf.Checked = false;
         }
 
         private void CoreWebView2_NewWindowRequested(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NewWindowRequestedEventArgs e)
@@ -129,62 +209,6 @@ namespace ContabeeCaptura.Controls
             if (this.InvokeRequired) { this.Invoke(new Action(() => OnDesglosarIEPS(msg))); return; }
 
             labelIEPS.Visible = msg.DesglosarIEPS;
-        }
-
-        private void CoreWebView2_DownloadStarting(object sender, Microsoft.Web.WebView2.Core.CoreWebView2DownloadStartingEventArgs e)
-        {
-            var downloadOperation = e.DownloadOperation;
-
-            string carpetaDestino = @"C:\comprobante";
-            Directory.CreateDirectory(carpetaDestino);
-
-            string nombreArchivo = Path.GetFileName(e.ResultFilePath);
-            string extension = Path.GetExtension(nombreArchivo).ToLower();
-
-            string rutaFinal = Path.Combine(carpetaDestino, nombreArchivo);
-
-            e.ResultFilePath = rutaFinal;
-            e.Handled = true;
-
-            downloadOperation.StateChanged += DownloadOperation_StateChanged;
-        }
-
-        private void DownloadOperation_StateChanged(object sender, object e)
-        {
-            var download = (CoreWebView2DownloadOperation)sender;
-
-            if (download.State == CoreWebView2DownloadState.Completed)
-            {
-                if ((ulong)download.BytesReceived == download.TotalBytesToReceive)
-                {
-                    var extension = Path.GetExtension(download.ResultFilePath);
-                    _hub.PublicarNotificacionUI(this, "La descarga se completó satisfactoriamente", TipoNotificacion.Info);
-
-                    _hub.Publicar(new DescargaDetectadaMensaje
-                    {
-                        Sender = this,
-                        NombreArchivo = _nombreBlob,
-                        RutaTemp = download.ResultFilePath,
-                        Extension = extension
-                    });
-
-                    if (extension.Equals(".xml"))
-                    {
-                        sinChxXml.Checked = false;
-                    }
-
-                    if (extension.Equals(".pdf"))
-                    {
-                        sinChxPdf.Checked = false;
-                    }
-                }
-
-            }
-            else if (download.State == CoreWebView2DownloadState.Interrupted)
-            {
-                _hub.PublicarNotificacionUI(this, "La descarga se completó satisfactoriamente", TipoNotificacion.Info);
-            }
-
         }
 
         private async void btnBuscar_Click(object sender, EventArgs e)
