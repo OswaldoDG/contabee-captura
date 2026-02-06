@@ -13,5 +13,7 @@ namespace ContabeeCaptura.Fachada
         Task<bool> SubirArchivosAsync(List<string> comprobantes);
 
         Task<bool> CompletarCapturaAsync(CompletarCapturaPagina completar);
+
+        Task<bool> MataZombies();
     }
 }

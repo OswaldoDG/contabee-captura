@@ -120,9 +120,10 @@ namespace ContabeeComunes.ProxyGenerico
                 }
                 else
                 {
-                    endpoint = $"/{endpoint.TrimStart('/')}";
-                    httpClient.BaseAddress = new Uri(host.TrimEnd('/'));
-                    var response = await httpClient.PostAsync(endpoint, form);
+                    endpoint = endpoint.TrimStart('/');
+                    var url = $"{host.TrimEnd('/')}/{endpoint}";
+
+                    var response = await httpClient.PostAsync(url, form);
                     response.EnsureSuccessStatusCode();
 
                     string contenidoRespuesta = await response.Content.ReadAsStringAsync();

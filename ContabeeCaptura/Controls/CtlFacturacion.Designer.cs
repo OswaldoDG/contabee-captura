@@ -44,29 +44,19 @@
             this.navegador = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.label7 = new System.Windows.Forms.Label();
             this.listViewComprobantes = new System.Windows.Forms.ListView();
             this.colNombre = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
-            this.label7 = new System.Windows.Forms.Label();
-            this.chkBoxXML = new System.Windows.Forms.CheckBox();
-            this.sinChxPdf = new System.Windows.Forms.CheckBox();
-            this.sinChxXml = new System.Windows.Forms.CheckBox();
-            this.chxBoxPDF = new System.Windows.Forms.CheckBox();
-            this.cbxMotivo = new System.Windows.Forms.ComboBox();
             this.cbxTipoFuente = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.BtnRemoverComprobante = new System.Windows.Forms.Button();
             this.btnComprobantes = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.cbxTieneCaptcha = new System.Windows.Forms.CheckBox();
             this.txtBxUrl = new System.Windows.Forms.TextBox();
-            this.btnFinalizar = new System.Windows.Forms.Button();
-            this.cbxReprogramar = new System.Windows.Forms.ComboBox();
             this.textBoxTotal = new System.Windows.Forms.TextBox();
-            this.labelTotal = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.txtBxComentario = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -76,6 +66,14 @@
             this.textBoxUUID = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.cbxReprogramar = new System.Windows.Forms.ComboBox();
+            this.btnFinalizar = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cbxMotivo = new System.Windows.Forms.ComboBox();
+            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
+            this.sinChxXml = new System.Windows.Forms.CheckBox();
+            this.sinChxPdf = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -85,9 +83,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.navegador)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
-            this.tableLayoutPanel7.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel2
@@ -316,35 +315,33 @@
             this.tableLayoutPanel6.ColumnCount = 2;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel6.Controls.Add(this.label7, 1, 2);
             this.tableLayoutPanel6.Controls.Add(this.listViewComprobantes, 0, 1);
-            this.tableLayoutPanel6.Controls.Add(this.label9, 1, 5);
-            this.tableLayoutPanel6.Controls.Add(this.label8, 0, 5);
-            this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel7, 0, 4);
-            this.tableLayoutPanel6.Controls.Add(this.cbxMotivo, 1, 3);
+            this.tableLayoutPanel6.Controls.Add(this.label9, 1, 4);
+            this.tableLayoutPanel6.Controls.Add(this.label8, 0, 4);
             this.tableLayoutPanel6.Controls.Add(this.cbxTipoFuente, 0, 3);
-            this.tableLayoutPanel6.Controls.Add(this.label6, 1, 2);
             this.tableLayoutPanel6.Controls.Add(this.BtnRemoverComprobante, 1, 0);
             this.tableLayoutPanel6.Controls.Add(this.btnComprobantes, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.label5, 0, 2);
-            this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel8, 0, 6);
-            this.tableLayoutPanel6.Controls.Add(this.btnFinalizar, 1, 12);
-            this.tableLayoutPanel6.Controls.Add(this.cbxReprogramar, 1, 11);
-            this.tableLayoutPanel6.Controls.Add(this.textBoxTotal, 0, 11);
-            this.tableLayoutPanel6.Controls.Add(this.labelTotal, 1, 10);
-            this.tableLayoutPanel6.Controls.Add(this.label12, 0, 10);
-            this.tableLayoutPanel6.Controls.Add(this.txtBxComentario, 0, 9);
-            this.tableLayoutPanel6.Controls.Add(this.label10, 0, 8);
-            this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel5, 0, 7);
-            this.tableLayoutPanel6.Controls.Add(this.btnCancel, 0, 12);
+            this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel8, 0, 5);
+            this.tableLayoutPanel6.Controls.Add(this.textBoxTotal, 0, 10);
+            this.tableLayoutPanel6.Controls.Add(this.label12, 0, 9);
+            this.tableLayoutPanel6.Controls.Add(this.txtBxComentario, 0, 8);
+            this.tableLayoutPanel6.Controls.Add(this.label10, 0, 7);
+            this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel5, 0, 6);
+            this.tableLayoutPanel6.Controls.Add(this.btnCancel, 0, 11);
+            this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel1, 1, 11);
+            this.tableLayoutPanel6.Controls.Add(this.label6, 1, 9);
+            this.tableLayoutPanel6.Controls.Add(this.cbxMotivo, 1, 10);
+            this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel7, 1, 3);
             this.tableLayoutPanel6.Cursor = System.Windows.Forms.Cursors.Default;
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.ForeColor = System.Drawing.SystemColors.ControlText;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 13;
+            this.tableLayoutPanel6.RowCount = 12;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 46.15385F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -355,8 +352,22 @@
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(1215, 629);
             this.tableLayoutPanel6.TabIndex = 1;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.label7.Location = new System.Drawing.Point(610, 196);
+            this.label7.Name = "label7";
+            this.label7.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label7.Size = new System.Drawing.Size(185, 20);
+            this.label7.TabIndex = 38;
+            this.label7.Text = "¿Falta Algún Archivo?";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // listViewComprobantes
             // 
@@ -371,7 +382,7 @@
             this.listViewComprobantes.Location = new System.Drawing.Point(2, 48);
             this.listViewComprobantes.Margin = new System.Windows.Forms.Padding(2);
             this.listViewComprobantes.Name = "listViewComprobantes";
-            this.listViewComprobantes.Size = new System.Drawing.Size(1211, 133);
+            this.listViewComprobantes.Size = new System.Drawing.Size(1211, 146);
             this.listViewComprobantes.TabIndex = 53;
             this.listViewComprobantes.UseCompatibleStateImageBehavior = false;
             this.listViewComprobantes.View = System.Windows.Forms.View.List;
@@ -385,7 +396,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.label9.Location = new System.Drawing.Point(609, 269);
+            this.label9.Location = new System.Drawing.Point(609, 250);
             this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(101, 20);
@@ -396,128 +407,12 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.label8.Location = new System.Drawing.Point(2, 269);
+            this.label8.Location = new System.Drawing.Point(2, 250);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(101, 20);
             this.label8.TabIndex = 43;
             this.label8.Text = "Página web";
-            // 
-            // tableLayoutPanel7
-            // 
-            this.tableLayoutPanel7.AutoSize = true;
-            this.tableLayoutPanel7.ColumnCount = 5;
-            this.tableLayoutPanel6.SetColumnSpan(this.tableLayoutPanel7, 2);
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel7.Controls.Add(this.label7, 0, 0);
-            this.tableLayoutPanel7.Controls.Add(this.chkBoxXML, 2, 0);
-            this.tableLayoutPanel7.Controls.Add(this.sinChxPdf, 4, 0);
-            this.tableLayoutPanel7.Controls.Add(this.sinChxXml, 3, 0);
-            this.tableLayoutPanel7.Controls.Add(this.chxBoxPDF, 1, 0);
-            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 238);
-            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
-            this.tableLayoutPanel7.RowCount = 1;
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(1209, 28);
-            this.tableLayoutPanel7.TabIndex = 42;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.label7.Location = new System.Drawing.Point(3, 0);
-            this.label7.Name = "label7";
-            this.label7.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label7.Size = new System.Drawing.Size(185, 20);
-            this.label7.TabIndex = 38;
-            this.label7.Text = "¿Falta Algún Archivo?";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // chkBoxXML
-            // 
-            this.chkBoxXML.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.chkBoxXML.AutoSize = true;
-            this.chkBoxXML.Enabled = false;
-            this.chkBoxXML.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.chkBoxXML.Location = new System.Drawing.Point(570, 2);
-            this.chkBoxXML.Margin = new System.Windows.Forms.Padding(2);
-            this.chkBoxXML.Name = "chkBoxXML";
-            this.chkBoxXML.Size = new System.Drawing.Size(64, 24);
-            this.chkBoxXML.TabIndex = 1;
-            this.chkBoxXML.Text = "XML";
-            this.chkBoxXML.UseVisualStyleBackColor = true;
-            // 
-            // sinChxPdf
-            // 
-            this.sinChxPdf.AutoSize = true;
-            this.sinChxPdf.Checked = true;
-            this.sinChxPdf.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.sinChxPdf.Enabled = false;
-            this.sinChxPdf.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.sinChxPdf.Location = new System.Drawing.Point(966, 2);
-            this.sinChxPdf.Margin = new System.Windows.Forms.Padding(2);
-            this.sinChxPdf.Name = "sinChxPdf";
-            this.sinChxPdf.Size = new System.Drawing.Size(94, 24);
-            this.sinChxPdf.TabIndex = 40;
-            this.sinChxPdf.Text = "Sin PDF";
-            this.sinChxPdf.UseVisualStyleBackColor = true;
-            // 
-            // sinChxXml
-            // 
-            this.sinChxXml.AutoSize = true;
-            this.sinChxXml.Checked = true;
-            this.sinChxXml.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.sinChxXml.Enabled = false;
-            this.sinChxXml.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.sinChxXml.Location = new System.Drawing.Point(725, 2);
-            this.sinChxXml.Margin = new System.Windows.Forms.Padding(2);
-            this.sinChxXml.Name = "sinChxXml";
-            this.sinChxXml.Size = new System.Drawing.Size(95, 24);
-            this.sinChxXml.TabIndex = 39;
-            this.sinChxXml.Text = "Sin XML";
-            this.sinChxXml.UseVisualStyleBackColor = true;
-            // 
-            // chxBoxPDF
-            // 
-            this.chxBoxPDF.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.chxBoxPDF.AutoSize = true;
-            this.chxBoxPDF.Enabled = false;
-            this.chxBoxPDF.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.chxBoxPDF.Location = new System.Drawing.Point(330, 2);
-            this.chxBoxPDF.Margin = new System.Windows.Forms.Padding(2);
-            this.chxBoxPDF.Name = "chxBoxPDF";
-            this.chxBoxPDF.Size = new System.Drawing.Size(63, 24);
-            this.chxBoxPDF.TabIndex = 0;
-            this.chxBoxPDF.Text = "PDF";
-            this.chxBoxPDF.UseVisualStyleBackColor = true;
-            // 
-            // cbxMotivo
-            // 
-            this.cbxMotivo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cbxMotivo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbxMotivo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxMotivo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.cbxMotivo.FormattingEnabled = true;
-            this.cbxMotivo.Items.AddRange(new object[] {
-            "Ninguno",
-            "ImagenDeficiente",
-            "ImagenErronea",
-            "Abuso",
-            "MaximoIntentosSuperado",
-            "ReprogramacionFueraRango",
-            "PortalPrivado",
-            "Extemporaneo",
-            "Otro Error"});
-            this.cbxMotivo.Location = new System.Drawing.Point(609, 205);
-            this.cbxMotivo.Margin = new System.Windows.Forms.Padding(2);
-            this.cbxMotivo.Name = "cbxMotivo";
-            this.cbxMotivo.Size = new System.Drawing.Size(604, 28);
-            this.cbxMotivo.TabIndex = 40;
             // 
             // cbxTipoFuente
             // 
@@ -532,23 +427,11 @@
             "Email",
             "Whatsapp, Telegram o similar",
             "Teléfono"});
-            this.cbxTipoFuente.Location = new System.Drawing.Point(2, 205);
+            this.cbxTipoFuente.Location = new System.Drawing.Point(2, 218);
             this.cbxTipoFuente.Margin = new System.Windows.Forms.Padding(2);
             this.cbxTipoFuente.Name = "cbxTipoFuente";
             this.cbxTipoFuente.Size = new System.Drawing.Size(603, 28);
             this.cbxTipoFuente.TabIndex = 39;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.label6.Location = new System.Drawing.Point(610, 183);
-            this.label6.Name = "label6";
-            this.label6.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label6.Size = new System.Drawing.Size(139, 20);
-            this.label6.TabIndex = 38;
-            this.label6.Text = "Error de Imagen";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // BtnRemoverComprobante
             // 
@@ -585,7 +468,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.label5.Location = new System.Drawing.Point(3, 183);
+            this.label5.Location = new System.Drawing.Point(3, 196);
             this.label5.Name = "label5";
             this.label5.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label5.Size = new System.Drawing.Size(109, 20);
@@ -602,7 +485,7 @@
             this.tableLayoutPanel8.Controls.Add(this.cbxTieneCaptcha, 1, 0);
             this.tableLayoutPanel8.Controls.Add(this.txtBxUrl, 0, 0);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(3, 292);
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(3, 273);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 1;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -632,62 +515,20 @@
             this.txtBxUrl.TabIndex = 29;
             this.txtBxUrl.Text = "https://algo.com";
             // 
-            // btnFinalizar
-            // 
-            this.btnFinalizar.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnFinalizar.BackColor = System.Drawing.Color.Gold;
-            this.btnFinalizar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnFinalizar.Enabled = false;
-            this.btnFinalizar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.btnFinalizar.Location = new System.Drawing.Point(976, 587);
-            this.btnFinalizar.Margin = new System.Windows.Forms.Padding(2);
-            this.btnFinalizar.Name = "btnFinalizar";
-            this.btnFinalizar.Size = new System.Drawing.Size(237, 39);
-            this.btnFinalizar.TabIndex = 5;
-            this.btnFinalizar.Text = "Finalizar";
-            this.btnFinalizar.UseVisualStyleBackColor = false;
-            this.btnFinalizar.Click += new System.EventHandler(this.btnFinalizar_Click_1);
-            // 
-            // cbxReprogramar
-            // 
-            this.cbxReprogramar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cbxReprogramar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxReprogramar.FormattingEnabled = true;
-            this.cbxReprogramar.Items.AddRange(new object[] {
-            "Finalizar",
-            "Reprogramar"});
-            this.cbxReprogramar.Location = new System.Drawing.Point(609, 555);
-            this.cbxReprogramar.Margin = new System.Windows.Forms.Padding(2);
-            this.cbxReprogramar.Name = "cbxReprogramar";
-            this.cbxReprogramar.Size = new System.Drawing.Size(604, 28);
-            this.cbxReprogramar.TabIndex = 52;
-            this.cbxReprogramar.SelectedIndexChanged += new System.EventHandler(this.cbxReprogramar_SelectedIndexChanged);
-            // 
             // textBoxTotal
             // 
             this.textBoxTotal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.textBoxTotal.Location = new System.Drawing.Point(3, 556);
+            this.textBoxTotal.Location = new System.Drawing.Point(3, 554);
             this.textBoxTotal.Name = "textBoxTotal";
             this.textBoxTotal.Size = new System.Drawing.Size(601, 26);
             this.textBoxTotal.TabIndex = 51;
-            // 
-            // labelTotal
-            // 
-            this.labelTotal.AutoSize = true;
-            this.labelTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.labelTotal.Location = new System.Drawing.Point(609, 533);
-            this.labelTotal.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.labelTotal.Name = "labelTotal";
-            this.labelTotal.Size = new System.Drawing.Size(82, 20);
-            this.labelTotal.TabIndex = 50;
-            this.labelTotal.Text = "Actividad";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.label12.Location = new System.Drawing.Point(2, 533);
+            this.label12.Location = new System.Drawing.Point(2, 531);
             this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(172, 20);
@@ -698,18 +539,18 @@
             // 
             this.tableLayoutPanel6.SetColumnSpan(this.txtBxComentario, 2);
             this.txtBxComentario.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtBxComentario.Location = new System.Drawing.Point(2, 376);
+            this.txtBxComentario.Location = new System.Drawing.Point(2, 357);
             this.txtBxComentario.Margin = new System.Windows.Forms.Padding(2);
             this.txtBxComentario.Multiline = true;
             this.txtBxComentario.Name = "txtBxComentario";
-            this.txtBxComentario.Size = new System.Drawing.Size(1211, 155);
+            this.txtBxComentario.Size = new System.Drawing.Size(1211, 172);
             this.txtBxComentario.TabIndex = 48;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.label10.Location = new System.Drawing.Point(2, 354);
+            this.label10.Location = new System.Drawing.Point(2, 335);
             this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(101, 20);
@@ -729,7 +570,7 @@
             this.tableLayoutPanel5.Controls.Add(this.textBoxUUID, 1, 0);
             this.tableLayoutPanel5.Controls.Add(this.label2, 2, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(2, 321);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(2, 302);
             this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
@@ -787,7 +628,7 @@
             this.btnCancel.BackColor = System.Drawing.SystemColors.ControlDark;
             this.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.btnCancel.Location = new System.Drawing.Point(368, 587);
+            this.btnCancel.Location = new System.Drawing.Point(368, 586);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(237, 39);
@@ -795,6 +636,137 @@
             this.btnCancel.Text = "Cancelar";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Controls.Add(this.cbxReprogramar, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnFinalizar, 1, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(610, 586);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(602, 40);
+            this.tableLayoutPanel1.TabIndex = 56;
+            // 
+            // cbxReprogramar
+            // 
+            this.cbxReprogramar.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.cbxReprogramar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cbxReprogramar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxReprogramar.FormattingEnabled = true;
+            this.cbxReprogramar.Items.AddRange(new object[] {
+            "Finalizar",
+            "Reprogramar"});
+            this.cbxReprogramar.Location = new System.Drawing.Point(4, 6);
+            this.cbxReprogramar.Margin = new System.Windows.Forms.Padding(2);
+            this.cbxReprogramar.Name = "cbxReprogramar";
+            this.cbxReprogramar.Size = new System.Drawing.Size(352, 28);
+            this.cbxReprogramar.TabIndex = 52;
+            this.cbxReprogramar.SelectedIndexChanged += new System.EventHandler(this.cbxReprogramar_SelectedIndexChanged);
+            // 
+            // btnFinalizar
+            // 
+            this.btnFinalizar.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnFinalizar.BackColor = System.Drawing.Color.Gold;
+            this.btnFinalizar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFinalizar.Enabled = false;
+            this.btnFinalizar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnFinalizar.Location = new System.Drawing.Point(363, 3);
+            this.btnFinalizar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnFinalizar.Name = "btnFinalizar";
+            this.btnFinalizar.Size = new System.Drawing.Size(237, 34);
+            this.btnFinalizar.TabIndex = 5;
+            this.btnFinalizar.Text = "Finalizar";
+            this.btnFinalizar.UseVisualStyleBackColor = false;
+            this.btnFinalizar.Click += new System.EventHandler(this.btnFinalizar_Click_1);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.label6.Location = new System.Drawing.Point(610, 531);
+            this.label6.Name = "label6";
+            this.label6.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label6.Size = new System.Drawing.Size(139, 20);
+            this.label6.TabIndex = 38;
+            this.label6.Text = "Error de Imagen";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // cbxMotivo
+            // 
+            this.cbxMotivo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cbxMotivo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxMotivo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.cbxMotivo.FormattingEnabled = true;
+            this.cbxMotivo.Items.AddRange(new object[] {
+            "Ninguno",
+            "ImagenDeficiente",
+            "ImagenErronea",
+            "Abuso",
+            "MaximoIntentosSuperado",
+            "ReprogramacionFueraRango",
+            "PortalPrivado",
+            "Extemporaneo",
+            "Otro Error"});
+            this.cbxMotivo.Location = new System.Drawing.Point(609, 553);
+            this.cbxMotivo.Margin = new System.Windows.Forms.Padding(2);
+            this.cbxMotivo.Name = "cbxMotivo";
+            this.cbxMotivo.Size = new System.Drawing.Size(604, 28);
+            this.cbxMotivo.TabIndex = 40;
+            // 
+            // tableLayoutPanel7
+            // 
+            this.tableLayoutPanel7.AutoSize = true;
+            this.tableLayoutPanel7.ColumnCount = 2;
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel7.Controls.Add(this.sinChxXml, 0, 0);
+            this.tableLayoutPanel7.Controls.Add(this.sinChxPdf, 1, 0);
+            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(610, 219);
+            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
+            this.tableLayoutPanel7.RowCount = 1;
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(602, 28);
+            this.tableLayoutPanel7.TabIndex = 42;
+            // 
+            // sinChxXml
+            // 
+            this.sinChxXml.AutoSize = true;
+            this.sinChxXml.Checked = true;
+            this.sinChxXml.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.sinChxXml.Enabled = false;
+            this.sinChxXml.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.sinChxXml.Location = new System.Drawing.Point(2, 2);
+            this.sinChxXml.Margin = new System.Windows.Forms.Padding(2);
+            this.sinChxXml.Name = "sinChxXml";
+            this.sinChxXml.Size = new System.Drawing.Size(95, 24);
+            this.sinChxXml.TabIndex = 39;
+            this.sinChxXml.Text = "Sin XML";
+            this.sinChxXml.UseVisualStyleBackColor = true;
+            // 
+            // sinChxPdf
+            // 
+            this.sinChxPdf.AutoSize = true;
+            this.sinChxPdf.Checked = true;
+            this.sinChxPdf.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.sinChxPdf.Enabled = false;
+            this.sinChxPdf.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.sinChxPdf.Location = new System.Drawing.Point(303, 2);
+            this.sinChxPdf.Margin = new System.Windows.Forms.Padding(2);
+            this.sinChxPdf.Name = "sinChxPdf";
+            this.sinChxPdf.Size = new System.Drawing.Size(94, 24);
+            this.sinChxPdf.TabIndex = 40;
+            this.sinChxPdf.Text = "Sin PDF";
+            this.sinChxPdf.UseVisualStyleBackColor = true;
             // 
             // CtlFacturacion
             // 
@@ -817,12 +789,13 @@
             this.tabPage2.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
-            this.tableLayoutPanel7.ResumeLayout(false);
-            this.tableLayoutPanel7.PerformLayout();
             this.tableLayoutPanel8.ResumeLayout(false);
             this.tableLayoutPanel8.PerformLayout();
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel7.ResumeLayout(false);
+            this.tableLayoutPanel7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -840,10 +813,8 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.CheckBox chkBoxXML;
         private System.Windows.Forms.CheckBox sinChxPdf;
         private System.Windows.Forms.CheckBox sinChxXml;
-        private System.Windows.Forms.CheckBox chxBoxPDF;
         private System.Windows.Forms.ComboBox cbxMotivo;
         private System.Windows.Forms.ComboBox cbxTipoFuente;
         private System.Windows.Forms.Label label6;
@@ -856,7 +827,6 @@
         private System.Windows.Forms.Button btnFinalizar;
         private System.Windows.Forms.ComboBox cbxReprogramar;
         private System.Windows.Forms.TextBox textBoxTotal;
-        private System.Windows.Forms.Label labelTotal;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox txtBxComentario;
         private System.Windows.Forms.Label label10;
@@ -876,5 +846,6 @@
         private System.Windows.Forms.Button btnAtras;
         private System.Windows.Forms.Button btnAdelante;
         private System.Windows.Forms.Button btnRecarga;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }

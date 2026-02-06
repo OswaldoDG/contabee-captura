@@ -9,8 +9,8 @@ using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ContabeeCaptura.Controls
 {
@@ -23,10 +23,15 @@ namespace ContabeeCaptura.Controls
         private Guid _subCfdi;
         private Guid _subIEPS;
         public List<string> comprobantesPath = new List<string>();
+        private bool _descargaProcesada = false;
 
         public CtlFacturacion()
         {
             InitializeComponent();
+            SetStyle(ControlStyles.AllPaintingInWmPaint |
+                    ControlStyles.OptimizedDoubleBuffer |
+                    ControlStyles.UserPaint, true);
+            UpdateStyles();
             this.AutoScaleMode = AutoScaleMode.Dpi;
             this.HandleDestroyed += (s, e) => {
                 if (_hub != null)
@@ -46,6 +51,84 @@ namespace ContabeeCaptura.Controls
             navegador.NavigationCompleted += Navegador_NavigationCompleted;
             navegador.CoreWebView2.DownloadStarting += CoreWebView2_DownloadStarting;
             navegador.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
+            navegador.CoreWebView2.NavigationStarting += CoreWebView2_NavigationStarting;
+        }
+
+        private void CoreWebView2_NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
+        {
+            string url = e.Uri;
+
+            if (url.EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
+            {
+                e.Cancel = true;
+
+                string carpetaDestino = @"C:\comprobante";
+                Directory.CreateDirectory(carpetaDestino);
+
+                string nombreArchivo = Path.GetFileName(url);
+                string rutaFinal = Path.Combine(carpetaDestino, nombreArchivo);
+
+                using (var client = new System.Net.WebClient())
+                {
+                    client.DownloadFile(url, rutaFinal);
+                }
+
+                PublicarDescarga(rutaFinal);
+            }
+        }
+
+        private void CoreWebView2_DownloadStarting(object sender, Microsoft.Web.WebView2.Core.CoreWebView2DownloadStartingEventArgs e)
+        {
+            var downloadOperation = e.DownloadOperation;
+            _descargaProcesada = false;
+
+            string carpetaDestino = @"C:\comprobante";
+            Directory.CreateDirectory(carpetaDestino);
+
+            string nombreArchivo = Path.GetFileName(e.ResultFilePath);
+            string extension = Path.GetExtension(nombreArchivo).ToLower();
+
+            string rutaFinal = Path.Combine(carpetaDestino, nombreArchivo);
+
+            e.ResultFilePath = rutaFinal;
+            e.Handled = true;
+
+            downloadOperation.StateChanged += DownloadOperation_StateChanged;
+
+            if (downloadOperation.State == CoreWebView2DownloadState.Completed && !_descargaProcesada)
+            {
+                _descargaProcesada = true;
+                PublicarDescarga(rutaFinal);
+            }
+        }
+
+        private void DownloadOperation_StateChanged(object sender, object e)
+        {
+            var download = (CoreWebView2DownloadOperation)sender;
+
+            if (download.State == CoreWebView2DownloadState.Completed && !_descargaProcesada)
+            {
+                _descargaProcesada = true;
+                PublicarDescarga(download.ResultFilePath);
+            }
+        }
+
+        private void PublicarDescarga(string rutaArchivo)
+        {
+            string extension = Path.GetExtension(rutaArchivo).ToLower();
+
+            _hub.PublicarNotificacionUI(this, "La descarga se completó satisfactoriamente", TipoNotificacion.Info);
+
+            _hub.Publicar(new DescargaDetectadaMensaje
+            {
+                Sender = this,
+                NombreArchivo = _nombreBlob,
+                RutaTemp = rutaArchivo,
+                Extension = extension
+            });
+
+            if (extension == ".xml") sinChxXml.Checked = false;
+            if (extension == ".pdf") sinChxPdf.Checked = false;
         }
 
         private void CoreWebView2_NewWindowRequested(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NewWindowRequestedEventArgs e)
@@ -102,16 +185,10 @@ namespace ContabeeCaptura.Controls
             _nombreBlob = string.Empty;
             comprobantesPath.Clear();
             listViewComprobantes.Clear();
-
             labelIEPS.Visible = false;
-
-
             textBoxURL.Text = string.Empty;
             cbxTipoFuente.SelectedItem = null;
             cbxMotivo.SelectedItem = null;
-
-            chkBoxXML.Checked = false;
-            chxBoxPDF.Checked = false;
             sinChxXml.Checked = true;
             sinChxPdf.Checked = true;
             txtBxUrl.Text = string.Empty;
@@ -132,50 +209,6 @@ namespace ContabeeCaptura.Controls
             if (this.InvokeRequired) { this.Invoke(new Action(() => OnDesglosarIEPS(msg))); return; }
 
             labelIEPS.Visible = msg.DesglosarIEPS;
-        }
-
-        private void CoreWebView2_DownloadStarting(object sender, Microsoft.Web.WebView2.Core.CoreWebView2DownloadStartingEventArgs e)
-        {
-            var downloadOperation = e.DownloadOperation;
-
-            string carpetaDestino = @"C:\comprobante";
-            Directory.CreateDirectory(carpetaDestino);
-
-            string nombreArchivo = Path.GetFileName(e.ResultFilePath);
-            string extension = Path.GetExtension(nombreArchivo).ToLower();
-
-            string rutaFinal = Path.Combine(carpetaDestino, nombreArchivo);
-
-            e.ResultFilePath = rutaFinal;
-            e.Handled = true;
-
-            downloadOperation.StateChanged += (s, ev) =>
-            {
-                if (downloadOperation.State ==
-                    Microsoft.Web.WebView2.Core.CoreWebView2DownloadState.Completed)
-                {
-                    _hub.Publicar(new DescargaDetectadaMensaje
-                    {
-                        Sender = this,
-                        NombreArchivo = _nombreBlob,
-                        RutaTemp = rutaFinal,
-                        Extension = extension
-                    });
-
-                    if (extension.Equals(".xml")) 
-                    {
-                        chkBoxXML.Checked = true;
-                        sinChxXml.Checked = false;
-                    }      
-
-                    if (extension.Equals(".pdf"))
-                    {
-                        chxBoxPDF.Checked = true;
-                        sinChxPdf.Checked = false;
-                    }
-                        
-                }
-            };
         }
 
         private async void btnBuscar_Click(object sender, EventArgs e)
@@ -236,6 +269,16 @@ namespace ContabeeCaptura.Controls
                             {
                                 _hub.PublicarNotificacionUI(this, "Solo se permiten 2 comprobantes (PDF o XML).", TipoNotificacion.Alerta);
                                 break;
+                            }
+
+                            if (Path.GetExtension(file).Equals(".xml"))
+                            {
+                                sinChxXml.Checked = false;
+                            }
+
+                            if (Path.GetExtension(file).Equals(".pdf"))
+                            {
+                                sinChxPdf.Checked = false;
                             }
 
                             comprobantesPath.Add(file);
@@ -300,14 +343,9 @@ namespace ContabeeCaptura.Controls
             comprobantesPath.Clear();
             listViewComprobantes.Clear();
             labelIEPS.Visible = false;
-
-
             textBoxURL.Text = string.Empty;
             cbxTipoFuente.SelectedItem = null;
             cbxMotivo.SelectedItem = null;
-
-            chkBoxXML.Checked = false;
-            chxBoxPDF.Checked = false;
             sinChxXml.Checked = true;
             sinChxPdf.Checked = true; 
             txtBxUrl.Text = string.Empty;
