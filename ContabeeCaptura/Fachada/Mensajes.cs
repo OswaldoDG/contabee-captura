@@ -75,4 +75,10 @@ namespace ContabeeComunes.Fachada
         public object Sender { get; set; }
         public bool ActivarSiguiente { get; set; }
     }
+
+    public class ArchivosMensaje : ITinyMessage
+    {
+        public object Sender { get; set; }
+        public string RutaArchivo { get; set; }
+    }
 }

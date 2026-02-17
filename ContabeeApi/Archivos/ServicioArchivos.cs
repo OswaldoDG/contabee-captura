@@ -42,8 +42,8 @@ namespace ContabeeApi.Archivos
                     File.Copy(rutaTemp, rutaFinal);
                     File.Delete(rutaTemp);
 
-                    if (extension.Equals(".xml", StringComparison.OrdinalIgnoreCase))
-                        respuesta.Payload = rutaFinal;
+                    respuesta.Payload = rutaFinal;
+
 
                     respuesta.Ok = true;
                 }
@@ -69,8 +69,8 @@ namespace ContabeeApi.Archivos
 
                             File.Move(archivo, rutaDestino);
 
-                            if (ext.Equals(".xml", StringComparison.OrdinalIgnoreCase))
-                                respuesta.Payload = rutaDestino;
+                            respuesta.Payload = rutaDestino;
+
                         }
                     }
 

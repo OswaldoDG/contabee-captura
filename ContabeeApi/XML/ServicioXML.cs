@@ -12,7 +12,7 @@ namespace ContabeeApi.XML
     {
         public (string UUID, string Fecha, string Total) ExtraerInfoCFDI(string rutaXml)
         {
-            if (!File.Exists(rutaXml)) return (null, null, null);
+            if (Path.GetExtension(rutaXml) != ".xml") return (null, null, null);
 
             XDocument xmlDoc = XDocument.Load(rutaXml);
 

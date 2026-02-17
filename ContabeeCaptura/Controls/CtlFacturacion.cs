@@ -22,6 +22,7 @@ namespace ContabeeCaptura.Controls
         private Guid _subClear;
         private Guid _subCfdi;
         private Guid _subIEPS;
+        private Guid _subArchivo;
         public List<string> comprobantesPath = new List<string>();
         private bool _descargaProcesada = false;
 
@@ -40,6 +41,7 @@ namespace ContabeeCaptura.Controls
                     _hub.Desuscribir(_subClear);
                     _hub.Desuscribir(_subCfdi); 
                     _hub.Desuscribir(_subIEPS);
+                    _hub.Desuscribir(_subArchivo);
                 }
             };
         }
@@ -54,7 +56,7 @@ namespace ContabeeCaptura.Controls
             navegador.CoreWebView2.NavigationStarting += CoreWebView2_NavigationStarting;
         }
 
-        private void CoreWebView2_NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
+        private async void CoreWebView2_NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
         {
             string url = e.Uri;
 
@@ -70,7 +72,7 @@ namespace ContabeeCaptura.Controls
 
                 using (var client = new System.Net.WebClient())
                 {
-                    client.DownloadFile(url, rutaFinal);
+                    client.DownloadFileAsync(new Uri(url), rutaFinal);
                 }
 
                 PublicarDescarga(rutaFinal);
@@ -115,20 +117,33 @@ namespace ContabeeCaptura.Controls
 
         private void PublicarDescarga(string rutaArchivo)
         {
-            string extension = Path.GetExtension(rutaArchivo).ToLower();
 
-            _hub.PublicarNotificacionUI(this, "La descarga se completó satisfactoriamente", TipoNotificacion.Info);
-
-            _hub.Publicar(new DescargaDetectadaMensaje
+            this.SuspendLayout();
+            try
             {
-                Sender = this,
-                NombreArchivo = _nombreBlob,
-                RutaTemp = rutaArchivo,
-                Extension = extension
-            });
+                string extension = Path.GetExtension(rutaArchivo).ToLower();
+                _hub.Publicar(new DescargaDetectadaMensaje
+                {
+                    Sender = this,
+                    NombreArchivo = _nombreBlob,
+                    RutaTemp = rutaArchivo,
+                    Extension = extension
+                });
 
-            if (extension == ".xml") sinChxXml.Checked = false;
-            if (extension == ".pdf") sinChxPdf.Checked = false;
+                if (extension == ".xml")
+                {
+                    sinChxXml.Checked = false;
+                }
+
+                if (extension == ".pdf")
+                {
+                    sinChxPdf.Checked = false;
+                }
+            }
+            finally
+            {
+                this.ResumeLayout(true);
+            }
         }
 
         private void CoreWebView2_NewWindowRequested(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NewWindowRequestedEventArgs e)
@@ -152,9 +167,23 @@ namespace ContabeeCaptura.Controls
             _subCfdi = _hub.Suscribir<CFDIMensaje>(OnDatosCFDI);
             _subClear = _hub.Suscribir<MensajeClear>(OnLimpiarDatos);
             _subIEPS = _hub.Suscribir<DesglosarIEPSMensaje>(OnDesglosarIEPS);
+            _subArchivo = _hub.Suscribir<ArchivosMensaje>(OnArchivoRecibido);
             IniciarWeb();
         }
+        private void OnArchivoRecibido(ArchivosMensaje msg)
+        {
+            if (msg == null) return;
 
+            if (this.InvokeRequired) { this.Invoke(new Action(() => OnArchivoRecibido(msg))); return; }
+
+            comprobantesPath.Add(msg.RutaArchivo);
+
+            FileInfo fi = new FileInfo(msg.RutaArchivo);
+
+            ListViewItem item = new ListViewItem(fi.Name);
+
+            listViewComprobantes.Items.Add(item);
+        }
         private void OnDatosRecibidos(NombreBlobMensaje msg)
         {
             if (msg == null) return;

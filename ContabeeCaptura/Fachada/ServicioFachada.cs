@@ -143,6 +143,12 @@ namespace ContabeeCaptura.Fachada
             {
                 var respuesta = _archivos.ProcesarDescarga(NombreArchivo, RutaTemp, Extension);
 
+                _hub.Publicar(new ArchivosMensaje
+                {
+                    Sender = this,
+                    RutaArchivo = respuesta.Payload
+                });
+
                 if (!respuesta.Ok) 
                 {
                     _hub.Publicar(new NotificacionUIEvent(
@@ -172,12 +178,17 @@ namespace ContabeeCaptura.Fachada
                         Fecha = fechaCFDI,
                         Total = decimal.Parse(info.Total, CultureInfo.InvariantCulture)
                 });
+
                 }
-                _hub.Publicar(new NotificacionUIEvent(
-                    this,
-                    "Comprobantes descargados correctamente",
-                    TipoNotificacion.Info
-                ));
+                if (Extension == ".xml")
+                {
+                    _hub.PublicarNotificacionUI(this, "XML Descargado.", TipoNotificacion.Info);
+                }
+
+                if (Extension == ".pdf")
+                {
+                    _hub.PublicarNotificacionUI(this, "PDF Descargado.", TipoNotificacion.Info);
+                }
             }
             catch (Exception ex)
             {
